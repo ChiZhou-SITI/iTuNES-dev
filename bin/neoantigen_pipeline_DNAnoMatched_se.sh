@@ -68,8 +68,8 @@ if [ $# -lt 2 ];then
 	exit 1
 fi
 
-TEMP=`getopt -o p:o:g:P:I:r:c:C:a:b:E:f: \
---long T_fq:,outpath:,genome:,prefix:,bwa_index:,reference:,CPU:Coverage:,binding_aff_fc_cutoff:,binding_aff_cutoff:,expression_file:,fpkm_cutoff: \
+TEMP=`getopt -o p:o:g:P:I:r:c:C:a:b:E:f:l: \
+--long T_fq:,outpath:,genome:,prefix:,bwa_index:,reference:,CPU:Coverage:,binding_aff_fc_cutoff:,binding_aff_cutoff:,expression_file:,fpkm_cutoff:,hla_str: \
 	-n 'neoantigen_pipeline_DNAMatched_se.sh' -- "$@"`
 
 if [ $? != 0 ];then
@@ -92,6 +92,7 @@ do
 		-a | --binding_aff_fc_cutoff) Binding_Aff_Fc_Cutoff=$2;shift 2;;
 		-E | --expression_file) Exp_file=$2;shift 2;;
 		-f | --fpkm_cutoff) Fpkm_Cutoff=$2;shift 2;;
+		-l | --hla_type) Hla_Type=$2;shift 2;;
 		--) shift;break;;
 		*) echo "Internal error!";exit 1;;
 	esac
@@ -327,76 +328,148 @@ callvariants_dna(){
     $HaplotypeCaller -R $REFERENCE -I $input_dna_bam -o $output -stand_call_conf 30 --dbsnp $dbsnp138
 }
 
+mutation_calling(){
+	local PREFIX=$1
+	BWA_sefq2bam	$T_fastq	alignments/${PREFIX}_tumor_bwa.bam	alignments/${PREFIX}_tumor_bwa_dedup.dup
+	realignment alignments/${PREFIX}_tumor_bwa.bam $OneKG $mills alignments/${PREFIX}_tumor_bwa_realign.bam
+	baserecalibration alignments/${PREFIX}_tumor_bwa_realign.bam $dbsnp138 $OneKG $mills alignments/${PREFIX}_tumor_bwa_realign_recal.bam
+	callvariants_dna alignments/${PREFIX}_tumor_bwa_realign_recal.bam somatic_mutation/${PREFIX}_raw.vcf
+}
+
+vcf_split(){
+	local PREFIX=$1
+	vcftools --vcf somatic_mutation/${PREFIX}_raw.vcf --remove-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}_SNVs_only
+	vcftools --vcf somatic_mutation/${PREFIX}_raw.vcf --keep-only-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}_INDELs_only
+
+}
+
+snv2fasta(){
+	local VEP_CACHE=$1
+	local PREFIX=$2
+	vep -i somatic_mutation/${PREFIX}_SNVs_only.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_snv_vep_ann.txt --force_overwrite
+	python ${iTuNES_BIN_PATH}/snv2fasta.py -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -o netmhc -s ${PREFIX}
+}
+indel2fasta(){
+	local VEP_CACHE=$1
+	local PREFIX=$2
+}
+
+netmhcpan(){
+	local input_fasta=$1
+	local hla_str=$2
+	local netmhc_out=$3
+	local out_dir=$4
+	local split_num=$5
+	if [ -d ${out_dir}/tmp ];then
+		rm -rf ${out_dir}/tmp
+		mkdir -p ${out_dir}/tmp
+	else
+		mkdir -p ${out_dir}/tmp
+	fi
+	if [ -f ${out_dir}/${netmhc_out} ];then
+		rm ${out_dir}/${netmhc_out}
+	fi
+	split -l ${split_num} ${input_fasta} ${out_dir}/tmp/
+	filelist=`ls ${out_dir}/tmp/`
+	OLD_IFS="$IFS" 
+	IFS=$"\n"
+	arr1=(${filelist})
+	IFS="$OLD_IFS" 
+	OLD_IFS="$IFS" 
+	IFS=","
+	arr2=(${hla_str})
+	IFS="$OLD_IFS" 
+	for s in ${arr2[@]}
+	do
+	{
+		echo $s
+		for file_l in ${arr1[@]}
+		do
+		{
+			echo ${file_l}
+			netMHCpan -a $s -f ${out_dir}/tmp/${file_l} -l 8,9,10,11 > ${out_dir}/tmp/${s}_${file_l}_tmp_netmhc.txt
+		} &
+		done
+		wait
+		
+	}
+	done
+	for file_l in ${arr1[@]}
+	do
+	{
+		rm ${out_dir}/tmp/${file_l}
+	}
+	done
+	filelist1=`ls ${out_dir}/tmp/`
+	for file_r in $filelist1
+	do
+	{
+		cat ${out_dir}/tmp/${file_r} >> ${out_dir}/${netmhc_out}
+		rm ${out_dir}/tmp/${file_r}	
+	}
+	done
+	rm -rf 	${out_dir}/tmp
+}
+
+
+fasta2netmhcpan2netCTLPAN(){
+	local PREFIX=$1
+	local Exp_file=$2
+	local Binding_Aff_Fc_Cutoff=$3
+	local Binding_Aff_Cutoff=$4 
+	local Fpkm_Cutoff=$5
+	local Hla_Type=$6
+	if [ "$Hla_Type" = 'None' ];then
+		echo -e "\033[40;32mHLAtyping......\t"$DATE"\033[0m"
+		#hlatyping $PREFIX
+		hla_str=`cat HLAtyping/${PREFIX}_optitype_hla_type`
+	else
+		hla_str=${Hla_Type}
+	fi
+	#netmhcpan netmhc/${PREFIX}_snv.fasta ${hla_str} ${PREFIX}_snv_netmhc.txt netmhc 500
+	python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_snv_netmhc.txt -g netmhc/${PREFIX}_snv.fasta -o netmhc -s ${PREFIX}_snv -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+	#netmhcpan netmhc/${PREFIX}_id_del.fasta ${hla_str} ${PREFIX}_id_del_netmhc.txt netmhc 6000
+	#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_id_del_netmhc.txt -g netmhc/${PREFIX}_id_del.fasta -o netmhc -s ${PREFIX}_id_del -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+	#netmhcpan netmhc/${PREFIX}_fs_del.fasta ${hla_str} ${PREFIX}_fs_del_netmhc.txt netmhc 50000
+	#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_fs_del_netmhc.txt -g netmhc/${PREFIX}_fs_del.fasta -o netmhc -s ${PREFIX}_fs_del -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+	#netmhcpan netmhc/${PREFIX}_ii_ins.fasta ${hla_str} ${PREFIX}_ii_ins_netmhc.txt netmhc 8000
+	#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_ii_ins_netmhc.txt -g netmhc/${PREFIX}_ii_ins.fasta -o netmhc -s ${PREFIX}_ii_ins -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+	#netmhcpan netmhc/${PREFIX}_fs_ins.fasta ${hla_str} ${PREFIX}_fs_ins_netmhc.txt netmhc 8000
+	#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_fs_ins_netmhc.txt -g netmhc/${PREFIX}_fs_ins.fasta -o netmhc -s ${PREFIX}_fs_ins -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+	python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_snv_final_neo_candidate.txt -o netctl -s ${PREFIX}_snv
+	#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_id_del_final_neo_candidate.txt -o netctl -s ${PREFIX}_id_del
+	#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_fs_del_final_neo_candidate.txt -o netctl -s ${PREFIX}_fs_del
+	#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_ii_ins_final_neo_candidate.txt -o netctl -s ${PREFIX}_ii_ins
+	#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_fs_ins_final_neo_candidate.txt -o netctl -s ${PREFIX}_fs_ins
+}
+
 dbsnp138='/home/zhouchi/database/Annotation/hg38_vcf/dbsnp_138.hg38.vcf'
 hapmap='/home/zhouchi/database/Annotation/hg38_vcf/hapmap_3.3.hg38.vcf'
 omni='/home/zhouchi/database/Annotation/hg38_vcf/1000G_phase1.snps.high_confidence.hg38.vcf'
 OneKG='/home/zhouchi/database/Annotation/hg38_vcf/1000G_omni2.5.hg38.vcf'
 mills='/home/zhouchi/database/Annotation/hg38_vcf/Mills_and_1000G_gold_standard.indels.hg38.vcf'
-set -x
-#BWA_sefq2bam	$T_fastq	alignments/${PREFIX}_tumor_bwa.bam	alignments/${PREFIX}_tumor_bwa_dedup.dup
-#realignment             alignments/${PREFIX}_tumor_bwa.bam        $OneKG     $mills  alignments/${PREFIX}_tumor_bwa_realign.bam
-#baserecalibration       alignments/${PREFIX}_tumor_bwa_realign.bam      $dbsnp138      $OneKG     $mills   alignments/${PREFIX}_tumor_bwa_realign_recal.bam
-#callvariants_dna            alignments/${PREFIX}_tumor_bwa_realign_recal.bam	somatic_mutation/${PREFIX}_raw.vcf
-set +x
-###split vcf file into snv and indel#####
-#SNP
-#vcftools --vcf somatic_mutation/${PREFIX}_raw.vcf --remove-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}/${PREFIX}_SNVs_only
-#INDEL
-#vcftools --vcf somatic_mutation/${PREFIX}_raw.vcf --keep-only-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}/${PREFIX}_INDELs_only
 
 
-##########neoantigen identification#####
-#######HLA TYPING#######
-:<<!
-echo -e "\033[40;32mHLAtyping......\t"$DATE"\033[0m"
-#python $HLAtyping -i ${T_fastq_1} ${T_fastq_2} -o HLAtyping -n ${PREFIX}
-#python ${iTuNES_BIN_PATH}/HLA_extract.py HLAtyping/${PREFIX}_HLAminer_HPTASR.csv HLAtyping/${PREFIX}_HLA_str.txt
-#hla_str=`cat HLAtyping/${PREFIX}_HLA_str.txt`
-razers3 -i 95 -tc 8 -m 1 -dr 0 -o HLAtyping/finished_filter.bam /home/zhouchi/software/OptiType/data/hla_reference_dna.fasta $T_fastq
-samtools bam2fq HLAtyping/finished_filter.bam > HLAtyping/finished_filter.fastq 
-rm HLAtyping/finished_filter.bam
-python /home/zhouchi/software/OptiType/OptiTypePipeline.py -i HLAtyping/finished_filter.fastq --dna -o HLAtyping/
-rm HLAtyping/finished_filter.fastq
-if [ -f HLAtyping/${PREFIX}_optitype_hla_type ];then
-	rm HLAtyping/${PREFIX}_optitype_hla_type
-fi
-dir=`ls HLAtyping/`
-python ${iTuNES_BIN_PATH}/optitype_ext.py -i HLAtyping/${dir}/${dir}_result.tsv -o HLAtyping -s ${PREFIX}
-!
-#######VEP Annotation########
-:<<!
-echo -e "\033[40;32mVEP Annotation......\t"$DATE"\033[0m"
 
-#VEP_DATA=/home/zhouchi/database/Annotation/vep_data
-#vep.pl -i somatic_mutation/${PREFIX}/${PREFIX}_SNVs_only.recode.vcf --cache --dir $VEP_DATA --dir_cache #$VEP_DATA --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_vep_ann.txt --force_overwrite
-########Preprocess########
-#python ${iTuNES_BIN_PATH}/animo_acid_prepare.py -i somatic_mutation/${PREFIX}_vep_ann.txt -o netmhc -s ${PREFIX}
-########netMHC###########
-#netMHCpan -a $hla_str -f netmhc/${PREFIX}_netmhc_input.fasta -l 8,9,10,11 > netmhc/${PREFIX}_netmhc_result.txt
-#######filtering######
-set -x
-#python ${iTuNES_BIN_PATH}/netMHC_result_parse.py -i netmhc/${PREFIX}_netmhc_result.txt -o netmhc -s ${PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-set +x
-#######netchop########
-set -x
-#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_final_neo_candidate.txt -o netctl -s ${PREFIX}
-set +x
-###indel identification###
-#vep.pl -i somatic_mutation/${PREFIX}/${PREFIX}_INDELs_only.recode.vcf --cache --dir $VEP_DATA --dir_cache #$VEP_DATA --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_vep_ann.txt --force_overwrite
-
-!
-########Preprocess########
-#python ${iTuNES_BIN_PATH}/deletion2fasta.py -i somatic_mutation/${PREFIX}_D_vep_ann.txt -c somatic_mutation/${PREFIX}_D.vcf -o netmhc -s ${PREFIX}
-#python ${iTuNES_BIN_PATH}/insertion2fasta.py -i somatic_mutation/${PREFIX}_SI_vep_ann.txt -c somatic_mutation/${PREFIX}_SI.vcf -o netmhc -s ${PREFIX}
-########netMHC###########
-#netMHCpan -a $hla_str -f netmhc/${PREFIX}_del.fasta -l 9 > netmhc/${PREFIX}_del_netmhc_result.txt
-#netMHCpan -a $hla_str -f netmhc/${PREFIX}_ins.fasta -l 9 > netmhc/${PREFIX}_ins_netmhc_result.txt
-#######filtering######
-#python ${iTuNES_BIN_PATH}/netMHC_result_parse.py -i netmhc/${PREFIX}_del_netmhc_result.txt -o netmhc -s ${DEL_PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-#python ${iTuNES_BIN_PATH}/netMHC_result_parse.py -i netmhc/${PREFIX}_ins_netmhc_result.txt -o netmhc -s ${INS_PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-#######netchop########
-#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${DEL_PREFIX}_final_neo_candidate.txt -o netctl -s ${DEL_PREFIX}
-#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${INS_PREFIX}_final_neo_candidate.txt -o netctl -s ${INS_PREFIX}
+pipeline_all(){
+	set -x
+	local PREFIX=$1
+	echo -e "\033[40;32mmapping......\t"$DATE"\033[0m"
+	#mapping_qc $PREFIX
+	#copynumber_calling $PREFIX 
+	echo -e "\033[40;32mcalling somatic mutaiton using varscan2......\t"$DATE"\033[0m"
+	#varscan_somatic_snp $PREFIX
+	echo -e "\033[40;32mindel calling ......\t"$DATE"\033[0m"
+	#Pindel $PREFIX
+	echo -e "\033[40;32fasta generate ......\t"$DATE"\033[0m"
+	#varscansnv2fasta /home/zhouchi/database/Annotation/vep_data $PREFIX
+	echo -e "\033[40;32Runnning netmhcpan and netCTLPAN ......\t"$DATE"\033[0m"
+	fasta2netmhcpan2netCTLPAN $PREFIX ${Exp_file} ${Binding_Aff_Fc_Cutoff} ${Binding_Aff_Cutoff} ${Fpkm_Cutoff} ${Hla_Type}
+	echo -e "\033[40;32Runnning pyclone ......\t"$DATE"\033[0m"
+	pyclone_copynumber $PREFIX
+	set +x
+}
+pipeline_all $PREFIX
 
 
 ###finished

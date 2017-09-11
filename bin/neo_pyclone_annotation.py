@@ -2,21 +2,24 @@
 # -*- coding: UTF-8 -*-
 ###########process varscan result into pyclone input#########
 import pandas as pd
+import numpy as np
 import sys,getopt
 
-opts,args=getopt.getopt(sys.argv[1:],"hn:i:s:c:o:S:C:",["neoantigen_file","vep_input_file","pyclone_loci","out_dir","SampleID"])
+opts,args=getopt.getopt(sys.argv[1:],"hn:i:s:c:o:S:C:t:",["neoantigen_file","vep_input_file","pyclone_loci","out_dir","SampleID","cancer_type"])
 neoantigen_file=""
 vep_input_file=""
 pyclone_loci=""
 output_dir=""
 sample_id=""
-USAGE='''usage: python pyclone_input.py -n <neoantigen_file> -i <vep_input_file> -s <pyclone_loci> -o <outdir> -S <sample_id> [option]"
+cancer_type=""
+USAGE='''usage: python pyclone_input.py -n <neoantigen_file> -i <vep_input_file> -s <pyclone_loci> -o <outdir> -S <sample_id> -t <cancer_type> [option]"
 		required argument:
 			-n | --neoantigen_file: 
 			-i | --vep_input_file : snv vep input file
 			-s | --pyclone_loci : pyclone_loci file result from pyclone
 			-o | --out_dir : output_directory
 			-S | --SampleID : sample id
+			-t | --cancer_type : specify cancer type
 '''
 for opt,value in opts:
 	if opt =="h":
@@ -32,9 +35,11 @@ for opt,value in opts:
 		out_dir=value  
 	elif opt in ("-S","--SampleID"):
 		sample_id=value
+	elif opt in ("-t","--cancer_type"):
+		cancer_type=value
 
 #print coverage
-if (neoantigen_file=="" or vep_input_file=="" or pyclone_loci=="" or out_dir=="" or sample_id==""):
+if (neoantigen_file=="" or vep_input_file=="" or pyclone_loci=="" or out_dir=="" or sample_id=="" or cancer_type==""):
 	print USAGE
 	sys.exit(2)
 gene_normal_expression_dic={}
@@ -64,11 +69,11 @@ f_vep.close()
 for i in range(len(vep_pos_list)):
 	gene_dic[vep_gene_list[i]]=vep_pos_list[i]
 gene_normal_expression_dic={}
-data_normal_expression=pd.read_table('/home/zhouchi/database/Annotation/expression/GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_median_rpkm.gct')
+data_normal_expression=pd.read_table('/home/zhouchi/database/Annotation/expression/GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_median_rpkm.gct',header=0,sep='\t')
 expression_gene=data_normal_expression.Description
-mel_expression=data_normal_expression["Skin - Not Sun Exposed (Suprapubic)"]
+normal_expression=data_normal_expression[cancer_type]
 for i in range(len(expression_gene)):
-	gene_normal_expression_dic[expression_gene[i]]=mel_expression[i]
+	gene_normal_expression_dic[expression_gene[i]]=normal_expression[i]
 
 #print gene_dic,len(gene_dic)
 #gene_name=[]
@@ -121,8 +126,17 @@ for ele in gene_name:
 	neo_normal_expression_list.append(neo_normal_expression)
 data_neo["cellular_prevalence"]=cellular_prevalence_neo
 data_neo["variant_allele_frequency"]=variant_allele_frequency_neo
-data_neo["median expression value in skin"]=neo_normal_expression_list
-data_neo.to_csv(out_dir+'/'+sample_id+'_pyclone_neo.txt',header=1,sep='\t',index=0)
+data_neo[cancer_type]=neo_normal_expression_list
+#del data_neo["Gene Name"]
+del data_neo["cleavage_prediction_score"]
+del data_neo["tap_prediction_score"]
+#print data_neo
+data_fill_na=data_neo.fillna(0)
+####HLA:0201 and sort by aff_rank
+data_drop=data_fill_na.drop_duplicates(subset=["Gene","MT_pep","WT_pep"])
+data_sort=data_drop.sort_values(["MT_Binding_level"],ascending=True)
+#print data_sort
+data_sort.to_csv(out_dir+'/'+sample_id+'_pyclone_neo.txt',header=1,sep='\t',index=0)
 
 
 

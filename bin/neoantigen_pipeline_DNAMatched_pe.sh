@@ -17,7 +17,7 @@
 #       CREATED:  3/18/2017 22:013 CST
 #      REVISION:  ---
 #===============================================================================
-
+set -e
 #######--Argument--######
 help_info(){
 	echo ""
@@ -60,8 +60,8 @@ if [ $# -lt 2 ];then
 	help_info
 	exit 1
 fi
-TEMP=`getopt -o p:q:s:t:o:g:P:I:r:c:C:a:b:E:f: \
---long N_fq_1:,N_fq_2:,T_fq_1:,T_fq_2:,outpath:,genome:,prefix:,bwa_index:,reference:,CPU:Coverage:,binding_aff_fc_cutoff:,binding_aff_cutoff:,expression_file:,fpkm_cutoff: \
+TEMP=`getopt -o p:q:s:t:o:g:P:I:r:c:C:a:b:E:f:l: \
+--long N_fq_1:,N_fq_2:,T_fq_1:,T_fq_2:,outpath:,genome:,prefix:,bwa_index:,reference:,CPU:Coverage:,binding_aff_fc_cutoff:,binding_aff_cutoff:,expression_file:,fpkm_cutoff:,hla_type: \
 	-n 'neoantigen_pipeline_DNAMatched.sh' -- "$@"`
 if [ $? != 0 ];then
 	echo "Terminating..." >&2 ; exit 1 ; fi
@@ -84,6 +84,7 @@ do
 		-a | --binding_aff_fc_cutoff) Binding_Aff_Fc_Cutoff=$2;shift 2;;
 		-E | --expression_file) Exp_file=$2;shift 2;;
 		-f | --fpkm_cutoff) Fpkm_Cutoff=$2;shift 2;;
+		-l | --hla_type) Hla_Type=$2;shift 2;;
 		--) shift;break;;
 		*) echo "Internal error!";exit 1;;
 	esac
@@ -143,6 +144,8 @@ if [ ! -n "$Fpkm_Cutoff" ];then
 #	echo "the Fpkm_Cutoff should be greater than 0!"
 #	exit 1
 fi
+
+
 ######result fold preparation#######
 ######make result directories######
 DATE=`date --date="-24 hour"`
@@ -199,172 +202,221 @@ else
 	fi
 	echo -e "\033[40;35;1mIndex: "${BWA_INDEX}"\033[0m"
 fi
-######check other files########
 
-
-
+Picard=/home/zhouchi/software/gatk_pre/picard-tools-2.3.0/picard.jar
+GATK="/home/zhouchi/software/gatk_pre/GenomeAnalysisTK.jar"
+BuildBamIndex="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $Picard BuildBamIndex"
+MarkDuplicates="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $Picard MarkDuplicates"
+AddOrReplaceReadGroups="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $Picard AddOrReplaceReadGroups"
+RealignerTargetCreator="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T RealignerTargetCreator -nt 8 -dt NONE"
+IndelRealigner="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T IndelRealigner"
+BaseRecalibrator="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T BaseRecalibrator -nct 8"
+AnalyzeCovariates="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T AnalyzeCovariates -dt NONE"
+HaplotypeCaller="java -Djava.io.tmpdir=/home/zhouchi/tmp -Xmx8g -jar $GATK -T HaplotypeCaller -nct 8 -dt NONE"
+SplitNCigarReads="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T SplitNCigarReads"
+PrintReads="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T PrintReads -nct 8 -dt NONE"
+VariantFiltration="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T VariantFiltration"
+GATK_Mutect2="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T MuTect2 -nct 8"
+SelectVariants="java -Djava.io.tmpdir=/home/zhouchi/tmp -jar $GATK -T SelectVariants"
 ####################
 ###Align with bwa###
 ####################
 ###align
-:<<!
-DATE=`date --date="-24 hour"`
-echo -e "\033[40;36;1m\033[1m---Align......---\t"$DATE"\033[0m"
-DATE=`date --date="-24 hour"`
-echo -e "\033[40;32mbwa alignment......\t"$DATE"\033[0m"
-set -x
 
-bwa mem -t ${CPU} ${BWA_INDEX}/${GENOME} ${N_fastq_1} ${N_fastq_2} > alignments/tmp_${PREFIX}_normal.sam \
-	2>log_file/${PREFIX}_normal_bwa_aln.log 
+dbsnp138='/home/zhouchi/database/Annotation/hg38_vcf/dbsnp_138.hg38.vcf'
+hapmap='/home/zhouchi/database/Annotation/hg38_vcf/hapmap_3.3.hg38.vcf'
+omni='/home/zhouchi/database/Annotation/hg38_vcf/1000G_phase1.snps.high_confidence.hg38.vcf'
+OneKG='/home/zhouchi/database/Annotation/hg38_vcf/1000G_omni2.5.hg38.vcf'
+mills='/home/zhouchi/database/Annotation/hg38_vcf/Mills_and_1000G_gold_standard.indels.hg38.vcf'
+cosmic='/home/zhouchi/database/Annotation/hg38_vcf/CosmicCodingMuts_chr_M_sorted.vcf'
+######check other files########
+hlatyping(){
+	local PREFIX=$1
+	rm -rf HLAtyping/*
+	#razers3 -i 95 -tc $CPU -m 1 -dr 0 -o HLAtyping/fished_test_1.bam /home/zhouchi/software/OptiType/data/hla_reference_dna.fasta $T_fastq_1
+	#razers3 -i 95 -tc $CPU -m 1 -dr 0 -o HLAtyping/fished_test_2.bam /home/zhouchi/software/OptiType/data/hla_reference_dna.fasta $T_fastq_2
+	#samtools bam2fq HLAtyping/fished_test_1.bam > HLAtyping/test_1_fished.fastq 
+	#samtools bam2fq HLAtyping/fished_test_2.bam > HLAtyping/test_2_fished.fastq
+	#rm HLAtyping/fished_test_1.bam HLAtyping/fished_test_2.bam
+	python /home/zhouchi/software/OptiType/OptiTypePipeline.py -i $T_fastq_1 $T_fastq_2 --dna -o HLAtyping/
+	#rm HLAtyping/test_1_fished.fastq HLAtyping/test_2_fished.fastq
+	dir=`ls HLAtyping/`
+	python ${iTuNES_BIN_PATH}/optitype_ext.py -i HLAtyping/${dir}/${dir}_result.tsv -o HLAtyping -s ${PREFIX}
+}
+mapping_qc_normal(){
+	local $PREFIX
+	bwa mem -t ${CPU} ${BWA_INDEX}/${GENOME} ${N_fastq_1} ${N_fastq_2} > alignments/tmp_${PREFIX}_normal.sam
+
+	samtools view -bhS -@ ${CPU} alignments/tmp_${PREFIX}_normal.sam > alignments/tmp_${PREFIX}_normal.bam 
+
+	samtools sort -@ ${CPU} -m 8G alignments/tmp_${PREFIX}_normal.bam alignments/${PREFIX}_normal_unfilter 
+
 	
-bwa mem -t ${CPU} ${BWA_INDEX}/${GENOME} ${T_fastq_1} ${T_fastq_2} > alignments/tmp_${PREFIX}_tumor.sam \
-	2>log_file/${PREFIX}_tumor_bwa_aln.log
+	samtools index alignments/${PREFIX}_normal_unfilter.bam 
+	samtools view -b -@ ${CPU} alignments/${PREFIX}_normal_unfilter.bam chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY > alignments/${PREFIX}_normal.bam 
+	samtools index alignments/${PREFIX}_normal.bam 
+	set +x
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mrun picard mark duplicates on non-UMI......\t"$DATE"\033[0m"
+	set -x
+	time java -Xmx4G -jar /home/zhouchi/software/gatk_pre/picard-tools-2.3.0/picard.jar MarkDuplicates \
+		INPUT=alignments/${PREFIX}_normal.bam OUTPUT=alignments/${PREFIX}_normal_mkdup.bam \
+		METRICS_FILE=${PREFIX}_normal_dup_qc.txt ASSUME_SORTED=true \
+		VALIDATION_STRINGENCY=SILENT
+	set +x
 
-samtools view -bhS alignments/tmp_${PREFIX}_normal.sam > alignments/tmp_${PREFIX}_normal.bam 
-samtools view -bhS alignments/tmp_${PREFIX}_tumor.sam > alignments/tmp_${PREFIX}_tumor.bam
+	###fliter bam on flags and threashold
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mfilter on flag 512 and threadshold score: "$SCORE"......\t"$DATE"\033[0m"
+	samtools view -F 512 -b -@ ${CPU} alignments/${PREFIX}_normal_mkdup.bam > alignments/${PREFIX}_normal_mkdup_filter.bam
+	samtools index alignments/${PREFIX}_normal_mkdup_filter.bam
+	rm alignments/${PREFIX}_normal_mkdup.bam
+	rm alignments/tmp_${PREFIX}_normal.bam alignments/tmp_${PREFIX}_normal.sam
+	rm alignments/${PREFIX}_normal_unfilter.bam alignments/${PREFIX}_normal_unfilter.bam.bai 
 
-samtools sort -@ ${CPU} -m 8G alignments/tmp_${PREFIX}_normal.bam alignments/${PREFIX}_normal_unfilter 
-samtools sort -@ ${CPU} -m 8G alignments/tmp_${PREFIX}_tumor.bam alignments/${PREFIX}_tumor_unfilter
-
-rm alignments/tmp_${PREFIX}_normal.bam alignments/tmp_${PREFIX}_tumor.bam alignments/tmp_${PREFIX}_normal.sam alignments/tmp_${PREFIX}_tumor.sam
-samtools index alignments/${PREFIX}_normal_unfilter.bam 
-samtools index alignments/${PREFIX}_tumor_unfilter.bam 
-
-samtools view -b alignments/${PREFIX}_normal_unfilter.bam chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY > alignments/${PREFIX}_normal.bam 
-samtools view -b alignments/${PREFIX}_tumor_unfilter.bam chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY > alignments/${PREFIX}_tumor.bam
-samtools index alignments/${PREFIX}_normal.bam 
-samtools index alignments/${PREFIX}_tumor.bam
-rm alignments/${PREFIX}_normal_unfilter.bam alignments/${PREFIX}_tumor_unfilter.bam alignments/${PREFIX}_normal_unfilter.bam.bai alignments/${PREFIX}_tumor_unfilter.bam.bai
-set +x
-!
-#######################
-###Filter alignments###
-#######################
-###mark duplicates with picard
-DATE=`date --date="-24 hour"`
-:<<!
-echo -e "\033[40;32mrun picard mark duplicates on non-UMI......\t"$DATE"\033[0m"
-set -x
-time java -Xmx4G -jar /home/zhouchi/software/gatk_pre/picard-tools-2.3.0/picard.jar MarkDuplicates \
-	INPUT=alignments/${PREFIX}_normal.bam OUTPUT=alignments/${PREFIX}_normal_marked.bam \
-	METRICS_FILE=${PREFIX}_normal_dup_qc.txt ASSUME_SORTED=true \
-	VALIDATION_STRINGENCY=SILENT
-#	READ_NAME_REGEX='[a-zA-Z0-9]+:[0-9]+:[a-zA-Z0-9]+:[0-9]+:([0-9]+):([0-9]+):([0-9]+).*'
-time java -Xmx4G -jar /home/zhouchi/software/gatk_pre/picard-tools-2.3.0/picard.jar MarkDuplicates \
-	INPUT=alignments/${PREFIX}_tumor.bam OUTPUT=alignments/${PREFIX}_tumor_marked.bam \
-	METRICS_FILE=${PREFIX}_tumor_dup_qc.txt ASSUME_SORTED=true \
-	VALIDATION_STRINGENCY=SILENT
-set +x
-mv ${PREFIX}_normal_dup_qc.txt bamstat
-mv ${PREFIX}_tumor_dup_qc.txt bamstat
-###fliter bam on flags and threashold
-DATE=`date --date="-24 hour"`
-echo -e "\033[40;32mfilter on flag 512 and threadshold score: "$SCORE"......\t"$DATE"\033[0m"
-samtools view -F 512 -b alignments/${PREFIX}_normal_marked.bam > alignments/${PREFIX}_normal_mkdup_filter.bam
-samtools view -F 512 -b alignments/${PREFIX}_tumor_marked.bam > alignments/${PREFIX}_tumor_mkdup_filter.bam
-rm alignments/${PREFIX}_normal_marked.bam alignments/${PREFIX}_tumor_marked.bam
-!
-:<<!
-######somatic mutation calling#########
-echo -e "\033[40;32mcalling somatic mutaiton using varscan2......\t"$DATE"\033[0m"
-set -x
-cd somatic_mutation
-mkfifo ${PREFIX}_normal.fifo
-mkfifo ${PREFIX}_tumor.fifo
-samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_normal_mkdup_filter.bam > ${PREFIX}_normal.fifo &
-samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_tumor_mkdup_filter.bam > ${PREFIX}_tumor.fifo &
-java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar somatic ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo ${PREFIX}
-rm ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo
-java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar processSomatic ${PREFIX}.snp
-cd ..
-set +x
-!
-##########neoantigen identification#####
-#######HLA TYPING#######
-echo -e "\033[40;32mHLAtyping......\t"$DATE"\033[0m"
-#######optitype#############
-:<<!
-set -x
-razers3 -i 95 -tc 8 -m 1 -dr 0 -o HLAtyping/fished_test_1.bam /home/zhouchi/software/OptiType/data/hla_reference_dna.fasta $T_fastq_1
-razers3 -i 95 -tc 8 -m 1 -dr 0 -o HLAtyping/fished_test_2.bam /home/zhouchi/software/OptiType/data/hla_reference_dna.fasta $T_fastq_2
-samtools bam2fq HLAtyping/fished_test_1.bam > HLAtyping/test_1_fished.fastq 
-samtools bam2fq HLAtyping/fished_test_2.bam > HLAtyping/test_2_fished.fastq
-rm HLAtyping/fished_test_1.bam HLAtyping/fished_test_2.bam
-python /home/zhouchi/software/OptiType/OptiTypePipeline.py -i $T_fastq_1 $T_fastq_2 --dna -o HLAtyping/
-rm HLAtyping/test_1_fished.fastq HLAtyping/test_2_fished.fastq
-if [ -f HLAtyping/${PREFIX}_optitype_hla_type ];then
-	rm HLAtyping/${PREFIX}_optitype_hla_type
-fi
-dir=`ls HLAtyping/`
-python ${iTuNES_BIN_PATH}/optitype_ext.py -i HLAtyping/${dir}/${dir}_result.tsv -o HLAtyping -s ${PREFIX}
-rm -rf HLAtyping/${dir}
-############################
-set +x
-!
-set -x
-#######SNV derived neoantigens########
-echo -e "\033[40;32mVEP Annotation......\t"$DATE"\033[0m"
-VEP_CACHE=/home/zhouchi/database/Annotation/vep_data
-sed '1d' somatic_mutation/${PREFIX}.snp.Somatic | awk -F '\t' '{print $1,$2,$2,$3"/"$4}' > somatic_mutation/${PREFIX}_vep_input.vcf
-VEP_CACHE=/data/PUBLIC/VEP_DATA
-vep -i somatic_mutation/${PREFIX}_vep_input.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_snv_vep_ann.txt --force_overwrite
-set +x
-set -x
-###indel identification###
-echo -e "\033[40;32mindel calling ......\t"$DATE"\033[0m"
-:<<! 
-samtools index alignments/${PREFIX}_normal_mkdup_filter.bam
-samtools index alignments/${PREFIX}_tumor_mkdup_filter.bam
-!
-cd somatic_mutation
-#DEL_PREFIX=${PREFIX}_del
-#INS_PREFIX=${PREFIX}_ins
-#DATE=`date --date="-24 hour"`
-:<<!
-echo -e "\033[40;32mfinish indel calling and annotation ......\t"$DATE"\033[0m"
-echo -e ../alignments/${PREFIX}_tumor_mkdup_filter.bam'\t250\t'${PREFIX} > ${PREFIX}_config.txt
-echo -e ../alignments/${PREFIX}_normal_mkdup_filter.bam'\t250\t'${PREFIX} >> ${PREFIX}_config.txt
-CHR_ARR=(chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY)
-for CHR in ${CHR_ARR[*]}
-do
-{
-	pindel -f /home/zhouchi/database/Annotation/Fasta/human.fasta -i ${PREFIX}_config.txt -c $CHR -o ${PREFIX}_${CHR} -E 0.90 -T 32
 }
-done
-DATE1=`date --date="-24 hour"`
-echo -e "\033[40;32mfinish......\t"$DATE1"\033[0m"
-for CHR in ${CHR_ARR[*]}
-do
-{
-	cat ${PREFIX}_${CHR}_D >> ${PREFIX}_D
-	cat ${PREFIX}_${CHR}_SI >> ${PREFIX}_SI
-	rm ${PREFIX}_${CHR}_D
-	rm ${PREFIX}_${CHR}_SI
+mapping_qc_tumor(){
+	local $PREFIX
+
+	bwa mem -t ${CPU} ${BWA_INDEX}/${GENOME} ${T_fastq_1} ${T_fastq_2} > alignments/tmp_${PREFIX}_tumor.sam 
+
+	samtools view -bhS -@ ${CPU} alignments/tmp_${PREFIX}_tumor.sam > alignments/tmp_${PREFIX}_tumor.bam
+
+	samtools sort -@ ${CPU} -m 8G alignments/tmp_${PREFIX}_tumor.bam alignments/${PREFIX}_tumor_unfilter
+
+	
+	samtools index alignments/${PREFIX}_tumor_unfilter.bam 
+
+	samtools view -b -@ ${CPU} alignments/${PREFIX}_tumor_unfilter.bam chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY > alignments/${PREFIX}_tumor.bam
+	samtools index alignments/${PREFIX}_tumor.bam
+	
+	set +x
+
+	#######################
+	###Filter alignments###
+	#######################
+	###mark duplicates with picard
+	DATE=`date --date="-24 hour"`
+
+	echo -e "\033[40;32mrun picard mark duplicates on non-UMI......\t"$DATE"\033[0m"
+	set -x
+	time java -Xmx4G -jar /home/zhouchi/software/gatk_pre/picard-tools-2.3.0/picard.jar MarkDuplicates \
+		INPUT=alignments/${PREFIX}_tumor.bam OUTPUT=alignments/${PREFIX}_tumor_mkdup.bam \
+		METRICS_FILE=${PREFIX}_tumor_dup_qc.txt ASSUME_SORTED=true \
+		VALIDATION_STRINGENCY=SILENT
+	
+	set +x
+
+	###fliter bam on flags and threashold
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mfilter on flag 512 and threadshold score: "$SCORE"......\t"$DATE"\033[0m"
+	samtools view -F 512 -b -@ ${CPU} alignments/${PREFIX}_tumor_mkdup.bam > alignments/${PREFIX}_tumor_mkdup_filter.bam
+	samtools index alignments/${PREFIX}_tumor_mkdup_filter.bam
+	rm alignments/${PREFIX}_tumor_mkdup.bam
+	rm alignments/tmp_${PREFIX}_tumor.bam alignments/tmp_${PREFIX}_tumor.sam
+	rm  alignments/${PREFIX}_tumor_unfilter.bam alignments/${PREFIX}_tumor_unfilter.bam.bai
 }
-done
-!
-VEP_CACHE=/home/zhouchi/database/Annotation/vep_data
-pindel2vcf -p ${PREFIX}_D -r /home/zhouchi/database/Annotation/Fasta/human.fasta -R ucsc_hg19 -d 20090201 -v ${PREFIX}_D.vcf
-vep -i ${PREFIX}_D.vcf --format vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is inframe_deletion" -o ${PREFIX}_D_id_vep_ann.txt --force_overwrite
-vep -i ${PREFIX}_D.vcf --format vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is frameshift_variant" -o ${PREFIX}_D_fs_vep_ann.txt --force_overwrite
-pindel2vcf -p ${PREFIX}_SI -r /home/zhouchi/database/Annotation/Fasta/human.fasta -R ucsc_hg19 -d 20090201 -v ${PREFIX}_SI.vcf
-vep -i ${PREFIX}_SI.vcf --format vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is frameshift_variant" -o ${PREFIX}_SI_fs_vep_ann.txt --force_overwrite
-vep -i ${PREFIX}_SI.vcf --format vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is inframe_insertion" -o ${PREFIX}_SI_ii_vep_ann.txt --force_overwrite
-cd ..
-set +x
-set -x
-########generate fasta file########
-python ${iTuNES_BIN_PATH}/snv2fasta.py -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -o netmhc -s ${PREFIX}
-python ${iTuNES_BIN_PATH}/deletion2fasta.py -i somatic_mutation/${PREFIX}_D_id_vep_ann.txt -c somatic_mutation/${PREFIX}_D.vcf -o netmhc -s ${PREFIX}_id
-python ${iTuNES_BIN_PATH}/deletion2fasta.py -i somatic_mutation/${PREFIX}_D_fs_vep_ann.txt -c somatic_mutation/${PREFIX}_D.vcf -o netmhc -s ${PREFIX}_fs
-python ${iTuNES_BIN_PATH}/insertion2fasta.py -i somatic_mutation/${PREFIX}_SI_ii_vep_ann.txt -c somatic_mutation/${PREFIX}_SI.vcf -o netmhc -s ${PREFIX}_ii
-python ${iTuNES_BIN_PATH}/insertion2fasta.py -i somatic_mutation/${PREFIX}_SI_fs_vep_ann.txt -c somatic_mutation/${PREFIX}_SI.vcf -o netmhc -s ${PREFIX}_fs
-########run netMHCpan###########
-#netMHCpan -a $hla_str -f netmhc/${PREFIX}_snv.fasta -l 8,9,10,11 > netmhc/${PREFIX}_snv_netmhc.txt
-#####snv######
+
+
+realignment(){
+    local input_bam=$1
+    local known_indels1=$2
+    local known_indels2=$3
+    local output=$4
+    local intervals=`${iTuNES_BIN_PATH}/newtf`.intervals; #mkfifo $intervals;
+    $RealignerTargetCreator -R $REFERENCE -I $input_bam -known $known_indels1 -known $known_indels2 -filterRNC -o $intervals 
+    $IndelRealigner         -R $REFERENCE -I $input_bam -known $known_indels1 -known $known_indels2 -targetIntervals $intervals -filterRNC -o $output      # The parallel -nt -nct are not supported
+    rm $intervals 
+}
+
+baserecalibration(){
+    local input_bam=$1
+    local known_indels1=$2
+    local known_indels2=$3
+    local known_indels3=$4
+    local output=$5
+    local before_table=`${iTuNES_BIN_PATH}/newtf`
+    $BaseRecalibrator  -R $REFERENCE -I $input_bam -knownSites $known_indels1 -knownSites $known_indels2 -knownSites $known_indels3 -o alignments/$before_table
+    $PrintReads        -R $REFERENCE -I $input_bam -BQSR alignments/$before_table -o $output       
+    rm alignments/$before_table
+}
+GATK_mutation_calling(){
+	local tumor_bam=$1
+	local normal_bam=$2
+	local dbsnp138=$3
+	local cosmic=$4
+	local output_vcf=$5
+	$GATK_Mutect2 \
+     -R $REFERENCE \
+     -I:tumor ${tumor_bam} \
+     -I:normal ${normal_bam} \
+     --dbsnp $dbsnp138 \
+     --cosmic $cosmic \
+     -o ${output_vcf}
+}
+GATK_pipe(){
+	local PREFIX=$1
+	$AddOrReplaceReadGroups I=alignments/${PREFIX}_normal_mkdup_filter.bam O=alignments/${PREFIX}_normal_mkdup_filter_add.bam SO=coordinate VALIDATION_STRINGENCY=SILENT RGID=id RGLB=solexa-123 RGPL=illumina RGPU=AXL2342  RGSM=WGC015802 RGCN=bi RGDT=2014-01-20      # Add your own annotation
+	$AddOrReplaceReadGroups I=alignments/${PREFIX}_tumor_mkdup_filter.bam O=alignments/${PREFIX}_tumor_mkdup_filter_add.bam SO=coordinate VALIDATION_STRINGENCY=SILENT RGID=id RGLB=solexa-123 RGPL=illumina RGPU=AXL2342  RGSM=WGC015802 RGCN=bi RGDT=2014-01-20      # Add your own annotation
+	$BuildBamIndex I=alignments/${PREFIX}_normal_mkdup_filter_add.bam O=alignments/${PREFIX}_normal_mkdup_filter_add.bam.bai VALIDATION_STRINGENCY=SILENT
+	$BuildBamIndex I=alignments/${PREFIX}_tumor_mkdup_filter_add.bam O=alignments/${PREFIX}_tumor_mkdup_filter_add.bam.bai VALIDATION_STRINGENCY=SILENT
+	realignment alignments/${PREFIX}_normal_mkdup_filter_add.bam $OneKG $mills alignments/${PREFIX}_normal_mkdup_filter_add_realign.bam
+	realignment alignments/${PREFIX}_tumor_mkdup_filter_add.bam $OneKG $mills alignments/${PREFIX}_tumor_mkdup_filter_add_realign.bam
+	baserecalibration alignments/${PREFIX}_normal_mkdup_filter_add_realign.bam $dbsnp138 $OneKG $mills alignments/${PREFIX}_normal_recal.bam
+	baserecalibration alignments/${PREFIX}_tumor_mkdup_filter_add_realign.bam $dbsnp138 $OneKG $mills alignments/${PREFIX}_tumor_recal.bam
+	#GATK_mutation_calling alignments/${PREFIX}_tumor_recal.bam alignments/${PREFIX}_normal_recal.bam $dbsnp138 $cosmic somatic_mutation/${PREFIX}_gatk_vep_input.vcf
+}
+varscan_somatic_calling(){
+	local PREFIX=$1
+	rm -rf somatic_mutation/*
+	cd somatic_mutation
+	mkfifo ${PREFIX}_normal.fifo
+	mkfifo ${PREFIX}_tumor.fifo
+	samtools mpileup -f ${REFERENCE} -q 5 -Q 20 -L 10000 -d 10000 ../alignments/${PREFIX}_normal_recal.bam  > ${PREFIX}_normal.fifo &
+	samtools mpileup -f ${REFERENCE} -q 5 -Q 20 -L 10000 -d 10000 ../alignments/${PREFIX}_tumor_recal.bam  > ${PREFIX}_tumor.fifo &
+	java -jar /home/zhouchi/software/varscan/VarScan.v2.4.2.jar somatic ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo ${PREFIX} #--output-vcf 1
+	java -jar /home/zhouchi/software/varscan/VarScan.v2.4.2.jar processSomatic ${PREFIX}.snp
+	rm ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo
+	cd ..
+}
+
+
+varscansnv2fasta(){
+	local VEP_CACHE=$1
+	local PREFIX=$2
+	sed '1d' somatic_mutation/${PREFIX}.snp.Somatic | awk -F '\t' '{print $1,$2,$2,$3"/"$4}' > somatic_mutation/${PREFIX}_snv_vep_input.vcf
+	vep -i somatic_mutation/${PREFIX}_snv_vep_input.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol --offline -o somatic_mutation/${PREFIX}_snv_all_vep_ann.txt
+	vep -i somatic_mutation/${PREFIX}_snv_vep_input.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_snv_vep_ann.txt --force_overwrite
+	python ${iTuNES_BIN_PATH}/snv2fasta.py -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -o netmhc -s ${PREFIX}
+
+}
+varscanindel2fasta(){
+	local VEP_CACHE=$1
+	local PREFIX=$2
+	python ${iTuNES_BIN_PATH}/varscan_indel_preprocess.py -i somatic_mutation/${PREFIX}.indel -o somatic_mutation -s ${PREFIX}
+	vep -i somatic_mutation/${PREFIX}_varscan_indel.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is coding_sequence_variant" -o somatic_mutation/${PREFIX}_varscan_indel_vep_ann.txt --force_overwrite
+	python ${iTuNES_BIN_PATH}/varscandel2fasta.py -i somatic_mutation/${PREFIX}_varscan_indel_vep_ann.txt -o netmhc -s ${PREFIX}_varscan
+	python ${iTuNES_BIN_PATH}/varscanins2fasta.py -i somatic_mutation/${PREFIX}_varscan_indel_vep_ann.txt  -o netmhc -s ${PREFIX}_varscan
+}
+strelka_indel_calling(){
+	local $PREFIX
+	if [ -d strelka_indel ];then
+		rm -rf strelka_indel
+	fi
+	python /usr/local/bin/configureStrelkaSomaticWorkflow.py --tumorBam=alignments/${PREFIX}_tumor_recal.bam --normalBam=alignments/${PREFIX}_normal_recal.bam --referenceFasta=${REFERENCE} --config=/usr/local/bin/configureStrelkaSomaticWorkflow.py.ini --runDir=strelka_indel --exome
+	python strelka_indel/runWorkflow.py -m local -j $CPU -q ${PREFIX}_strelka -g 32 --quiet
+}
+strelkaindel2fasta(){
+	local VEP_CACHE=$1
+	local PREFIX=$2
+	vep -i strelka_indel/results/variants/somatic.indels.vcf.gz --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is coding_sequence_variant" -o somatic_mutation/${PREFIX}_strelka_indel_vep_ann.txt --force_overwrite
+	python ${iTuNES_BIN_PATH}/varscandel2fasta.py -i somatic_mutation/${PREFIX}_strelka_indel_vep_ann.txt -o netmhc -s ${PREFIX}_strelka
+	python ${iTuNES_BIN_PATH}/varscanins2fasta.py -i somatic_mutation/${PREFIX}_strelka_indel_vep_ann.txt  -o netmhc -s ${PREFIX}_strelka
+}
+
 netmhcpan(){
 	local input_fasta=$1
-	local hla=$2
+	local hla_str=$2
 	local netmhc_out=$3
 	local out_dir=$4
 	local split_num=$5
@@ -379,78 +431,179 @@ netmhcpan(){
 	fi
 	split -l ${split_num} ${input_fasta} ${out_dir}/tmp/
 	filelist=`ls ${out_dir}/tmp/`
-	for file in $filelist
+	arr1=(${filelist})
+	echo ${arr1[@]}
+	OLD_IFS="$IFS" 
+	IFS=","
+	arr2=(${hla_str})
+	IFS="$OLD_IFS" 
+	for s in ${arr2[@]}
 	do
 	{
-		netMHCpan -a ${hla} -f ${out_dir}/tmp/${file} -l 8,9,10,11 > ${out_dir}/tmp/${file}_tmp_netmhc.txt
-		rm ${out_dir}/tmp/${file}
-	} &
+		echo $s
+		for file_l in ${arr1[@]}
+		do
+		{
+			echo ${file_l}
+			netMHCpan -a $s -f ${out_dir}/tmp/${file_l} -l 8,9,10,11 > ${out_dir}/tmp/${s}_${file_l}_tmp_netmhc.txt
+		} &
+		done
+		wait
+		
+	}
 	done
-	wait
+	for file_l in ${arr1[@]}
+	do
+	{
+		rm ${out_dir}/tmp/${file_l}
+	}
+	done
 	filelist1=`ls ${out_dir}/tmp/`
 	for file_r in $filelist1
 	do
 	{
-		cat ${out_dir}/tmp/$file_r >> ${out_dir}/${netmhc_out}
+		cat ${out_dir}/tmp/${file_r} >> ${out_dir}/${netmhc_out}
 		rm ${out_dir}/tmp/${file_r}	
 	}
 	done
 	rm -rf 	${out_dir}/tmp
 }
-hla_str=`cat HLAtyping/${PREFIX}_optitype_hla_type`
-netmhcpan netmhc/${PREFIX}_snv.fasta ${hla_str} ${PREFIX}_snv_netmhc.txt netmhc 1000
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_snv_netmhc.txt -g netmhc/${PREFIX}_snv.fasta -o netmhc -s ${PREFIX}_snv -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-netmhcpan netmhc/${PREFIX}_id_del.fasta ${hla_str} ${PREFIX}_id_del_netmhc.txt netmhc 6000
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_id_del_netmhc.txt -g netmhc/${PREFIX}_id_del.fasta -o netmhc -s ${PREFIX}_id_del -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-netmhcpan netmhc/${PREFIX}_fs_del.fasta ${hla_str} ${PREFIX}_fs_del_netmhc.txt netmhc 50000
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_fs_del_netmhc.txt -g netmhc/${PREFIX}_fs_del.fasta -o netmhc -s ${PREFIX}_fs_del -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-netmhcpan netmhc/${PREFIX}_ii_ins.fasta ${hla_str} ${PREFIX}_ii_ins_netmhc.txt netmhc 8000
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_ii_ins_netmhc.txt -g netmhc/${PREFIX}_ii_ins.fasta -o netmhc -s ${PREFIX}_ii_ins -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-netmhcpan netmhc/${PREFIX}_fs_ins.fasta ${hla_str} ${PREFIX}_fs_ins_netmhc.txt netmhc 8000
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_fs_ins_netmhc.txt -g netmhc/${PREFIX}_fs_ins.fasta -o netmhc -s ${PREFIX}_fs_ins -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
-set +x
-#######netCTLpan########
-set -x
-echo -e "\033[40;32mnetCTLpan prediction\t"$DATE"\033[0m"
-python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_snv_final_neo_candidate.txt -o netctl -s ${PREFIX}_snv
-if [ "$?" -ne 0 ]; then echo "Running Snv netCTLPAN failed!"; exit 1; else echo "Running Snv netCTLPAN finished!"; fi 
-python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_id_del_final_neo_candidate.txt -o netctl -s ${PREFIX}_id_del
-python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_fs_del_final_neo_candidate.txt -o netctl -s ${PREFIX}_fs_del
-python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_ii_ins_final_neo_candidate.txt -o netctl -s ${PREFIX}_ii_ins
-python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_fs_ins_final_neo_candidate.txt -o netctl -s ${PREFIX}_fs_ins
-echo -e "\033[40;32mFinish netCTLpan\t"$DATE"\033[0m"
-set +x
-echo -e "\033[40;32mGene fusion detection\t"$DATE"\033[0m"
-####################################################
-########## detect gene fusion using DNA-seq#########
-####################################################
-######detect copynumber profile#########
-echo -e "\033[40;32mdetect copy number profile......\t"$DATE"\033[0m"
-:<<!
-set -x
-cd copynumber_profile
-mkfifo ${PREFIX}_normal.fifo
-mkfifo ${PREFIX}_tumor.fifo
-samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_normal_mkdup_filter.bam > ${PREFIX}_normal.fifo &
-samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_tumor_mkdup_filter.bam > ${PREFIX}_tumor.fifo &
-java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo ${PREFIX}
-rm ${PREFIX}_normal.fifo ${PREFIX}_tumor.fifo
-cd ..
-set +x
-!
-set -x
-Rscript ${iTuNES_BIN_PATH}/sequenza_test.R somatic_mutation/${PREFIX}.snp copynumber_profile/${PREFIX}.copynumber copynumber_profile/ ${PREFIX}
-if [ "$?" -ne 0 ]; then echo "snv netMHCMHC result parsing failed"; exit 1; else echo "snv netMHCMHC result parsing finished"; fi 
-#echo $COVERAGE
-python ${iTuNES_BIN_PATH}/pyclone_input.py -n netctl/${PREFIX}_snv_netctl_concact.txt -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -s somatic_mutation/${PREFIX}.snp.Somatic -c copynumber_profile/${PREFIX}_seg_copynumber.txt -o copynumber_profile -S ${PREFIX} -C ${COVERAGE}
-if [ "$?" -ne 0 ]; then echo "prepare pyclone input failed"; exit 1; else echo "Prepare pyclone input finished!"; fi 
-TUMOR_CONTENT=`cat copynumber_profile/${PREFIX}_cellularity.txt`
-PyClone run_analysis_pipeline --in_files copynumber_profile/${PREFIX}_pyclone_input.tsv --tumour_contents $TUMOR_CONTENT --prior major_copy_number --working_dir pyclone 
-if [ "$?" -ne 0 ]; then echo "Pyclone running failed"; exit 1; else echo "Pyclone running finished!"; fi 
-python ${iTuNES_BIN_PATH}/neo_pyclone_annotation.py -n netctl/${PREFIX}_snv_netctl_concact.txt -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -s pyclone/tables/loci.tsv -o netctl -S ${PREFIX}
-if [ "$?" -ne 0 ]; then echo "Pyclone annotation failed"; exit 1; else echo "Pyclone annotation finished!"; fi 
-set +x
 
-######
-###finished
+snv_fasta2netmhcpan2netCTLPAN(){
+	local PREFIX=$1
+	local Exp_file=$2
+	local Binding_Aff_Fc_Cutoff=$3
+	local Binding_Aff_Cutoff=$4 
+	local Fpkm_Cutoff=$5
+	local Hla_Type=$6
+	netmhcpan netmhc/${PREFIX}_snv.fasta ${hla_str} ${PREFIX}_snv_netmhc.txt netmhc 100
+	python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_snv_netmhc.txt -g netmhc/${PREFIX}_snv.fasta -o netmhc -s ${PREFIX}_snv -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${hla_str}
+	python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_snv_final_neo_candidate.txt -o netctl -s ${PREFIX}_snv
+
+}
+strelka_varscanindel_fasta2netmhcpan2netCTLPAN(){
+	local PREFIX=$1
+	local Exp_file=$2
+	local Binding_Aff_Fc_Cutoff=$3
+	local Binding_Aff_Cutoff=$4 
+	local Fpkm_Cutoff=$5
+	local Hla_Type=$6
+	cat netmhc/${PREFIX}_strelka_del.fasta > netmhc/${PREFIX}_indel.fasta
+	cat netmhc/${PREFIX}_strelka_ins.fasta >> netmhc/${PREFIX}_indel.fasta
+	cat netmhc/${PREFIX}_varscan_del.fasta >> netmhc/${PREFIX}_indel.fasta
+	cat netmhc/${PREFIX}_varscan_ins.fasta >> netmhc/${PREFIX}_indel.fasta
+	netmhcpan netmhc/${PREFIX}_indel.fasta ${hla_str} ${PREFIX}_indel_netmhc.txt netmhc 100
+	python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_indel_netmhc.txt -g netmhc/${PREFIX}_indel.fasta -o netmhc -s ${PREFIX}_indel -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${hla_str}
+	python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_indel_final_neo_candidate.txt -o netctl -s ${PREFIX}_indel
+	}
+
+pyclone_copynumber_varscan(){
+	local PREFIX=$1
+	chrlist=`sed '1d' somatic_mutation/${PREFIX}.snp | cut -f1 | uniq`
+	echo 'chromosome	position	base.ref	depth.normal	depth.tumor	depth.ratio	Af	Bf	zygosity.normal	GC.percent	good.reads	AB.normal	AB.tumor	tumor.strand' > pyclone/${PREFIX}.seqz
+	for s in $chrlist
+	do
+	{
+		str_chr='-C '$s
+		python ${iTuNES_BIN_PATH}/sequenza-utils.py bam2seqz -gc /home/zhouchi/database/Annotation/human.gc50Base.txt.gz $str_chr --fasta $REFERENCE -n alignments/${PREFIX}_normal_recal.bam -t alignments/${PREFIX}_tumor_recal.bam | sed '1d' >> pyclone/${s}.seqz
+	} &
+	done
+	wait
+	
+	for s in $chrlist
+	do
+	{
+		cat pyclone/${s}.seqz >> pyclone/${PREFIX}.seqz
+		rm pyclone/${s}.seqz
+	}
+	done
+	gzip -f pyclone/${PREFIX}.seqz > pyclone/${PREFIX}.seqz.gz
+	python ${iTuNES_BIN_PATH}/sequenza-utils.py seqz-binning -w 50 -s pyclone/${PREFIX}.seqz.gz | gzip > pyclone/${PREFIX}.small.seqz.gz
+	Rscript ${iTuNES_BIN_PATH}/sequenza_test.R pyclone/${PREFIX}.small.seqz.gz pyclone/ ${PREFIX}
+	python ${iTuNES_BIN_PATH}/pyclone_input.py -n netctl/${PREFIX}_snv_netctl_concact.txt -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -s somatic_mutation/${PREFIX}.snp.Somatic -c pyclone/${PREFIX}_seg_copynumber.txt -o pyclone -S ${PREFIX} -C ${COVERAGE}
+	TUMOR_CONTENT=`cat pyclone/${PREFIX}_cellularity.txt`
+	PyClone run_analysis_pipeline --in_files pyclone/${PREFIX}_pyclone_input.tsv --tumour_contents $TUMOR_CONTENT --prior major_copy_number --working_dir pyclone 
+	python ${iTuNES_BIN_PATH}/neo_pyclone_annotation.py -n netctl/${PREFIX}_snv_netctl_concact.txt -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -s pyclone/tables/loci.tsv -o netctl -S ${PREFIX}
+}
+pipeline_all(){
+	set -x
+	local PREFIX=$1
+	if [ "$Hla_Type" = 'None' ];then
+		DATE=`date --date="-24 hour"`
+		echo -e "\033[40;32mHLAtyping......\t"$DATE"\033[0m"
+		begin_time=$(date +%s)
+		#hlatyping $PREFIX
+		end_time=$(date +%s)
+		cost_time=$(($begin_time - $end_time))
+		echo "it spended $cost_time seconds running the hlatyping." >> log_file/running_time.txt
+		#hla_str=`cat HLAtyping/${PREFIX}_optitype_hla_type`
+	else
+		hla_str=${Hla_Type}
+	fi
+	
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mmapping......\t"$DATE"\033[0m"
+	begin_time=$(date +%s)
+	mapping_qc_normal $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds running the normal sample mapping and quality control." >> log_file/running_time.txt
+	begin_time=$(date +%s)
+	mapping_qc_tumor $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds running the tumor sample mapping and quality control." >> log_file/running_time.txt
+
+	begin_time=$(date +%s)
+	GATK_pipe $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds running the GATK process." >> log_file/running_time.txt
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mcalling somatic mutaiton and copynumber profile......\t"$DATE"\033[0m"
+	begin_time=$(date +%s)
+	varscan_somatic_calling $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds to call somatic profile." >> log_file/running_time.txt
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32mindel calling using stelka......\t"$DATE"\033[0m"
+
+	begin_time=$(date +%s)
+	strelka_indel_calling $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds to use stelka to call indel." >> log_file/running_time.txt
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32fasta generate ......\t"$DATE"\033[0m"
+	VEP_CACHE=/home/zhouchi/database/Annotation/vep_data/
+	varscansnv2fasta /home/zhouchi/database/Annotation/vep_data $PREFIX
+	varscanindel2fasta /home/zhouchi/database/Annotation/vep_data $PREFIX
+	strelkaindel2fasta /home/zhouchi/database/Annotation/vep_data $PREFIX
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32Runnning netmhcpan and netCTLPAN ......\t"$DATE"\033[0m"
+	####snv
+	begin_time=$(date +%s)
+	snv_fasta2netmhcpan2netCTLPAN $PREFIX ${Exp_file} ${Binding_Aff_Fc_Cutoff} ${Binding_Aff_Cutoff} ${Fpkm_Cutoff} ${Hla_Type}
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds to run netMHCpan for snv." >> log_file/running_time.txt
+	####indel
+	begin_time=$(date +%s)
+	strelka_varscanindel_fasta2netmhcpan2netCTLPAN $PREFIX ${Exp_file} ${Binding_Aff_Fc_Cutoff} ${Binding_Aff_Cutoff} ${Fpkm_Cutoff} ${Hla_Type}
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds to run netMHCpan for indel." >> log_file/running_time.txt
+	DATE=`date --date="-24 hour"`
+	echo -e "\033[40;32Runnning pyclone to get cellularity preverence......\t"$DATE"\033[0m"
+	begin_time=$(date +%s)
+	pyclone_copynumber_varscan $PREFIX
+	end_time=$(date +%s)
+	cost_time=$(($begin_time - $end_time))
+	echo "it spended $cost_time seconds to run pyclone." >> log_file/running_time.txt
+
+	set +x
+}
+pipeline_all $PREFIX
+DATE=`date --date="-24 hour"`
 echo -e "\033[40;32;1mfinished\t"$DATE"\033[0m"

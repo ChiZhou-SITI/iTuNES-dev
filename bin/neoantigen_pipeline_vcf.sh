@@ -104,13 +104,14 @@ echo ${vcf_file}
 echo ${HLA_type_str}
 
 if [ ! -n "$OUTPATH" ];then
-	OUTPATH=./
+	OUTPATH=./${PREFIX}
+	mkdir ./${PREFIX}
 	echo -e "\033[40;33;1mWARNING: output path not found, use current fold\033[0m"
-elif [ ! -d "$OUTPATH" ];then
+elif [ ! -d "$OUTPATH/${PREFIX}" ];then
 	echo -e "\033[40;33;1mWARNING: output path not found, create one\033[0m"	
-	mkdir -p ${OUTPATH}
+	mkdir -p ${OUTPATH}/${PREFIX}
 fi
-echo $OUTPATH
+
 
 if [ ! -n "$PREFIX" ];then
 	echo -e "\033[40;33;1mWARNING: no prefix name, use sample name as prefix\033[0m"
@@ -152,7 +153,7 @@ fi
 
 DATE=`date --date="-24 hour"`
 echo -e "\033[40;36;1m\033[1m---Preparation......\t"$DATE"\033[0m"
-cd ${OUTPATH}
+cd ${OUTPATH}/${PREFIX}
 
 if [ ! -d liftover ];then
 	mkdir liftover
@@ -174,138 +175,119 @@ if [ ! -d annotation ];then
 	mkdir annotation
 fi
 
-if [ ! -d liftover/${PREFIX} ];then
-	mkdir liftover/${PREFIX}
-fi
-
-if [ ! -d somatic_mutation/${PREFIX} ];then
-	mkdir somatic_mutation/${PREFIX}
-fi
-
-if [ ! -d netmhc/${PREFIX} ];then
-	mkdir netmhc/${PREFIX}
-fi
-if [ ! -d netctl/${PREFIX} ];then
-	mkdir netctl/${PREFIX}
-fi
-if [ ! -d annotation/${PREFIX} ];then
-	mkdir annotation/${PREFIX}
-fi
 
 ####liftover hg19 coordinates to hg38###
-#CrossMap.py vcf /home/zhouchi/database/Annotation/crossmap/hg19ToHg38.over.chain.gz ${vcf_file} /home/zhouchi/database/Annotation/Fasta/human.fasta liftover/${PREFIX}/${PREFIX}_liftover38.vcf
-
-
+#CrossMap.py vcf /home/zhouchi/database/Annotation/crossmap/hg19ToHg38.over.chain.gz ${vcf_file} /home/zhouchi/database/Annotation/Fasta/human.fasta liftover/${PREFIX}_liftover38.vcf
 ###split vcf file into snv and indel#####
 #SNP
-#vcftools --vcf liftover/${PREFIX}/${PREFIX}_liftover38.vcf --remove-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}/${PREFIX}_SNVs_only
+#vcftools --vcf liftover/${PREFIX}_liftover38.vcf --remove-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}_SNVs_only
 #INDEL
-#vcftools --vcf liftover/${PREFIX}/${PREFIX}_liftover38.vcf --keep-only-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}/${PREFIX}_INDELs_only
+#vcftools --vcf liftover/${PREFIX}_liftover38.vcf --keep-only-indels --recode --recode-INFO-all --out somatic_mutation/${PREFIX}_INDELs_only
 
+####not liftover####
+#SNP
+#vcftools --gzvcf ${vcf_file} --remove-indels --recode --recode-INFO-all --stdout | gzip -c > somatic_mutation/${PREFIX}_SNVs_only.vcf.gz
+#INDEL
+#vcftools --gzvcf ${vcf_file} --keep-only-indels --recode --recode-INFO-all --stdout | gzip -c > somatic_mutation/${PREFIX}_INDELs_only.vcf.gz
+
+netmhcpan(){
+	local input_fasta=$1
+	local hla_str=$2
+	local netmhc_out=$3
+	local out_dir=$4
+	local split_num=$5
+	if [ -d ${out_dir}/tmp ];then
+		rm -rf ${out_dir}/tmp
+		mkdir -p ${out_dir}/tmp
+	else
+		mkdir -p ${out_dir}/tmp
+	fi
+	if [ -f ${out_dir}/${netmhc_out} ];then
+		rm ${out_dir}/${netmhc_out}
+	fi
+	split -l ${split_num} ${input_fasta} ${out_dir}/tmp/
+	filelist=`ls ${out_dir}/tmp/`
+	arr1=(${filelist})
+	echo ${arr1[@]}
+	OLD_IFS="$IFS" 
+	IFS=","
+	arr2=(${hla_str})
+	IFS="$OLD_IFS" 
+	for s in ${arr2[@]}
+	do
+	{
+		echo $s
+		for file_l in ${arr1[@]}
+		do
+		{
+			echo ${file_l}
+			netMHCpan -a $s -f ${out_dir}/tmp/${file_l} -l 8,9,10,11 > ${out_dir}/tmp/${s}_${file_l}_tmp_netmhc.txt
+		} &
+		done
+		wait
+		
+	}
+	done
+	for file_l in ${arr1[@]}
+	do
+	{
+		rm ${out_dir}/tmp/${file_l}
+	}
+	done
+	filelist1=`ls ${out_dir}/tmp/`
+	for file_r in $filelist1
+	do
+	{
+		cat ${out_dir}/tmp/${file_r} >> ${out_dir}/${netmhc_out}
+		rm ${out_dir}/tmp/${file_r}	
+	}
+	done
+	rm -rf 	${out_dir}/tmp
+}
 
 
 ####SNV derived neoantigens####
 echo -e "\033[40;32mVEP Annotation......\t"$DATE"\033[0m"
-VEP_CACHE=/data/PUBLIC/VEP_DATA
-#vep.pl -i somatic_mutation/${PREFIX}/${PREFIX}_SNVs_only.recode.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}/${PREFIX}_snv_vep_ann.txt --force_overwrite
-SNV_PREFIX=${PREFIX}_snv
-#python ${iTuNES_BIN_PATH}/snv2fasta.py -i somatic_mutation/${PREFIX}/${PREFIX}_snv_vep_ann.txt -o netmhc/${PREFIX} -s ${PREFIX}
-########netMHC###########
-#cd netmhc/${PREFIX}
+VEP_CACHE=/home/zhouchi/database/Annotation/vep_data_89_37
+#vep.pl -i ${vcf_file} --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is missense_variant" -o somatic_mutation/${PREFIX}_snv_vep_ann.txt --force_overwrite
+#python ${iTuNES_BIN_PATH}/snv2fasta.py -i somatic_mutation/${PREFIX}_snv_vep_ann.txt -o netmhc/ -s ${PREFIX}
 echo -e "\033[40;32mnetMHCpan......\t"$DATE"\033[0m"
-#if [ -d tmp ];then
-#	rm -rf tmp/
-#else
-#	mkdir tmp
-#fi
-#if [ -f ${PREFIX}_snv_netmhc.txt ];then
-#	rm ${PREFIX}_snv_netmhc.txt
-#fi
-#cd tmp
-#split -l 1000 ../${PREFIX}_snv.fasta tmp
-#filelist=`ls .`
-#for file in $filelist
-#do
-#{
-#	netMHCpan -a ${HLA_type_str} -f ${file} -l 9 > ${file}_tmp_netmhc.txt
-#	rm ${file}
-#} &
-#done
-#wait
-#filelist1=`ls .`
-#for file_r in $filelist1
-#do
-#{
-#	cat $file_r >> ../${PREFIX}_snv_netmhc.txt
-#	rm ${file_r}	
-#}
-#done
-#cd ..
-#rm -rf tmp
-#cd ..
-#cd ..
+set -x
+#netmhcpan netmhc/${PREFIX}_snv.fasta ${HLA_type_str} ${PREFIX}_snv_netmhc.txt netmhc 20000
+set +x
 #######filtering######
 set -x
-#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}/${PREFIX}_snv_netmhc.txt -g netmhc/${PREFIX}/${PREFIX}_snv.fasta -o netmhc/${PREFIX} -s ${SNV_PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_snv_netmhc.txt -g netmhc/${PREFIX}_snv.fasta -o netmhc -s ${PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${HLA_type_str}
 set +x
 #######netchop########
 set -x
-#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}/${SNV_PREFIX}_final_neo_candidate.txt -o netctl/${PREFIX} -s ${SNV_PREFIX}
-#python ${iTuNES_BIN_PATH}/neoantigens_annotation.py -i netctl/${PREFIX}/${SNV_PREFIX}_netctl_concact.txt -o annotation/${PREFIX} -s ${SNV_PREFIX}
+python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}_final_neo_candidate.txt -o netctl -s ${PREFIX}
+#python ${iTuNES_BIN_PATH}/neoantigens_annotation.py -i netctl/${SNV_PREFIX}_netctl_concact.txt -o annotation -s ${PREFIX}
+
 
 
 
 
 
 ####INDEL derived neoantigens###
-#vep.pl -i somatic_mutation/${PREFIX}/${PREFIX}_INDELs_only.recode.vcf --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is coding_sequence_variant" -o somatic_mutation/${PREFIX}/${PREFIX}_indel_vep_ann.txt --force_overwrite
-INDEL_PREFIX=${PREFIX}_indel
-#python ${iTuNES_BIN_PATH}/deletion2fasta.py -i somatic_mutation/${PREFIX}/${PREFIX}_indel_vep_ann.txt -c somatic_mutation/${PREFIX}/${PREFIX}_INDELs_only.recode.vcf -o netmhc/${PREFIX} -s ${INDEL_PREFIX}
-########netMHC###########
 set -x
-#cd netmhc/${PREFIX}
-#echo -e "\033[40;32mnetMHCpan......\t"$DATE"\033[0m"
-#if [ -d tmp ];then
-#	rm -rf tmp/
-#else
-#	mkdir tmp
-#fi
-#if [ -f ${PREFIX}_indel_netmhc.txt ];then
-#	rm ${PREFIX}_indel_netmhc.txt
-#fi
-#cd tmp
-#split -l 1000 ../${PREFIX}_indel.fasta tmp
-#filelist=`ls .`
-#for file in $filelist
-#do
-#{
-#	netMHCpan -a $HLA_type_str -f ${file} -l 9 > ${file}_tmp_netmhc.txt
-#	rm ${file}
-#} &
-#done
-#wait
-#filelist1=`ls .`
-#for file_r in $filelist1
-#do
-#{
-#	cat $file_r >> ../${PREFIX}_indel_netmhc.txt
-#	rm ${file_r}	
-#}
-#done
-#cd ..
-#rm -rf tmp
-#cd ..
-#cd ..
+#vep.pl -i somatic_mutation/${PREFIX}_INDELs_only.vcf.gz --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is coding_sequence_variant" -o somatic_mutation/${PREFIX}_indel_vep_ann.txt --force_overwrite
+#gunzip somatic_mutation/${PREFIX}_INDELs_only.vcf.gz
+#python ${iTuNES_BIN_PATH}/deletion2fasta.py -i somatic_mutation/${PREFIX}_indel_vep_ann.txt -c somatic_mutation/${PREFIX}_INDELs_only.vcf -o netmhc -s ${PREFIX}
+#python ${iTuNES_BIN_PATH}/insertion2fasta.py -i somatic_mutation/${PREFIX}_indel_vep_ann.txt -c somatic_mutation/${PREFIX}_INDELs_only.recode.vcf -o netmhc -s ${PREFIX}
 set +x
+########netMHC###########
+#cat netmhc/${PREFIX}_del.fasta > netmhc/${PREFIX}_indel.fasta
+#cat netmhc/${PREFIX}_del.fasta > netmhc/${PREFIX}_indel.fasta
+#netmhcpan netmhc/${PREFIX}_indel.fasta ${hla_str} ${PREFIX}_snv_netmhc.txt netmhc 100
 #######filtering######
 set -x
-#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}/${PREFIX}_indel_netmhc.txt -g netmhc/${PREFIX}/${PREFIX}_indel.fasta -o netmhc/${PREFIX} -s ${INDEL_PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
+#python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i netmhc/${PREFIX}_indel_netmhc.txt -g netmhc/${PREFIX}_indel.fasta -o netmhc -s ${PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
 set +x
 #######netchop########
 set -x
-#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${PREFIX}/${INDEL_PREFIX}_final_neo_candidate.txt -o netctl/${PREFIX} -s ${INDEL_PREFIX}
-#python ${iTuNES_BIN_PATH}/neoantigens_annotation.py -i netclt/${PREFIX}/${INDEL_PREFIX}_netctl_concact.txt -o annotation/${PREFIX} -s ${INDEL_PREFIX}
-
+#python ${iTuNES_BIN_PATH}/netCTLPAN.py -i netmhc/${INDEL_PREFIX}_final_neo_candidate.txt -o netctl -s ${PREFIX}
+set +x
 
 
 

@@ -31,11 +31,11 @@ some description
                          usage='python iTuNES.py pairmatchdna [options]',
                          help='detecting tumor neoantigens using pair-end WGS/WES sequencing data')
 	ui.ParsePAIRNOMATCHDNA(p_PairNoMatchDna)
-	p_SingleNoMatchDna = sp.add_parser('SingleNomatchDna',
+	p_GeneFusion = sp.add_parser('GeneFusion',
                          description='detecting tumor neoantigens using single-end WGS/WES sequencing data',
-                         usage='python iTuNES.py singlenomatchdna [options]',
+                         usage='python iTuNES.py GeneFusion [options]',
                          help='detecting tumor neoantigens using single-end WGS/WES sequencing data')
-	ui.ParseSINGLENOMATCHDNA(p_SingleNoMatchDna)
+	ui.ParseGENEFUSION(p_GeneFusion)
 	p_PairRna = sp.add_parser('PairRna',
                          description='detecting tumor neoantigens using pair-end RNA sequencing data',
                          usage='python iTuNES.py pairmatchdna [options]',
@@ -58,8 +58,8 @@ some description
 		if sys.argv[1] == 'PairNomatchDna':
 			p_PairNoMatchDna.print_help()
 			sys.exit(1)
-		if sys.argv[1] == 'SingleNomatchDna':
-			p_SingleNoMatchDna.print_help()
+		if sys.argv[1] == 'p_GeneFusion':
+			p_GeneFusion.print_help()
 			sys.exit(1)
 		if sys.argv[1] == 'PairRna':
 			p_PairRna.print_help()
@@ -74,9 +74,9 @@ some description
 	if sys.argv[1] == 'PairNomatchDna':
 		from src.core import pairendNMDNA 
 		pairendNMDNA.PENMD(opts)
-	if sys.argv[1] == 'SingleNomatchDna':
-		from src.core import singleendNMDNA 
-		singleendNMDNA.SENMD(opts)
+	if sys.argv[1] == 'GeneFusion':
+		from src.core import GeneFusionNeo 
+		GeneFusionNeo.GF(opts)
 	if sys.argv[1] == 'PairRna':
 		from src.core import pairendRNA 
 		pairendRNA.PERNA(opts)

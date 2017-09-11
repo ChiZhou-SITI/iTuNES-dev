@@ -1,1832 +1,0 @@
-0.5
-[40;36;1m[1m---Preparation......	Sat Jun 24 19:04:31 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sat Jun 24 19:04:31 CST 2017[0m
-Jun 25 19:04:31 ..... started STAR run
-Jun 25 19:04:31 ..... loading genome
-Jun 25 19:08:08 ..... started 1st pass mapping
-Jun 25 19:15:26 ..... finished 1st pass mapping
-Jun 25 19:15:26 ..... inserting junctions into the genome indices
-Jun 25 19:16:56 ..... started mapping
-Jun 25 19:32:10 ..... started sorting BAM
-Jun 25 19:39:44 ..... finished successfully
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-Warning: gene "TTTY9A" (on chrY) has reference transcripts on both strands?
-Warning: gene "TTTY9B" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY2" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY1" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY1" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY2" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY1" (on chrY) has reference transcripts on both strands?
-Warning: gene "HSFY2" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1E" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1D" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1A1" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1B" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1E" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1D" (on chrY) has reference transcripts on both strands?
-Warning: gene "RBMY1B" (on chrY) has reference transcripts on both strands?
-[40;32mHLAtyping......	Sat Jun 24 19:04:31 CST 2017[0m
-[40;32mVEP Annotation......	Sat Jun 24 19:04:31 CST 2017[0m
-+ set +x
-RunTIme:3355.157030 s
-[40;32;1mfinished	Sat Jun 24 20:00:26 CST 2017[0m
-Done!
-500 None 1
-0.5
-[40;36;1m[1m---Preparation......	Sat Jun 24 20:00:26 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sat Jun 24 20:00:26 CST 2017[0m
-Jun 25 20:00:26 ..... started STAR run
-Jun 25 20:00:26 ..... loading genome
-Jun 25 20:04:03 ..... started 1st pass mapping
-Jun 25 20:14:39 ..... finished 1st pass mapping
-Jun 25 20:14:40 ..... inserting junctions into the genome indices
-Jun 25 20:16:20 ..... started mapping
-Jun 25 20:33:54 ..... started sorting BAM
-Jun 25 20:45:42 ..... finished successfully
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-[40;32mHLAtyping......	Sat Jun 24 20:00:26 CST 2017[0m
-[40;32mVEP Annotation......	Sat Jun 24 20:00:26 CST 2017[0m
-+ set +x
-RunTIme:3963.996625 s
-[40;32;1mfinished	Sat Jun 24 21:06:30 CST 2017[0m
-Done!
-500 None 1
-0.5
-[40;36;1m[1m---Preparation......	Sat Jun 24 21:06:30 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sat Jun 24 21:06:30 CST 2017[0m
-Jun 25 21:06:30 ..... started STAR run
-Jun 25 21:06:30 ..... loading genome
-Jun 25 21:10:07 ..... started 1st pass mapping
-Jun 25 21:20:22 ..... finished 1st pass mapping
-Jun 25 21:20:23 ..... inserting junctions into the genome indices
-Jun 25 21:21:48 ..... started mapping
-Jun 25 21:50:41 ..... started sorting BAM
-Jun 25 21:58:29 ..... finished successfully
-Warning: gene "CENPVL1" (on chrX) has reference transcripts on both strands?
-Warning: gene "LOC441495" (on chrX) has reference transcripts on both strands?
-Warning: gene "OR4C3" (on chr11) has reference transcripts on both strands?
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-Warning: gene "" (on chrY) has reference transcripts on both strands?
-Warning: gene "NCRNA00319_1" (on chr21) has reference transcripts on both strands?
-Warning: gene "NCRNA00319_1" (on chr21) has reference transcripts on both strands?
-[40;32mHLAtyping......	Sat Jun 24 21:06:30 CST 2017[0m
-[40;32mVEP Annotation......	Sat Jun 24 21:06:30 CST 2017[0m
-+ set +x
-RunTIme:4145.002207 s
-[40;32;1mfinished	Sat Jun 24 22:15:35 CST 2017[0m
-Done!
-500 None 1
-[40;36;1m[1m---Preparation......	Sat Jun 24 22:44:56 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sat Jun 24 22:44:56 CST 2017[0m
-[40;32mbwa alignment......	Sat Jun 24 22:44:56 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sat Jun 24 22:44:56 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mHLAtyping......	Sat Jun 24 22:44:56 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_1_optitype_hla_type
-+ hla_str=HLA-A02:01
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sat Jun 24 22:44:56 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mindel calling ......	Sat Jun 24 22:44:56 CST 2017[0m
-+ set +x
-+ cd netmhc/
-+ echo -e '\033[40;32mnetMHCpan......\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mnetMHCpan......	Sat Jun 24 22:44:56 CST 2017[0m
-+ '[' -d tmp ']'
-+ mkdir tmp
-+ '[' -f mel_21_1_snv_netmhc.txt ']'
-+ cd tmp
-+ split -l 500 ../mel_21_1_snv.fasta tmp
-++ ls .
-+ filelist='tmpaa
-tmpab
-tmpac
-tmpad
-tmpae
-tmpaf'
-+ for file in '$filelist'
-+ for file in '$filelist'
-+ for file in '$filelist'
-+ netMHCpan -a HLA-A02:01 -f tmpaa -l 8,9,10,11
-+ for file in '$filelist'
-+ netMHCpan -a HLA-A02:01 -f tmpab -l 8,9,10,11
-+ for file in '$filelist'
-+ for file in '$filelist'
-+ netMHCpan -a HLA-A02:01 -f tmpac -l 8,9,10,11
-+ wait
-+ netMHCpan -a HLA-A02:01 -f tmpae -l 8,9,10,11
-+ netMHCpan -a HLA-A02:01 -f tmpaf -l 8,9,10,11
-+ netMHCpan -a HLA-A02:01 -f tmpad -l 8,9,10,11
-+ rm tmpaf
-+ rm tmpac
-+ rm tmpaa
-+ rm tmpad
-+ rm tmpab
-+ rm tmpae
-++ ls .
-+ filelist1='tmpaa_tmp_netmhc.txt
-tmpab_tmp_netmhc.txt
-tmpac_tmp_netmhc.txt
-tmpad_tmp_netmhc.txt
-tmpae_tmp_netmhc.txt
-tmpaf_tmp_netmhc.txt'
-+ for file_r in '$filelist1'
-+ cat tmpaa_tmp_netmhc.txt
-+ rm tmpaa_tmp_netmhc.txt
-+ for file_r in '$filelist1'
-+ cat tmpab_tmp_netmhc.txt
-+ rm tmpab_tmp_netmhc.txt
-+ for file_r in '$filelist1'
-+ cat tmpac_tmp_netmhc.txt
-+ rm tmpac_tmp_netmhc.txt
-+ for file_r in '$filelist1'
-+ cat tmpad_tmp_netmhc.txt
-+ rm tmpad_tmp_netmhc.txt
-+ for file_r in '$filelist1'
-+ cat tmpae_tmp_netmhc.txt
-+ rm tmpae_tmp_netmhc.txt
-+ for file_r in '$filelist1'
-+ cat tmpaf_tmp_netmhc.txt
-+ rm tmpaf_tmp_netmhc.txt
-+ cd ..
-+ rm -rf tmp
-+ cd ..
-+ cd ..
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ SNV_PREFIX=mel_21_1_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ DEL_PREFIX=mel_21_1_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ INS_PREFIX=mel_21_1_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sat Jun 24 22:44:56 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sat Jun 24 22:44:56 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sat Jun 24 22:44:56 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mGene fusion detection	Sat Jun 24 22:44:56 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSat' Jun 24 22:44:56 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sat Jun 24 22:44:56 CST 2017[0m
-+ set -x
-+ :
-+ set +x
-cat: copynumber_profile/mel_21_1_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sat Jun 24 22:44:56 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_1/expression/mel_21_1/mel_21_1_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sat Jun 24 23:27:48 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sat Jun 24 23:27:48 CST 2017[0m
-[40;32mbwa alignment......	Sat Jun 24 23:27:48 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sat Jun 24 23:27:48 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mHLAtyping......	Sat Jun 24 23:27:48 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_38_aw_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C07:02,HLA-C03:03
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sat Jun 24 23:27:48 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mindel calling ......	Sat Jun 24 23:27:48 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ SNV_PREFIX=mel_38_aw_snv
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/sm_netMHC_result_parse.py -i netmhc/mel_38_aw_snv_netmhc.txt -g netmhc/mel_38_aw_snv.fasta -o netmhc -s mel_38_aw_snv -e /data/zhouchi/phs001005/RNA-seq/mel_38_aw/expression/mel_38_aw/mel_38_aw_gene_abund.tab -a 1 -b 500 -f 2
-Traceback (most recent call last):
-  File "/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/sm_netMHC_result_parse.py", line 61, in <module>
-    full_gene=line.split('_')[1]
-IndexError: list index out of range
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ DEL_PREFIX=mel_38_aw_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ INS_PREFIX=mel_38_aw_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sat Jun 24 23:27:48 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sat Jun 24 23:27:48 CST 2017[0m
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/netCTLPAN.py -i netmhc/mel_38_aw_snv_final_neo_candidate.txt -o netctl -s mel_38_aw_snv
-Traceback (most recent call last):
-  File "/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/netCTLPAN.py", line 35, in <module>
-    data_neo_fil = pd.read_table(input_neo_file,header=0,sep='\t')
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 645, in parser_f
-    return _read(filepath_or_buffer, kwds)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 388, in _read
-    parser = TextFileReader(filepath_or_buffer, **kwds)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 729, in __init__
-    self._make_engine(self.engine)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 922, in _make_engine
-    self._engine = CParserWrapper(self.f, **self.options)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 1389, in __init__
-    self._reader = _parser.TextReader(src, **kwds)
-  File "pandas/parser.pyx", line 373, in pandas.parser.TextReader.__cinit__ (pandas/parser.c:4175)
-  File "pandas/parser.pyx", line 667, in pandas.parser.TextReader._setup_parser_source (pandas/parser.c:8440)
-IOError: File netmhc/mel_38_aw_snv_final_neo_candidate.txt does not exist
-+ echo -e '\033[40;32mFinish netCTLpan\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sat Jun 24 23:27:48 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mGene fusion detection	Sat Jun 24 23:27:48 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSat' Jun 24 23:27:48 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sat Jun 24 23:27:48 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_38_aw_normal.fifo
-+ mkfifo mel_38_aw_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_aw_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_38_aw_normal.fifo mel_38_aw_tumor.fifo mel_38_aw
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_aw_tumor_mkdup_filter.bam
-Normal Pileup: mel_38_aw_normal.fifo
-Tumor Pileup: mel_38_aw_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-[40;36;1m[1m---Preparation......	Sat Jun 24 23:29:40 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sat Jun 24 23:29:40 CST 2017[0m
-[40;32mbwa alignment......	Sat Jun 24 23:29:40 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sat Jun 24 23:29:40 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mHLAtyping......	Sat Jun 24 23:29:40 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_3_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B13:02,HLA-B15:17,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sat Jun 24 23:29:40 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mindel calling ......	Sat Jun 24 23:29:40 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ SNV_PREFIX=mel_21_3_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ DEL_PREFIX=mel_21_3_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ INS_PREFIX=mel_21_3_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sat Jun 24 23:29:40 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sat Jun 24 23:29:40 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sat Jun 24 23:29:40 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mGene fusion detection	Sat Jun 24 23:29:40 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSat' Jun 24 23:29:40 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sat Jun 24 23:29:40 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_21_3_normal.fifo
-+ mkfifo mel_21_3_tumor.fifo
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_21_3_normal.fifo mel_21_3_tumor.fifo mel_21_3
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_3_tumor_mkdup_filter.bam
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_3_normal_mkdup_filter.bam
-Normal Pileup: mel_21_3_normal.fifo
-Tumor Pileup: mel_21_3_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-[40;36;1m[1m---Preparation......	Sat Jun 24 23:30:48 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sat Jun 24 23:30:48 CST 2017[0m
-[40;32mbwa alignment......	Sat Jun 24 23:30:48 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sat Jun 24 23:30:48 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mHLAtyping......	Sat Jun 24 23:30:48 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_2_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B15:17,HLA-B13:02,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sat Jun 24 23:30:48 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mindel calling ......	Sat Jun 24 23:30:48 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ SNV_PREFIX=mel_21_2_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ DEL_PREFIX=mel_21_2_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ INS_PREFIX=mel_21_2_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sat Jun 24 23:30:48 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sat Jun 24 23:30:48 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sat Jun 24 23:30:48 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mGene fusion detection	Sat Jun 24 23:30:48 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSat' Jun 24 23:30:48 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sat Jun 24 23:30:48 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_21_2_normal.fifo
-+ mkfifo mel_21_2_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_2_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_21_2_normal.fifo mel_21_2_tumor.fifo mel_21_2
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_2_tumor_mkdup_filter.bam
-Normal Pileup: mel_21_2_normal.fifo
-Tumor Pileup: mel_21_2_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-2160172 positions in tumor
-2061363 positions shared in normal
-1543609 had sufficient coverage for comparison
-17155 raw copynumber segments with size > 10
-17142 good copynumber segments with depth > 10
-/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neoantigen_pipeline_DNAMatched_pe.sh: line 592: 26380 Terminated              samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_normal_mkdup_filter.bam > ${PREFIX}_normal.fifo
-/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neoantigen_pipeline_DNAMatched_pe.sh: line 592: 26381 Terminated              samtools mpileup -f ${REFERENCE} -q 5 -L 10000 -d 10000 ../alignments/${PREFIX}_tumor_mkdup_filter.bam > ${PREFIX}_tumor.fifo
-+ rm mel_21_2_normal.fifo mel_21_2_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_21_2_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sat Jun 24 23:30:48 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_2/expression/mel_21_2/mel_21_2_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sat Jun 24 23:33:08 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sat Jun 24 23:33:08 CST 2017[0m
-[40;32mbwa alignment......	Sat Jun 24 23:33:08 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sat Jun 24 23:33:08 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mHLAtyping......	Sat Jun 24 23:33:08 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_2_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B15:17,HLA-B13:02,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sat Jun 24 23:33:08 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mindel calling ......	Sat Jun 24 23:33:08 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ SNV_PREFIX=mel_21_2_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ DEL_PREFIX=mel_21_2_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ INS_PREFIX=mel_21_2_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sat Jun 24 23:33:08 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sat Jun 24 23:33:08 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sat Jun 24 23:33:08 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mGene fusion detection	Sat Jun 24 23:33:08 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSat' Jun 24 23:33:08 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sat Jun 24 23:33:08 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_21_2_normal.fifo
-+ mkfifo mel_21_2_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_2_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_21_2_normal.fifo mel_21_2_tumor.fifo mel_21_2
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_21_2_tumor_mkdup_filter.bam
-Normal Pileup: mel_21_2_normal.fifo
-Tumor Pileup: mel_21_2_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-189347161 positions in tumor
-188823891 positions shared in normal
-114925631 had sufficient coverage for comparison
-1268145 raw copynumber segments with size > 10
-1267275 good copynumber segments with depth > 10
-+ rm mel_21_3_normal.fifo mel_21_3_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_21_3_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sat Jun 24 23:29:40 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_3/expression/mel_21_3/mel_21_3_gene_abund.tab 1
-153696772 positions in tumor
-153325909 positions shared in normal
-113750270 had sufficient coverage for comparison
-1263103 raw copynumber segments with size > 10
-1262204 good copynumber segments with depth > 10
-+ rm mel_21_2_normal.fifo mel_21_2_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_21_2_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sat Jun 24 23:33:08 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_2/expression/mel_21_2/mel_21_2_gene_abund.tab 1
-215499161 positions in tumor
-214840825 positions shared in normal
-120457177 had sufficient coverage for comparison
-1354803 raw copynumber segments with size > 10
-1353948 good copynumber segments with depth > 10
-+ rm mel_38_aw_normal.fifo mel_38_aw_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_38_aw_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sat Jun 24 23:27:48 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_38_aw/expression/mel_38_aw/mel_38_aw_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sun Jun 25 10:15:41 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 10:15:41 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 10:15:41 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 10:15:41 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 10:15:41 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_38_cell_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C07:02,HLA-C03:03
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 10:15:41 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 10:15:41 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ SNV_PREFIX=mel_38_cell_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ DEL_PREFIX=mel_38_cell_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ INS_PREFIX=mel_38_cell_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 10:15:41 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 10:15:41 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 10:15:41 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 10:15:41 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 10:15:41 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 10:15:41 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_38_cell_normal.fifo
-+ mkfifo mel_38_cell_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_cell_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_38_cell_normal.fifo mel_38_cell_tumor.fifo mel_38_cell
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_cell_tumor_mkdup_filter.bam
-Normal Pileup: mel_38_cell_normal.fifo
-Tumor Pileup: mel_38_cell_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-[40;36;1m[1m---Preparation......	Sun Jun 25 10:15:46 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 10:15:46 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 10:15:46 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 10:15:46 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 10:15:46 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_38_breast_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C07:02,HLA-C03:03
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 10:15:46 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 10:15:46 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ SNV_PREFIX=mel_38_breast_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ DEL_PREFIX=mel_38_breast_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ INS_PREFIX=mel_38_breast_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 10:15:46 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 10:15:46 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 10:15:46 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 10:15:46 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 10:15:46 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 10:15:46 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_38_breast_normal.fifo
-+ mkfifo mel_38_breast_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_breast_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_38_breast_normal.fifo mel_38_breast_tumor.fifo mel_38_breast
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_breast_tumor_mkdup_filter.bam
-Normal Pileup: mel_38_breast_normal.fifo
-Tumor Pileup: mel_38_breast_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-[40;36;1m[1m---Preparation......	Sun Jun 25 10:52:02 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 10:52:02 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 10:52:02 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 10:52:02 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 10:52:02 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_38_breast_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C07:02,HLA-C03:03
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 10:52:02 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 10:52:02 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ SNV_PREFIX=mel_38_breast_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ DEL_PREFIX=mel_38_breast_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ INS_PREFIX=mel_38_breast_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 10:52:02 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 10:52:02 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 10:52:02 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 10:52:02 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 10:52:02 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 10:52:02 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_38_breast_normal.fifo
-mkfifo: cannot create fifo 'mel_38_breast_normal.fifo': File exists
-+ mkfifo mel_38_breast_tumor.fifo
-mkfifo: cannot create fifo 'mel_38_breast_tumor.fifo': File exists
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_38_breast_normal.fifo mel_38_breast_tumor.fifo mel_38_breast
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_breast_normal_mkdup_filter.bam
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_breast_tumor_mkdup_filter.bam
-Normal Pileup: mel_38_breast_normal.fifo
-Tumor Pileup: mel_38_breast_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-[40;36;1m[1m---Preparation......	Sun Jun 25 10:52:15 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 10:52:15 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 10:52:15 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 10:52:15 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 10:52:15 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_38_cell_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C07:02,HLA-C03:03
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 10:52:15 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 10:52:15 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ SNV_PREFIX=mel_38_cell_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ DEL_PREFIX=mel_38_cell_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ INS_PREFIX=mel_38_cell_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 10:52:15 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 10:52:15 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 10:52:15 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 10:52:15 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 10:52:15 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 10:52:15 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_38_cell_normal.fifo
-mkfifo: cannot create fifo 'mel_38_cell_normal.fifo': File exists
-+ mkfifo mel_38_cell_tumor.fifo
-mkfifo: cannot create fifo 'mel_38_cell_tumor.fifo': File exists
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_cell_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_38_cell_normal.fifo mel_38_cell_tumor.fifo mel_38_cell
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_38_cell_tumor_mkdup_filter.bam
-Normal Pileup: mel_38_cell_normal.fifo
-Tumor Pileup: mel_38_cell_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-Not resetting normal file because chr10 < chr9
-196447124 positions in tumor
-196046944 positions shared in normal
-120370896 had sufficient coverage for comparison
-1344569 raw copynumber segments with size > 10
-1343429 good copynumber segments with depth > 10
-+ rm mel_38_cell_normal.fifo mel_38_cell_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_38_cell_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sun Jun 25 10:52:15 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_38_cell/expression/mel_38_cell/mel_38_cell_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sun Jun 25 12:41:52 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 12:41:52 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 12:41:52 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 12:41:52 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 12:41:52 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_218_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A03:01,HLA-B44:02,HLA-B37:01,HLA-C07:04,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 12:41:52 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 12:41:52 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ SNV_PREFIX=mel_218_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ DEL_PREFIX=mel_218_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ INS_PREFIX=mel_218_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 12:41:52 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 12:41:52 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 12:41:52 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 12:41:52 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 12:41:52 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 12:41:52 CST 2017[0m
-+ set -x
-+ cd copynumber_profile
-+ mkfifo mel_218_normal.fifo
-+ mkfifo mel_218_tumor.fifo
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_218_normal_mkdup_filter.bam
-+ java -jar /home/zhouchi/neoantigen_pipeline/varscan/VarScan.v2.4.2.jar copynumber mel_218_normal.fifo mel_218_tumor.fifo mel_218
-+ samtools mpileup -f /home/zhouchi/database/Annotation/Fasta/human.fasta -q 5 -L 10000 -d 10000 ../alignments/mel_218_tumor_mkdup_filter.bam
-Normal Pileup: mel_218_normal.fifo
-Tumor Pileup: mel_218_tumor.fifo
-Min coverage:	10
-Min avg qual:	15
-P-value thresh:	0.01
-[mpileup] 1 samples in 1 input files
-[mpileup] 1 samples in 1 input files
-220027804 positions in tumor
-219352186 positions shared in normal
-120465429 had sufficient coverage for comparison
-1354824 raw copynumber segments with size > 10
-1354007 good copynumber segments with depth > 10
-+ rm mel_38_breast_normal.fifo mel_38_breast_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_38_breast_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sun Jun 25 10:52:02 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_38_breast/expression/mel_38_breast/mel_38_breast_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sun Jun 25 13:15:07 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 13:15:07 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 13:15:07 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 13:15:07 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 13:15:07 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_2_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B15:17,HLA-B13:02,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 13:15:07 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 13:15:07 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ SNV_PREFIX=mel_21_2_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ DEL_PREFIX=mel_21_2_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ INS_PREFIX=mel_21_2_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 13:15:07 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 13:15:07 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 13:15:07 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 13:15:07 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 13:15:07 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 13:15:07 CST 2017[0m
-+ set -x
-+ :
-+ set +x
-Loading required package: copynumber
-Loading required package: BiocGenerics
-Loading required package: methods
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following objects are masked from ‘package:stats’:
-
-    IQR, mad, xtabs
-
-The following objects are masked from ‘package:base’:
-
-    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    do.call, duplicated, eval, evalq, Filter, Find, get, grep, grepl,
-    intersect, is.unsorted, lapply, lengths, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist, unsplit
-
-Loading required package: squash
-null device 
-          1 
-Processing chr1: 74 variant calls; 5867 heterozygous positions; 275015 homozygous positions.
-Processing chr2: 79 variant calls; 5044 heterozygous positions; 218096 homozygous positions.
-Processing chr3: 44 variant calls; 3406 heterozygous positions; 166335 homozygous positions.
-Processing chr4: 48 variant calls; 2744 heterozygous positions; 114756 homozygous positions.
-Processing chr5: 34 variant calls; 2724 heterozygous positions; 124878 homozygous positions.
-Processing chr6: 56 variant calls; 2704 heterozygous positions; 122755 homozygous positions.
-Processing chr7: 39 variant calls; 3592 heterozygous positions; 139454 homozygous positions.
-Processing chr8: 25 variant calls; 2034 heterozygous positions; 90149 homozygous positions.
-Processing chr9: 53 variant calls; 2333 heterozygous positions; 115449 homozygous positions.
-Processing chr10: 37 variant calls; 2676 heterozygous positions; 116721 homozygous positions.
-Processing chr12: 46 variant calls; 2929 heterozygous positions; 141982 homozygous positions.
-Processing chr13: 18 variant calls; 1299 heterozygous positions; 55861 homozygous positions.
-Processing chr14: 12 variant calls; 1469 heterozygous positions; 80551 homozygous positions.
-Processing chr15: 34 variant calls; 2087 heterozygous positions; 94051 homozygous positions.
-Processing chr16: 34 variant calls; 2308 heterozygous positions; 100613 homozygous positions.
-Processing chr17: 34 variant calls; 3058 heterozygous positions; 135830 homozygous positions.
-Processing chr18: 23 variant calls; 912 heterozygous positions; 44097 homozygous positions.
-Processing chr19: 26 variant calls; 3411 heterozygous positions; 132778 homozygous positions.
-Processing chr20: 16 variant calls; 1898 heterozygous positions; 66171 homozygous positions.
-Processing chr21: 17 variant calls; 899 heterozygous positions; 30121 homozygous positions.
-Processing chr22: 24 variant calls; 1648 heterozygous positions; 58361 homozygous positions.
-Processing chrX: 12 variant calls; 190 heterozygous positions; 96253 homozygous positions.
-Processing chrY: 8 variant calls; 60 heterozygous positions; 7266 homozygous positions.
-[1] "BAF"         "ratio"       "mutations"   "segments"    "chromosomes"
-[6] "gc"          "avg.depth"  
-null device 
-          1 
-  |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  24%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  28%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |=============================                                         |  41%  |                                                                              |==============================                                        |  42%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  64%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  69%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |==================================================                    |  71%  |                                                                              |===================================================                   |  72%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  78%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |=======================================================               |  78%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |===================================================================== |  98%  |                                                                              |======================================================================|  99%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================| 100%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%
-null device 
-          1 
-+ echo 5
-5
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/pyclone_input.py -n netctl/mel_21_2_snv_netctl_concact.txt -i somatic_mutation/mel_21_2_snv_vep_ann.txt -s somatic_mutation/mel_21_2.snp.Somatic -c copynumber_profile/mel_21_2_seg_copynumber.txt -o copynumber_profile -S mel_21_2 -C 5
-257
-++ cat copynumber_profile/mel_21_2_cellularity.txt
-+ TUMOR_CONTENT=0.31
-+ PyClone run_analysis_pipeline --in_files copynumber_profile/mel_21_2_pyclone_input.tsv --tumour_contents 0.31 --prior major_copy_number --working_dir pyclone
-/usr/local/lib/python2.7/dist-packages/IPython/html.py:14: ShimWarning: The `IPython.html` package has been deprecated since IPython 4.0. You should import from `notebook` instead. `IPython.html.widgets` has moved to `ipywidgets`.
-  "`IPython.html.widgets` has moved to `ipywidgets`.", ShimWarning)
-[40;36;1m[1m---Preparation......	Sun Jun 25 13:20:09 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 13:20:09 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 13:20:09 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 13:20:09 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 13:20:09 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_3_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B13:02,HLA-B15:17,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 13:20:09 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 13:20:09 CST 2017[0m
-+ set +x
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ SNV_PREFIX=mel_21_3_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ DEL_PREFIX=mel_21_3_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ INS_PREFIX=mel_21_3_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 13:20:09 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 13:20:09 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 13:20:09 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 13:20:09 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 13:20:09 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 13:20:09 CST 2017[0m
-+ set -x
-+ :
-+ set +x
-Loading required package: copynumber
-Loading required package: BiocGenerics
-Loading required package: methods
-Loading required package: parallel
-
-Attaching package: ‘BiocGenerics’
-
-The following objects are masked from ‘package:parallel’:
-
-    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    clusterExport, clusterMap, parApply, parCapply, parLapply,
-    parLapplyLB, parRapply, parSapply, parSapplyLB
-
-The following objects are masked from ‘package:stats’:
-
-    IQR, mad, xtabs
-
-The following objects are masked from ‘package:base’:
-
-    anyDuplicated, append, as.data.frame, as.vector, cbind, colnames,
-    do.call, duplicated, eval, evalq, Filter, Find, get, grep, grepl,
-    intersect, is.unsorted, lapply, lengths, Map, mapply, match, mget,
-    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-    union, unique, unlist, unsplit
-
-Loading required package: squash
-null device 
-          1 
-Processing chr1: 27 variant calls; 6895 heterozygous positions; 275105 homozygous positions.
-Processing chr2: 27 variant calls; 5816 heterozygous positions; 218255 homozygous positions.
-Processing chr3: 19 variant calls; 4125 heterozygous positions; 166865 homozygous positions.
-Processing chr4: 20 variant calls; 3422 heterozygous positions; 115540 homozygous positions.
-Processing chr5: 18 variant calls; 3272 heterozygous positions; 125158 homozygous positions.
-Processing chr6: 17 variant calls; 3132 heterozygous positions; 122915 homozygous positions.
-Processing chr7: 33 variant calls; 4364 heterozygous positions; 140212 homozygous positions.
-Processing chr8: 8 variant calls; 2436 heterozygous positions; 90469 homozygous positions.
-Processing chr9: 25 variant calls; 3005 heterozygous positions; 116558 homozygous positions.
-Processing chr10: 14 variant calls; 3341 heterozygous positions; 117323 homozygous positions.
-Processing chr12: 15 variant calls; 3362 heterozygous positions; 141707 homozygous positions.
-Processing chr13: 10 variant calls; 1633 heterozygous positions; 56334 homozygous positions.
-Processing chr14: 8 variant calls; 1902 heterozygous positions; 81157 homozygous positions.
-Processing chr15: 17 variant calls; 2457 heterozygous positions; 94129 homozygous positions.
-Processing chr16: 21 variant calls; 2613 heterozygous positions; 100438 homozygous positions.
-Processing chr17: 31 variant calls; 3649 heterozygous positions; 136193 homozygous positions.
-Processing chr18: 2 variant calls; 1076 heterozygous positions; 44412 homozygous positions.
-Processing chr19: 27 variant calls; 4247 heterozygous positions; 133347 homozygous positions.
-Processing chr20: 17 variant calls; 2288 heterozygous positions; 66227 homozygous positions.
-Processing chr21: 18 variant calls; 1092 heterozygous positions; 30178 homozygous positions.
-Processing chr22: 19 variant calls; 2101 heterozygous positions; 58695 homozygous positions.
-Processing chrX: 17 variant calls; 267 heterozygous positions; 96786 homozygous positions.
-Processing chrY: 6 variant calls; 105 heterozygous positions; 8622 homozygous positions.
-[1] "BAF"         "ratio"       "mutations"   "segments"    "chromosomes"
-[6] "gc"          "avg.depth"  
-null device 
-          1 
-  |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   4%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |==================                                                    |  25%  |                                                                              |===================                                                   |  26%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  28%  |                                                                              |===================                                                   |  27%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  32%  |                                                                              |======================                                                |  31%  |                                                                              |=======================                                               |  32%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |=========================================                             |  58%  |                                                                              |==========================================                            |  59%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |===========================================                           |  61%  |                                                                              |============================================                          |  62%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  69%  |                                                                              |================================================                      |  68%  |                                                                              |=================================================                     |  69%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |==================================================                    |  71%  |                                                                              |===================================================                   |  72%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |====================================================                  |  74%  |                                                                              |=====================================================                 |  75%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  78%  |                                                                              |======================================================                |  77%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  78%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |=========================================================             |  81%  |                                                                              |==========================================================            |  82%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  88%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |=============================================================         |  88%  |                                                                              |===============================================================       |  89%  |                                                                              |==============================================================        |  88%  |                                                                              |===============================================================       |  90%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |===============================================================       |  91%  |                                                                              |=================================================================     |  93%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================   |  96%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%
-null device 
-          1 
-+ echo 5
-5
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/pyclone_input.py -n netctl/mel_21_3_snv_netctl_concact.txt -i somatic_mutation/mel_21_3_snv_vep_ann.txt -s somatic_mutation/mel_21_3.snp.Somatic -c copynumber_profile/mel_21_3_seg_copynumber.txt -o copynumber_profile -S mel_21_3 -C 5
-Traceback (most recent call last):
-  File "/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/pyclone_input.py", line 77, in <module>
-    for ele in open(neoantigen_file,'r'):
-IOError: [Errno 2] No such file or directory: 'netctl/mel_21_3_snv_netctl_concact.txt'
-++ cat copynumber_profile/mel_21_3_cellularity.txt
-+ TUMOR_CONTENT=0.17
-+ PyClone run_analysis_pipeline --in_files copynumber_profile/mel_21_3_pyclone_input.tsv --tumour_contents 0.17 --prior major_copy_number --working_dir pyclone
-/usr/local/lib/python2.7/dist-packages/IPython/html.py:14: ShimWarning: The `IPython.html` package has been deprecated since IPython 4.0. You should import from `notebook` instead. `IPython.html.widgets` has moved to `ipywidgets`.
-  "`IPython.html.widgets` has moved to `ipywidgets`.", ShimWarning)
-Traceback (most recent call last):
-  File "/usr/local/bin/PyClone", line 337, in <module>
-    main()
-  File "/usr/local/bin/PyClone", line 78, in main
-    args.func(args)
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/run.py", line 35, in run_analysis_pipeline
-    args.working_dir
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/run.py", line 219, in _setup_analysis
-    prior
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/run.py", line 254, in _build_mutations_file
-    reader = csv.DictReader(open(in_file), delimiter='\t')
-IOError: [Errno 2] No such file or directory: 'copynumber_profile/mel_21_3_pyclone_input.tsv'
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neo_pyclone_annotation.py -n netctl/mel_21_3_snv_netctl_concact.txt -i somatic_mutation/mel_21_3_snv_vep_ann.txt -s pyclone/tables/loci.tsv -o netctl -S mel_21_3
-Traceback (most recent call last):
-  File "/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neo_pyclone_annotation.py", line 75, in <module>
-    data_neo=pd.read_table(neoantigen_file,header=0,sep='\t')
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 645, in parser_f
-    return _read(filepath_or_buffer, kwds)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 388, in _read
-    parser = TextFileReader(filepath_or_buffer, **kwds)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 729, in __init__
-    self._make_engine(self.engine)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 922, in _make_engine
-    self._engine = CParserWrapper(self.f, **self.options)
-  File "/usr/local/lib/python2.7/dist-packages/pandas/io/parsers.py", line 1389, in __init__
-    self._reader = _parser.TextReader(src, **kwds)
-  File "pandas/parser.pyx", line 373, in pandas.parser.TextReader.__cinit__ (pandas/parser.c:4175)
-  File "pandas/parser.pyx", line 667, in pandas.parser.TextReader._setup_parser_source (pandas/parser.c:8440)
-IOError: File netctl/mel_21_3_snv_netctl_concact.txt does not exist
-+ set +x
-[40;32;1mfinished	Sun Jun 25 13:20:09 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_3/expression/mel_21_3/mel_21_3_gene_abund.tab 1
-0 256 1.0
-1000
-100 4 1.34489175332
-897.903565154
-200 1 0.38880491319
-1088.49258987
-300 1 0.0739269559916
-1200.0586848
-400 1 0.0939145745423
-1120.48135785
-500 1 0.0932088359045
-983.294025874
-600 2 0.108267247055
-975.409643505
-700 1 0.0481734750403
-1073.98152978
-800 2 0.108642856802
-996.69332721
-900 1 0.00916468729565
-999.135723138
-1000 1 0.130986257793
-1037.40026522
-1100 1 0.197984782211
-862.094059703
-1200 2 0.179577860821
-788.210259797
-1300 1 0.0664685947589
-662.75213809
-1400 1 0.00806155466547
-759.076623396
-1500 1 0.144418028536
-809.519311525
-1600 1 0.0354676189105
-680.372727597
-1700 2 0.216105824279
-829.438517503
-1800 1 0.463573140424
-807.538704439
-1900 1 0.0318257558601
-949.806580871
-2000 1 0.105709399891
-952.827429769
-2100 3 0.680909385529
-968.830061432
-2200 1 0.0924167757871
-976.675600774
-2300 1 0.220886514991
-877.08556632
-2400 1 1.1051394953
-754.672998884
-2500 1 0.391779634862
-763.091405536
-2600 1 0.0880301161686
-672.076914976
-2700 1 0.143306717897
-732.527915033
-2800 1 0.00560563594357
-684.337038783
-2900 1 0.0626794258073
-837.141602685
-3000 1 0.0303289495036
-867.317842552
-3100 1 0.132868810605
-905.59435858
-3200 1 0.255153219428
-936.375271252
-3300 1 1.24147160886
-936.824541807
-3400 1 0.0764383734596
-943.090460489
-3500 1 0.140744926178
-758.708864029
-3600 4 0.665977005806
-937.416829735
-3700 1 0.171951610169
-778.741958928
-3800 1 0.0154866651335
-821.46497081
-3900 1 0.347146515365
-716.538800939
-4000 1 0.0493330867053
-715.103378601
-4100 1 0.0482613764002
-755.922863243
-4200 1 0.261155450885
-815.700537603
-4300 1 0.0732082828418
-808.234155902
-4400 2 0.113646015537
-677.073058437
-4500 1 0.133328029579
-713.851307542
-4600 2 0.0491722529911
-832.210571079
-4700 1 0.011839031764
-921.132455363
-4800 2 0.137081147353
-901.23417101
-4900 1 0.0871310088946
-848.968874105
-5000 1 0.0469667850526
-602.234817416
-5100 1 0.254490586438
-636.930763313
-5200 1 0.212413169531
-665.668122301
-5300 1 0.400402329866
-661.925124611
-5400 2 0.0874441696299
-704.397539219
-5500 1 0.33316993646
-692.851261812
-5600 1 0.0862658967706
-689.04350537
-5700 1 0.874934896657
-699.388929852
-5800 2 0.285170429267
-622.833824524
-5900 1 0.0687762521589
-412.413578218
-6000 1 0.391096653921
-379.035102687
-6100 2 0.928810900049
-360.434821322
-6200 1 0.0154510329951
-465.598276346
-6300 1 0.295437690338
-487.22559792
-6400 1 0.12992049671
-411.054808356
-6500 1 0.0415271517278
-328.802455392
-6600 1 0.159860876551
-318.193328268
-6700 1 0.023015123324
-328.158970928
-6800 1 0.678092675861
-307.426457835
-6900 1 0.53528760153
-358.681810199
-7000 1 0.196445926502
-364.256710776
-7100 1 0.101324917038
-334.813568953
-7200 1 0.440687001778
-321.57209385
-7300 1 0.46701999997
-284.601575565
-7400 2 0.298109852321
-212.954947558
-7500 1 0.0715711110263
-126.641942269
-7600 2 0.592622932588
-163.100613791
-7700 2 0.0682524135969
-207.491754613
-7800 1 0.0377496805168
-367.305755677
-7900 1 0.0179483925094
-266.16965383
-8000 2 0.102098504558
-252.186453908
-8100 1 0.102135534122
-193.384365748
-8200 2 0.296109179451
-311.497280867
-8300 1 0.0148337686564
-436.175064657
-8400 1 0.0459965753949
-410.876362439
-8500 1 0.00321626677552
-529.572450618
-8600 1 0.00636329780715
-555.546751685
-8700 1 0.0171298376318
-585.744003519
-8800 1 0.314095254967
-490.31618588
-8900 1 0.0739456493529
-526.418167179
-9000 1 0.39292380209
-629.259272989
-9100 1 0.147688670536
-593.5827
-9200 1 0.195058887229
-618.943754187
-9300 1 0.0257567152815
-573.96440881
-9400 1 0.0196740387627
-434.704102089
-9500 1 0.0710829534069
-380.083370481
-9600 1 0.247133195957
-237.445038526
-9700 2 0.431562564576
-168.494041861
-9800 1 0.239323144956
-305.170742657
-9900 1 0.44750534817
-347.180778708
-Traceback (most recent call last):
-  File "/usr/local/bin/PyClone", line 337, in <module>
-    main()
-  File "/usr/local/bin/PyClone", line 78, in main
-    args.func(args)
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/run.py", line 53, in run_analysis_pipeline
-    args.thin
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/run.py", line 308, in _build_table
-    mesh_size=mesh_size
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/post_process/clusters.py", line 46, in load_summary_table
-    thin=thin, 
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/post_process/clusters.py", line 95, in load_table
-    labels = cluster_pyclone_trace(config_file, burnin, thin)
-  File "/usr/local/lib/python2.7/dist-packages/pyclone/post_process/clusters.py", line 29, in cluster_pyclone_trace
-    labels = cluster_with_mpear(X)
-  File "/usr/local/lib/python2.7/dist-packages/pydp/cluster.py", line 29, in cluster_with_mpear
-    best_cluster_labels = _get_flat_clustering(Z, 1)
-  File "/usr/local/lib/python2.7/dist-packages/pydp/cluster.py", line 49, in _get_flat_clustering
-    return fcluster(Z, number_of_clusters, criterion='maxclust')
-  File "/usr/local/lib/python2.7/dist-packages/scipy/cluster/hierarchy.py", line 1589, in fcluster
-    is_valid_linkage(Z, throw=True, name='Z')
-  File "/usr/local/lib/python2.7/dist-packages/scipy/cluster/hierarchy.py", line 1421, in is_valid_linkage
-    % name_str)
-ValueError: Linkage 'Z' uses the same cluster more than once.
-+ python /home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neo_pyclone_annotation.py -n netctl/mel_21_2_snv_netctl_concact.txt -i somatic_mutation/mel_21_2_snv_vep_ann.txt -s pyclone/tables/loci.tsv -o netctl -S mel_21_2
-Traceback (most recent call last):
-  File "/home/zhouchi/neoantigen_pipeline/iTuNES-dev/bin/neo_pyclone_annotation.py", line 85, in <module>
-    for ele in open(pyclone_loci,'r'):
-IOError: [Errno 2] No such file or directory: 'pyclone/tables/loci.tsv'
-+ set +x
-[40;32;1mfinished	Sun Jun 25 13:15:07 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_2/expression/mel_21_2/mel_21_2_gene_abund.tab 1
-[40;36;1m[1m---Preparation......	Sun Jun 25 13:44:04 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/bwa/human[0m
-[40;36;1m[1m---Align......---	Sun Jun 25 13:44:04 CST 2017[0m
-[40;32mbwa alignment......	Sun Jun 25 13:44:04 CST 2017[0m
-+ :
-++ date '--date=-24 hour'
-+ DATE='Sun Jun 25 13:44:04 CST 2017'
-+ :
-++ date '--date=-24 hour'
-+ :
-+ echo -e '\033[40;32mHLAtyping......\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mHLAtyping......	Sun Jun 25 13:44:04 CST 2017[0m
-+ :
-++ ls HLAtyping/
-++ cat HLAtyping/mel_21_3_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A01:01,HLA-B13:02,HLA-B15:17,HLA-C07:01,HLA-C06:02
-+ set -x
-+ echo -e '\033[40;32mVEP Annotation......\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mVEP Annotation......	Sun Jun 25 13:44:04 CST 2017[0m
-+ :
-+ echo -e '\033[40;32mindel calling ......\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mindel calling ......	Sun Jun 25 13:44:04 CST 2017[0m
-+ set +x
-+ netMHCpan -a HLA-A02:01,HLA-A01:01,HLA-B13:02,HLA-B15:17,HLA-C07:01,HLA-C06:02 -f netmhc/mel_21_3_snv.fasta -l 8,9,10,11
-+ :
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-++ ls .
-++ ls .
-+ :
-++ ls .
-++ ls .
-+ set +x
-+ set -x
-+ echo -e '\033[40;32mSNV netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mSNV netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ SNV_PREFIX=mel_21_3_snv
-+ echo -e '\033[40;32mFinish SNV netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mFinish SNV netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ echo -e '\033[40;32mDEL netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mDEL netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ DEL_PREFIX=mel_21_3_del
-+ echo -e '\033[40;32mFinish DEL netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mFinish DEL netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ echo -e '\033[40;32mINS netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mINS netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ INS_PREFIX=mel_21_3_ins
-+ echo -e '\033[40;32mFinish INS netMHC result parse\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mFinish INS netMHC result parse	Sun Jun 25 13:44:04 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mnetCTLpan prediction\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mnetCTLpan prediction	Sun Jun 25 13:44:04 CST 2017[0m
-+ echo -e '\033[40;32mFinish netCTLpan\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mFinish netCTLpan	Sun Jun 25 13:44:04 CST 2017[0m
-+ set +x
-+ echo -e '\033[40;32mGene fusion detection\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mGene fusion detection	Sun Jun 25 13:44:04 CST 2017[0m
-+ echo -e '\033[40;32mdetect copy number profile......\tSun' Jun 25 13:44:04 CST '2017\033[0m'
-[40;32mdetect copy number profile......	Sun Jun 25 13:44:04 CST 2017[0m
-+ set -x
-+ :
-+ set +x
-+ set +x
-[40;32;1mfinished	Sun Jun 25 13:44:04 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_21_3/expression/mel_21_3/mel_21_3_gene_abund.tab 1
-209739831 positions in tumor
-209290808 positions shared in normal
-131625818 had sufficient coverage for comparison
-1445073 raw copynumber segments with size > 10
-1444255 good copynumber segments with depth > 10
-+ rm mel_218_normal.fifo mel_218_tumor.fifo
-+ cd ..
-+ set +x
-cat: copynumber_profile/mel_218_cellularity.txt: No such file or directory
-[40;32;1mfinished	Sun Jun 25 12:41:52 CST 2017[0m
-Done!
-500 /data/zhouchi/phs001005/RNA-seq/mel_218/expression/mel_218/mel_218_gene_abund.tab 1
-0.5
-[40;36;1m[1m---Preparation......	Sun Jun 25 22:21:14 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sun Jun 25 22:21:14 CST 2017[0m
-[40;32mHLAtyping......	Sun Jun 25 22:21:14 CST 2017[0m
-[40;32mVEP Annotation......	Sun Jun 25 22:21:14 CST 2017[0m
-Unable to open(r) file netmhc/mel_38_cell_snv.fasta
-+ set +x
-RunTIme:0.051469 s
-[40;32;1mfinished	Sun Jun 25 22:21:14 CST 2017[0m
-Done!
-500 None 1
-0.5
-[40;36;1m[1m---Preparation......	Sun Jun 25 22:40:30 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sun Jun 25 22:40:30 CST 2017[0m
-[40;32mHLAtyping......	Sun Jun 25 22:40:30 CST 2017[0m
-[40;32mVEP Annotation......	Sun Jun 25 22:40:30 CST 2017[0m
-++ cat HLAtyping/mel_38_cell/mel_38_cell_optitype_hla_type
-+ hla_str=HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C03:03,HLA-C07:02
-+ netMHCpan -a HLA-A31:01,HLA-A02:01,HLA-B07:02,HLA-B55:01,HLA-C03:03,HLA-C07:02 -f netmhc/mel_38_cell/mel_38_cell_snv.fasta -l 8,9,10,11
-0.5
-[40;36;1m[1m---Preparation......	Sun Jun 25 22:40:44 CST 2017[0m
-[40;35;1mIndex: /home/zhouchi/database/Annotation/Index/STAR/human[0m
-[40;32mcalling somatic mutaiton using GATK......	Sun Jun 25 22:40:44 CST 2017[0m
-[40;32mHLAtyping......	Sun Jun 25 22:40:44 CST 2017[0m
-[40;32mVEP Annotation......	Sun Jun 25 22:40:44 CST 2017[0m
-++ cat HLAtyping/mel_218/mel_218_optitype_hla_type
-+ hla_str=HLA-A02:01,HLA-A03:01,HLA-B44:02,HLA-B37:01,HLA-C07:04,HLA-C06:02
-+ netMHCpan -a HLA-A02:01,HLA-A03:01,HLA-B44:02,HLA-B37:01,HLA-C07:04,HLA-C06:02 -f netmhc/mel_218/mel_218_snv.fasta -l 8,9,10,11
-+ set +x
-+ set +x
-RunTIme:138732.041415 s
-[40;32;1mfinished	Tue Jun 27 13:12:42 CST 2017[0m
-Done!
-500 None 1
-+ set +x
-+ set +x
-RunTIme:169833.817496 s
-[40;32;1mfinished	Tue Jun 27 21:51:18 CST 2017[0m
-Done!
-500 None 1

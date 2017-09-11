@@ -78,7 +78,7 @@ for ele in open(neoantigen_file,'r'):
 	if ele.startswith('#'):
 		continue
 	else:
-		gene=ele.strip().split('\t')[1]
+		gene=ele.strip().split('\t')[2]
 		n_c_r=gene_dic[gene]
 	if gene not in gene_name:
 		gene_name.append(gene)

@@ -33,9 +33,12 @@ if (input_neo_file =="" or out_dir =="" or sample_id==""):
 
 
 data_neo_fil = pd.read_table(input_neo_file,header=0,sep='\t')
+if data_neo_fil.empty:
+	print "NetMHC filtering result is empty!!"
+	sys.exit()
 if os.path.exists(out_dir+'/'+sample_id+'_netCLT.txt'):
     	os.remove(out_dir+'/'+sample_id+'_netCLT.txt')
-for hla,gene,aa,mt_pep in zip(data_neo_fil['#HLA_type'],data_neo_fil.Gene,data_neo_fil.AA_change,data_neo_fil.MT_pep):
+for hla,gene,aa,mt_pep in zip(data_neo_fil['HLA_type'],data_neo_fil.Gene,data_neo_fil.AA_change,data_neo_fil.MT_pep):
     line='>'+str(gene) + '_' + str(aa) + '\n' + str(mt_pep) + '\n'
     pep_len=len(mt_pep)
     print mt_pep
@@ -78,7 +81,10 @@ for i in range(len(data_con.Gene)):
 	else:
 		whether_driver_gene.append('FALSE')
 data_con['DriverGene_Lable'] = whether_driver_gene
-data_con.to_csv(out_dir+'/'+sample_id+'_netctl_concact.txt',sep='\t',header=1,index=0)	 
+data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','Mutation','MT_pep','WT_pep'])
+data_con_sort=data_con_drop.sort_values(['MT_Binding_level','fold_change'],ascending=[1, 1])
+data_has_change_aa=data_con_sort[data_con_sort.MT_pep!=data_con_sort.WT_pep]
+data_has_change_aa.to_csv(out_dir+'/'+sample_id+'_netctl_concact.txt',sep='\t',header=1,index=0)	 
 if os.path.exists(out_dir+'/'+sample_id+'_tmp.txt'):    
 	os.remove(out_dir+'/'+sample_id+'_tmp.txt')
 if os.path.exists(out_dir+'/'+sample_id+'_netCLT.txt'):
