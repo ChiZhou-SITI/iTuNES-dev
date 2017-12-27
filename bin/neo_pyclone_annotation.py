@@ -51,8 +51,7 @@ for ele in f_vep:
 	if ele.startswith('#'):
 		continue
 	else:
-		line=ele.strip().split('\t')[0]
-		vep_pos=line.split('_')[0]+':'+line.split('_')[1]
+		vep_pos=ele.strip().split('\t')[1]
 		extra=ele.strip().split('\t')[-1]
 		#vep_gene=extra.split(';')[2].split('=')[1]
 		element=extra.split(';')
@@ -69,9 +68,13 @@ f_vep.close()
 for i in range(len(vep_pos_list)):
 	gene_dic[vep_gene_list[i]]=vep_pos_list[i]
 gene_normal_expression_dic={}
-data_normal_expression=pd.read_table('/home/zhouchi/database/Annotation/expression/GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_median_rpkm.gct',header=0,sep='\t')
-expression_gene=data_normal_expression.Description
-normal_expression=data_normal_expression[cancer_type]
+data_gtex=pd.read_table('/home/zhouchi/database/Annotation/expression/GTEx_Analysis_v6p_RNA-seq_RNA-SeQCv1.1.8_gene_median_rpkm.gct',header=0,sep='\t')
+expression_gene=data_gtex.Description
+data_exp=data_gtex.iloc[:,[4,22,26,27,29,35,36,37,40,41,42,44,46,49,50,51,52,54]]
+data_exp.columns="Adrenal Gland","Breast","Cervix","Colorectal","Esophagus","Kidney","Liver","Lung","Nervous System","Ovary","Pancreas","Prostate","Skin","Stomach","Testis","Thyroid","Uterus","Blood"
+f=lambda x:x*1000000/sum(x)
+data_tpm=data_exp.apply(f)
+normal_expression=data_tpm[cancer_type]
 for i in range(len(expression_gene)):
 	gene_normal_expression_dic[expression_gene[i]]=normal_expression[i]
 

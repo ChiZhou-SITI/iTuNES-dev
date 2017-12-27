@@ -107,7 +107,7 @@ for i in range(len(trans_name)):
 		ref_animo_acid_seq=transcript_seq[i]
 		if pro_change_pos<=10:
 			wt_pep=ref_animo_acid_seq[0:21]
-			mt_pep=ref_animo_acid_seq[0:pro_change_pos]+alt_animo_acid[i]+ref_animo_acid_seq[pro_change_pos+1:21]
+			mt_pep=ref_animo_acid_seq[0:pro_change_pos-1]+alt_animo_acid[i]+ref_animo_acid_seq[pro_change_pos:21]
 		elif pro_change_pos>10 and len(ref_animo_acid_seq)-pro_change_pos<=10:
 			wt_pep=ref_animo_acid_seq[len(ref_animo_acid_seq)-21:len(ref_animo_acid_seq)]
 			mt_pep=ref_animo_acid_seq[len(ref_animo_acid_seq)-21:pro_change_pos-1]+alt_animo_acid[i]+ref_animo_acid_seq[pro_change_pos:len(ref_animo_acid_seq)]

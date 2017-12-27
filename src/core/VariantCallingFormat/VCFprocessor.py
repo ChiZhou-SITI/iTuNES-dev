@@ -22,8 +22,8 @@ vcf_file=%s
 vcf_fold=%s
 vcftools=%s
 PREFIX=%s
-$vcftools --vcf ${vcf_file} --remove-indels --recode --recode-INFO-all --not-chr chrM --out ${vcf_fold}/${PREFIX}_SNVs_only
-$vcftools --vcf ${vcf_file} --keep-only-indels --recode --recode-INFO-all --not-chr chrM --out ${vcf_fold}/${PREFIX}_INDELs_only
+$vcftools --vcf ${vcf_file} --remove-filtered-all --remove-indels --recode --recode-INFO-all --not-chr chrM --out ${vcf_fold}/${PREFIX}_SNVs_only
+$vcftools --vcf ${vcf_file} --remove-filtered-all --keep-only-indels --recode --recode-INFO-all --not-chr chrM --out ${vcf_fold}/${PREFIX}_INDELs_only
 '''%(vcf_file,vcf_fold,vcftools_path,prefix)
 	print str_proc
 	subprocess.call(str_proc, shell=True, executable='/bin/bash')
@@ -123,20 +123,21 @@ python ${iTuNES_BIN_PATH}/netCTLPAN.py -i ${netmhc_out}/${PREFIX}_snv_final_neo_
 	subprocess.call(str_proc2, shell=True, executable='/bin/bash')
 
 
-def indel_neo(vep_path,indel_vcf_file,vep_cache,vcf_fold,netmhc_out_fold,indel_fasta_file,hla_str,netmhc_out_file,out_dir,split_num,netMHCpan_path,prefix,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_fold):
+def indel_neo(vep_path,indel_vcf_file,vep_cache,vcf_fold,netmhc_out_fold,indel_fasta_file,hla_str,netmhc_out_file,split_num,netMHCpan_path,prefix,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_fold):
 	str_proc1=r'''
+PREFIX=%s
 vep=%s
 indel_vcf_file=%s
 VEP_CACHE=%s
 vcf_fold=%s
 netmhc_out=%s
 $vep -i ${indel_vcf_file} --cache --dir $VEP_CACHE --dir_cache $VEP_CACHE --force_overwrite  --symbol -o STDOUT --offline | filter_vep.pl --ontology --filter "Consequence is coding_sequence_variant" -o ${vcf_fold}/${PREFIX}_indel_vep_ann.txt --force_overwrite
-python ${iTuNES_BIN_PATH}/varscandel2fasta.py -i ${vcf_fold}/${PREFIX}_indel_vep_ann.txt -c ${vcf_fold}/${PREFIX}_INDELs_only.recode.vcf -o ${netmhc_out} -s ${PREFIX}
-python ${iTuNES_BIN_PATH}/varscanins2fasta.py -i ${vcf_fold}/${PREFIX}_indel_vep_ann.txt -c ${vcf_fold}/${PREFIX}_INDELs_only.recode.vcf -o ${netmhc_out} -s ${PREFIX}
+python ${iTuNES_BIN_PATH}/varscandel2fasta.py -i ${vcf_fold}/${PREFIX}_indel_vep_ann.txt -o ${netmhc_out} -s ${PREFIX}
+python ${iTuNES_BIN_PATH}/varscanins2fasta.py -i ${vcf_fold}/${PREFIX}_indel_vep_ann.txt -o ${netmhc_out} -s ${PREFIX}
 cat ${netmhc_out}/${PREFIX}_del.fasta > ${netmhc_out}/${PREFIX}_indel.fasta
 cat ${netmhc_out}/${PREFIX}_ins.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
-'''%(vep_path,indel_vcf_file,vep_cache,vcf_fold,netmhc_out_fold)
-	subprocess.call(str_proc1, shell=True, executable='/bin/bash')
+'''%(prefix,vep_path,indel_vcf_file,vep_cache,vcf_fold,netmhc_out_fold)
+	#subprocess.call(str_proc1, shell=True, executable='/bin/bash')
 	netMHCpan(indel_fasta_file,hla_str,netmhc_out_file,netmhc_out_fold,split_num,netMHCpan_path,"tmp_indel")
 	str_proc2=r'''
 PREFIX=%s
@@ -150,7 +151,7 @@ netctl_fold=%s
 python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i ${netmhc_out}/${PREFIX}_indel_netmhc.txt -g ${netmhc_out}/${PREFIX}_indel.fasta -o ${netmhc_out} -s ${PREFIX} -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff}
 python ${iTuNES_BIN_PATH}/netCTLPAN.py -i ${netmhc_out}/${PREFIX}_indel_final_neo_candidate.txt -o ${netctl_fold} -s ${PREFIX}
 '''%(prefix,netmhc_out_fold,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,hla_str,netctl_fold)	
-	subprocess.call(str_proc2, shell=True, executable='/bin/bash')
+	#subprocess.call(str_proc2, shell=True, executable='/bin/bash')
 
 
 

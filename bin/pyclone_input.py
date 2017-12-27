@@ -4,19 +4,19 @@
 import pandas as pd
 import sys,getopt
 
-opts,args=getopt.getopt(sys.argv[1:],"hn:i:s:c:o:S:C:",["neoantigen_file","vep_input_file","snp_file","copynumber_file","out_dir","SampleID","Coverage"])
+opts,args=getopt.getopt(sys.argv[1:],"hn:i:s:c:o:S:C:",["neoantigen_file","vep_input_file","snv_mutect2_file","copynumber_file","out_dir","SampleID","Coverage"])
 neoantigen_file=""
 vep_input_file=""
-snp_input_file=""
+snv_mutect2_file=""
 copynumber_file=""
 output_dir=""
 sample_id=""
 coverage=2	
-USAGE='''usage: python pyclone_input.py -n <neoantigen_file> -i <vep_input_file> -s <snp_file> -c <copynumber_file> -o <outdir> -S <sample_id> [option]"
+USAGE='''usage: python pyclone_input.py -n <neoantigen_file> -i <vep_input_file> -s <snv_mutect2_file> -c <copynumber_file> -o <outdir> -S <sample_id> [option]"
 		required argument:
 			-n | --neoantigen_file: 
 			-i | --vep_input_file : snv vep input file
-			-s | --snp_file : snp file result from varscan
+			-s | --snv_mutect2_file : snp file result from mutect2
 			-c | --copynumber_file : copynumber file result from varscan
 			-o | --out_dir : output_directory
 			-S | --SampleID : sample id
@@ -31,8 +31,8 @@ for opt,value in opts:
 		neoantigen_file=value
 	elif opt in ("-i","--vep_input_file"):
 		vep_input_file=value
-	elif opt in ("-s","--snp_file"):
-		snp_input_file=value
+	elif opt in ("-s","--snv_mutect2_file"):
+		snv_mutect2_file=value
 	elif opt in ("-c","--copynumber_file"):
 		copynumber_file=value
 	elif opt in ("-o","--out_dir"):
@@ -43,19 +43,19 @@ for opt,value in opts:
 		coverage=value 
 
 #print coverage
-if (neoantigen_file== "" or vep_input_file=="" or snp_input_file=="" or copynumber_file=="" or output_dir=="" or sample_id==""):
+print neoantigen_file,vep_input_file,snv_mutect2_file,copynumber_file,output_dir,sample_id
+if (neoantigen_file=="" or vep_input_file=="" or snv_mutect2_file=="" or copynumber_file=="" or output_dir=="" or sample_id==""):
 	print USAGE
 	sys.exit(2)
-gene_dic={}	
-vep_pos_list=[]
-vep_gene_list=[]
+gene_dic={}	 ###gene--postion dictionary
+vep_pos_list=[]#####postion information in VEP
+vep_gene_list=[]####gene information in VEP
 f_vep=open(vep_input_file)
 for ele in f_vep:
 	if ele.startswith('#'):
 		continue
 	else:
-		line=ele.strip().split('\t')[0]
-		vep_pos=line.split('_')[0]+':'+line.split('_')[1]
+		vep_pos=ele.strip().split('\t')[1]
 		extra=ele.strip().split('\t')[-1]
 		#vep_gene=extra.split(';')[2].split('=')[1]
 		element=extra.split(';')
@@ -111,9 +111,9 @@ var_allele=[]
 tumor_reads1=[]
 tumor_reads2=[]
 snp_chr_pos=[]
-f_snp=open(snp_input_file,'r')
+f_snp=open(snv_mutect2_file,'r')
 for ele in f_snp:
-	if ele.startswith('chrom'):
+	if ele.startswith('#'):
 		continue
 	else:
 		line=ele.strip().split('\t')
@@ -122,8 +122,17 @@ for ele in f_snp:
 		p_l=line[1]
 		r_a=line[2]
 		a_a=line[3]
-		t_r1=line[8]
-		t_r2=line[9]
+		format_information=line[8].split(':')
+		alt_read_1_index=format_information.index('ALT_F1R2')
+		alt_read_2_index=format_information.index('ALT_F2R1')
+		ref_read_1_index=format_information.index('REF_F1R2')
+		ref_read_2_index=format_information.index('REF_F2R1')
+		tumor_info_list=line[9].split(':')
+		print tumor_info_list
+		t_r1=int(tumor_info_list[ref_read_1_index])+int(tumor_info_list[ref_read_2_index])
+		t_r2=int(tumor_info_list[alt_read_1_index])+int(tumor_info_list[alt_read_2_index])
+		#t_r1=line[8]
+		#t_r2=line[9]
 	if chro_pos in neo_chr_pos:
 		snp_chr_pos.append(chro_pos)
 		chr_list.append(c_l)

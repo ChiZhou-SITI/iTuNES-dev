@@ -1,17 +1,11 @@
 import os
 from pairendRNAprocessor import *
 import shutil
+import yaml
 def PERNA(opts):
 	config_file=opts.Config_file
-	f = open(config_file,"r"); # open the configure file
-	config_list = {}; # define a hash table
-	while 1:
-		text = f.readline();
-		if text == "":
-			break;
-		str = text.split(); # split the string
-		config_list[str[0]] = str[1]; # assignment the config_list
-	f.close()
+	f=open(config_file)
+	config_list=yaml.load(f)
 	#######read and parse parameter
 	print "read and parse parameter."
 	output_fold=config_list["output_fold"]
@@ -24,6 +18,7 @@ def PERNA(opts):
 	opitype_ext='${iTuNES_BIN_PATH}/optitype_ext.py'
 	prefix=config_list["sample_name"]
 	CPU=config_list["thread_number"]
+	vcftools_path=config_list["vcftools_path"]
 	REFERENCE=config_list["reference_path"]
 	STAR_INDEX=config_list["STAR_index_path"]
 	GENOME=config_list["genome"]
@@ -48,19 +43,33 @@ def PERNA(opts):
 	indel_fasta_file=netmhc_out_fold+'/'+prefix+'_indel.fasta'
 	hla_str=config_list["hla_str"]
 	indel_netmhc_out_file=netmhc_out_fold+'/'+prefix+'_indel_netmhc.txt'
-	split_num=10000
-	exp_file=config_list["expression_file"]
+	split_num=500
 	binding_fc_aff_cutoff=int(config_list["binding_fc_aff_cutoff"])
 	binding_aff_cutoff=int(config_list["binding_aff_cutoff"])
 	fpkm_cutoff=int(config_list["fpkm_cutoff"])
 	netctl_out_fold=output_fold + '/' + 'netctl'
 	netMHCpan_path=config_list["netMHCpan_path"]
-	snv_fasta_file=netmhc_out_fold+'/'+prefix+'_varscan_snv.fasta'
+	snv_fasta_file=netmhc_out_fold+'/'+prefix+'_snv.fasta'
 	snv_netmhc_out_file=netmhc_out_fold+'/'+prefix+'_snv_netmhc.txt'
 	strelka_path=config_list["strelka_path"]
-	stringtie_path=config_list["stringtie_path"]
+	kallisto_path=config_list["kallisto_path"]
+	kallisto_cdna_path=config_list["kallisto_cdna_path"]
+	final_neo_file=netctl_out_fold + '/' + prefix + '_snv_netctl_concact.txt'
+	gmm_classification_file=netctl_out_fold + '/' + prefix + '_gmm.png'
+	immunogenicity_score_ranking=netctl_out_fold + '/' + prefix + '_score.txt'
+	immunogenicity_gmm_score_ranking=netctl_out_fold + '/' + prefix + '_gmm_score.txt'
+	candidate_neoantigens_fold=output_fold + '/' + 'candidate_neoantigens'
 	GTF_path=config_list["GTF_path"]
-	expression_fold=output_fold + '/' + 'expression'
+	kallisto_out_fold=output_fold + '/' + 'expression'
+	logfile_out_fold=output_fold + '/' + 'logfile'
+	clean_fastq_fold=output_fold + '/' + 'clean_fastq'
+	trimmomatic_path=config_list["trimmomatic_path"]
+	adapter_path=config_list["adapter_path"]
+	tumor_fastq_prefix=clean_fastq_fold + '/' + prefix + "_tumor_clean.fq.gz"
+	normal_fastq_prefix=clean_fastq_fold + '/' + prefix + "_normal_clean.fq.gz"
+	tumor_fastq_clean_first=clean_fastq_fold + '/' + prefix + "_tumor_clean_1P.fq.gz"
+	tumor_fastq_clean_second=clean_fastq_fold + '/' + prefix + "_tumor_clean_2P.fq.gz"
+	pos_1000G_file_path=config_list["pos_1000G_file"]
 	#####check input file,tool path and reference file#####
 	if os.path.exists(tumor_fastq_path_first) and os.path.exists(tumor_fastq_path_second):
 		print "check all fastq file done."
@@ -112,13 +121,7 @@ def PERNA(opts):
 	else:
 		print "please check your vep cache path!"
 		os._exit(1)	
-	if exp_file!="no_exp" and os.path.exists(exp_file):
-		print "check expression file done."
-	elif exp_file=="no_exp":
-		print "no expression file provided."
-	else:
-		print "please check your expression file path!"
-		os._exit(1)	
+	exp_file=output_fold + '/' + "expression/abundance.tsv"
 	if os.path.exists(REFERENCE):
 		print "check REFERENCE file path done."
 	else:
@@ -148,30 +151,54 @@ def PERNA(opts):
 		os.mkdir(netctl_out_fold)
 	if not os.path.exists(alignment_out_fold):
 		os.mkdir(alignment_out_fold)
-	if not os.path.exists(expression_fold):
-		os.mkdir(expression_fold)		
+	if not os.path.exists(kallisto_out_fold):
+		os.mkdir(kallisto_out_fold)
+	if not os.path.exists(clean_fastq_fold):
+		os.mkdir(clean_fastq_fold)
+	if not os.path.exists(candidate_neoantigens_fold):
+		os.mkdir(candidate_neoantigens_fold)
+	if not os.path.exists(candidate_neoantigens_fold):
+		os.mkdir(candidate_neoantigens_fold)
+	if not os.path.exists(logfile_out_fold):
+		os.mkdir(logfile_out_fold)
+	if not os.path.exists(opitype_out_fold):
+		os.mkdir(opitype_out_fold)
+	print "start fastq quality control"
+	processes_0=[]
+	q1=multiprocessing.Process(target=read_trimmomatic,args=(tumor_fastq_path_first,tumor_fastq_path_second,trimmomatic_path,adapter_path,tumor_fastq_prefix,logfile_out_fold,"tumor",CPU,))
+	processes_0.append(q1)
+	#for p in processes_0:
+	#	p.daemon = True
+	#	p.start()
+	#for p in processes_0:
+	#	p.join()
+		
 	print "start stage 1"
 	processes_1=[]
 	if hla_str=="None":
 		d1=multiprocessing.Process(target=hlatyping,args=(tumor_fastq_path_first,tumor_fastq_path_second,opitype_fold,opitype_out_fold,opitype_ext,prefix,))
- 		processes_1.append(d1)		
+ 		#processes_1.append(d1)		
  	else:
  		print "hla type provided!"
-	d2=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(tumor_fastq_path_first,tumor_fastq_path_second,CPU,STAR_INDEX,alignment_out_fold,prefix,REFERENCE,STAR_path,stringtie_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,GTF_path,expression_fold,))
- 	processes_1.append(d2)
- 	for p in processes_1:
-		p.daemon = True
-		p.start()
-	for p in processes_1:
-		p.join()
+	d2=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(tumor_fastq_clean_first,tumor_fastq_clean_second,CPU,STAR_INDEX,alignment_out_fold,prefix,REFERENCE,STAR_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,GTF_path,))
+ 	#processes_1.append(d2)
+ 	d3=multiprocessing.Process(target=kallisto_expression,args=(tumor_fastq_clean_first,tumor_fastq_clean_second,kallisto_path,kallisto_out_fold,prefix,kallisto_cdna_path,logfile_out_fold,))
+ 	processes_1.append(d3)
+ 	#for p in processes_1:
+	#	p.daemon = True
+	#	p.start()
+	#for p in processes_1:
+	#	p.join()
 	if hla_str=="None":	
 		hla_str=open(opitype_out_fold+'/'+prefix+"_optitype_hla_type").readlines()[0]
 	print "start stage 2"
 	processes_2=[]
-	h1=multiprocessing.Process(target=varscan_snv_calling,args=(somatic_mutation_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,))
+	h1=multiprocessing.Process(target=GATK_hp,args=(GATK_path,REFERENCE,alignment_out_fold,prefix,CPU,dbsnp138_path,somatic_mutation_fold,vcftools_path,vep_path,vep_cache,netmhc_out_fold,pos_1000G_file_path))
  	processes_2.append(h1)
- 	h2=multiprocessing.Process(target=varscan_indel_calling,args=(varscan_indel_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,))
- 	processes_2.append(h2)
+ 	#h2=multiprocessing.Process(target=varscan_snv_calling,args=(somatic_mutation_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,))
+ 	#processes_2.append(h2)
+ 	#h3=multiprocessing.Process(target=varscan_indel_calling,args=(varscan_indel_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,))
+ 	#processes_2.append(h3)
  	for p in processes_2:
 		p.daemon = True
 		p.start()
@@ -179,15 +206,23 @@ def PERNA(opts):
 		p.join()	
 	processes_3=[]
   	l1=multiprocessing.Process(target=varscan_neo,args=(snv_fasta_file,hla_str,snv_netmhc_out_file,netmhc_out_fold,split_num,prefix,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
- 	processes_3.append(l1)	
-   	l2=multiprocessing.Process(target=indel_neo,args=(prefix,netmhc_out_fold,indel_fasta_file,hla_str,indel_netmhc_out_file,split_num,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
- 	processes_3.append(l2)		
- 	for p in processes_3:
-		p.daemon = True
-		p.start()
-	for p in processes_3:
-		p.join()
+ 	processes_3.append(l1)
+   	#l2=multiprocessing.Process(target=indel_neo,args=(prefix,netmhc_out_fold,indel_fasta_file,hla_str,indel_netmhc_out_file,split_num,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
+ 	#processes_3.append(l2)		
+ 	#for p in processes_3:
+	#	p.daemon = True
+	#	p.start()
+	#for p in processes_3:
+	#	p.join()
 
+	processes_4=[]
+  	r1=multiprocessing.Process(target=immunogenicity_score_calculate,args=(final_neo_file,gmm_classification_file,immunogenicity_score_ranking,immunogenicity_gmm_score_ranking,))
+ 	processes_4.append(r1)
+ 	#for p in processes_4:
+	#	p.daemon = True
+	#	p.start()
+	#for p in processes_4:
+	#	p.join()
 
 
 

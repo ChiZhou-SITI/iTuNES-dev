@@ -70,10 +70,10 @@ pdata={'tap_prediction_score':tap_prediction_score,'cleavage_prediction_score':c
 data_pdata=pd.DataFrame(pdata) 
 data_con=pd.concat([data_neo_fil,data_pdata],axis=1)
 gene_list=data_con.Gene.drop_duplicates()
-f_drivergene=open('/home/zhouchi/database/Annotation/GoldDriverGene','r')
+f_drivergene=open('/home/zhouchi/database/Annotation/DriveGene.tsv','r')
 drivergene_list=[]
 for line in f_drivergene:
-	drivergene_list.append(line)
+	drivergene_list.append(line.strip())
 whether_driver_gene=[]
 for i in range(len(data_con.Gene)):
 	if data_con.Gene[i] in drivergene_list:
@@ -82,6 +82,7 @@ for i in range(len(data_con.Gene)):
 		whether_driver_gene.append('FALSE')
 data_con['DriverGene_Lable'] = whether_driver_gene
 data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','Mutation','MT_pep','WT_pep'])
+#data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','MT_pep','WT_pep'])
 data_con_sort=data_con_drop.sort_values(['MT_Binding_level','fold_change'],ascending=[1, 1])
 data_has_change_aa=data_con_sort[data_con_sort.MT_pep!=data_con_sort.WT_pep]
 data_has_change_aa.to_csv(out_dir+'/'+sample_id+'_netctl_concact.txt',sep='\t',header=1,index=0)	 

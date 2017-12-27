@@ -1,17 +1,11 @@
 import os,multiprocessing
 from VCFprocessor import *
 import shutil
+import yaml
 def Vcf(opts):
 	config_file=opts.Config_file
-	f = open(config_file,"r"); # open the configure file
-	config_list = {}; # define a hash table
-	while 1:
-		text = f.readline();
-		if text == "":
-			break;
-		str = text.split(); # split the string
-		config_list[str[0]] = str[1]; # assignment the config_list
-	f.close()
+	f=open(config_file)
+	config_list=yaml.load(f)
 	#######read and parse parameter
 	print "read and parse parameter."
 	output_fold=config_list["output_fold"]
@@ -27,7 +21,7 @@ def Vcf(opts):
 	indel_fasta_file=netmhc_out_fold+'/'+prefix+'_indel.fasta'
 	hla_str=config_list["hla_str"]
 	indel_netmhc_out_file=netmhc_out_fold+'/'+prefix+'_indel_netmhc.txt'
-	split_num=20000
+	split_num=200
 	exp_file=config_list["expression_file"]
 	binding_fc_aff_cutoff=int(config_list["binding_fc_aff_cutoff"])
 	binding_aff_cutoff=int(config_list["binding_aff_cutoff"])

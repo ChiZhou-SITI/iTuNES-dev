@@ -80,3 +80,6 @@ cn.alleles <- baf.bayes(Bf = seg.tab$Bf, depth.ratio = seg.tab$depth.ratio, cell
 
 seg.tab <- cbind(seg.tab, cn.alleles)
 write.table(seg.tab, paste(out_dir,sample_id,"_seg_copynumber.txt",sep=""), col.names = TRUE, row.names = FALSE, sep = "\t", quote=FALSE)
+
+#pyclone_input <- sequenza2PyClone(mut.tab,seg.tab,sample_id,norm.cn = 2)
+#write.table(pyclone_input, paste(out_dir,sample_id,"_pyclone_input_sequenza.txt",sep=""), col.names = TRUE, row.names = FALSE, sep = "\t", quote=FALSE)

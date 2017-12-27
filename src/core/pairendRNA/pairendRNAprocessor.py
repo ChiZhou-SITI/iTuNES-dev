@@ -2,7 +2,36 @@ import os,sys,time
 import multiprocessing
 import shutil 
 import subprocess
+import pandas as pd
+import math
+from pyper import *
+import numpy as np
+import math
+from sklearn import preprocessing
+from sklearn.decomposition import PCA
+from matplotlib import pyplot as plt
+from sklearn.semi_supervised import label_propagation
+import itertools
+from scipy import linalg
+import matplotlib as mpl
+from sklearn import mixture
 
+def read_trimmomatic(raw_fastq_path_first,raw_fastq_path_second,trimmomatic_path,adapter_path,fastq_prefix,logfile_fold,fastq_type,CPU):
+	cmd_trimmomatic="java -jar " + trimmomatic_path + " PE -threads " + str(CPU) + " -phred33 " + raw_fastq_path_first + ' ' + raw_fastq_path_second  + ' -baseout ' + fastq_prefix + " ILLUMINACLIP:" + adapter_path + ':2:30:10' + ' LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 > ' + logfile_fold + '/' + fastq_type + '_trimmomatic.log' + ' 2>&1'
+	print cmd_trimmomatic
+	os.system(cmd_trimmomatic)
+
+
+def kallisto_expression(raw_fastq_path_first,raw_fastq_path_second,kallisto_path,kallisto_out_fold,prefix,kallisto_cdna_path,logfile_fold):
+	cdna_path_dir = os.path.dirname(kallisto_cdna_path)
+	cnd_file_prefix = os.path.splitext(os.path.basename(kallisto_cdna_path))[0]
+	kallisto_index_path = cdna_path_dir + '/' + cnd_file_prefix + '.idx'
+	cmd_kallisto_index = kallisto_path + " index -i " + kallisto_index_path + ' ' + kallisto_cdna_path + ' > ' +  logfile_fold + '/' + prefix + '_kallisto_index.log' + ' 2>&1'
+	cmd_kallisto_quant = kallisto_path + " quant -i " + kallisto_index_path + " -o " + kallisto_out_fold + " " + raw_fastq_path_first + " " + raw_fastq_path_second + ' > ' +  logfile_fold + '/' + prefix + '_kallisto.log' + ' 2>&1'
+	print cmd_kallisto_index
+	#os.system(cmd_kallisto_index)
+	print cmd_kallisto_quant
+	os.system(cmd_kallisto_quant)
 
 def hlatyping(raw_fastq_path_first,raw_fastq_path_second,opitype_fold,opitype_out_fold,opitype_ext,prefix):
 	os.system("rm -rf %s/*"%opitype_out_fold)
@@ -18,21 +47,18 @@ def hlatyping(raw_fastq_path_first,raw_fastq_path_second,opitype_fold,opitype_ou
 	os.system(cmd_hla_ext)
 	print 'hla type process done.'
 
-def mapping_qc_gatk_preprocess(fastq_1_path,fastq_2_path,CPU,STAR_index,alignment_out_fold,prefix,REFERENCE,STAR_path,stringtie_path,java_picard_path,GATK_path,dbsnp138,OneKG,mills,GTF_path,expression_fold):
-	cmd_STAR=STAR_path + " --runThreadN " + str(CPU) + " --twopassMode Basic --readFilesIn " + fastq_1_path + " " +  fastq_2_path + " --genomeDir " + STAR_index + " --outFileNamePrefix " + alignment_out_fold+'/'+prefix + " --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 64424509440 "
-	cmd_stringtie=stringtie_path + alignment_out_fold+'/'+prefix+"Aligned.sortedByCoord.out.bam" + " -o " + expression_fold+'/'+prefix+".gtf" + " -p 8 -G " + GTF_path + " -A " + expression_fold + '/' + prefix + "_gene_abund.tab"
+def mapping_qc_gatk_preprocess(fastq_1_path,fastq_2_path,CPU,STAR_index,alignment_out_fold,prefix,REFERENCE,STAR_path,java_picard_path,GATK_path,dbsnp138,OneKG,mills,GTF_path):
+	cmd_STAR=STAR_path + " --runThreadN " + str(CPU) + " --twopassMode Basic --readFilesCommand zcat --readFilesIn " + fastq_1_path + " " +  fastq_2_path + " --genomeDir " + STAR_index + " --outFileNamePrefix " + alignment_out_fold+'/'+prefix + " --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 64424509440 "
 	cmd_add_readgroup="java -Xmx4G -jar " + java_picard_path + ' AddOrReplaceReadGroups I=' + alignment_out_fold+'/'+ prefix + 'Aligned.sortedByCoord.out.bam' + ' O=' + alignment_out_fold+'/'+ prefix + '_add.bam' + ' SO=coordinate VALIDATION_STRINGENCY=SILENT RGID=id RGLB=solexa-123 RGPL=illumina RGPU=AXL2342  RGSM=WGC015802 RGCN=bi RGDT=2014-01-20'
 	cmd_picard="java -Xmx4G -jar " + java_picard_path + ' MarkDuplicates INPUT=' + alignment_out_fold+'/'+ prefix + '_add.bam' + ' OUTPUT=' + alignment_out_fold+'/'+ prefix + '_add_markdup.bam' + ' METRICS_FILE=' + alignment_out_fold+'/'+prefix + '_dup_qc.txt ASSUME_SORTED=true VALIDATION_STRINGENCY=SILENT MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=1000'
 	cmd_buildbamindex="java -Xmx4G -jar " + java_picard_path + ' BuildBamIndex I=' + alignment_out_fold+'/'+ prefix + '_add_markdup.bam' + ' O=' + alignment_out_fold+'/'+ prefix + '_add_markdup.bam.bai' + ' VALIDATION_STRINGENCY=SILENT'
 	cmd_SplitNCigarReads="java -Xmx4G -jar " + GATK_path + ' -T SplitNCigarReads -R ' + REFERENCE + ' -I '+ alignment_out_fold+'/'+ prefix + '_add_markdup.bam' + ' -rf ReassignOneMappingQuality -RMQF 255 -RMQT 60 -U ALLOW_N_CIGAR_READS -o ' + alignment_out_fold+'/'+ prefix + '_SplitNCigarReads.bam'
-	cmd_RealignerTargetCreator="java -Xmx4G -jar " + GATK_path + ' -T RealignerTargetCreator -nt 8 -dt NONE -R ' + REFERENCE + ' -I '+ alignment_out_fold+'/'+ prefix + '_SplitNCigarReads.bam' + ' -known ' + OneKG + ' -known ' + mills + ' -filterRNC -o ' + alignment_out_fold+'/'+ prefix + '.intervals'
+	cmd_RealignerTargetCreator="java -Xmx4G -jar " + GATK_path + ' -T RealignerTargetCreator -nt 16 -dt NONE -R ' + REFERENCE + ' -I '+ alignment_out_fold+'/'+ prefix + '_SplitNCigarReads.bam' + ' -known ' + OneKG + ' -known ' + mills + ' -filterRNC -o ' + alignment_out_fold+'/'+ prefix + '.intervals'
 	cmd_IndelRealigner="java -Xmx4G -jar " + GATK_path + ' -T IndelRealigner -R ' + REFERENCE + ' -I ' + alignment_out_fold+'/'+ prefix + '_SplitNCigarReads.bam' + ' -known ' + OneKG + ' -known ' + mills + ' -targetIntervals ' + alignment_out_fold+'/'+ prefix + '.intervals' + ' -filterRNC -o ' + alignment_out_fold+'/'+ prefix + '_realign.bam'
-	cmd_BaseRecalibrator="java -Xmx4G -jar " + GATK_path + ' -T BaseRecalibrator -nct 8 -R ' + REFERENCE + ' -I ' + alignment_out_fold+'/'+ prefix +'_realign.bam' + ' -knownSites ' + OneKG + ' -knownSites ' + mills + ' -knownSites ' + dbsnp138 + ' -o ' + alignment_out_fold + '/' + prefix + '.table'
-	cmd_PrintReads="java -Xmx4G -jar " + GATK_path + ' -T PrintReads -nct 8 -dt NONE -R ' + REFERENCE + ' -I ' + alignment_out_fold+'/'+ prefix + '_realign.bam' + ' -BQSR ' + alignment_out_fold + '/' + prefix + '.table' + ' -o ' + alignment_out_fold + '/' + prefix + '_recal.bam'
+	cmd_BaseRecalibrator="java -Xmx4G -jar " + GATK_path + ' -T BaseRecalibrator -nct 16 -R ' + REFERENCE + ' -I ' + alignment_out_fold+'/'+ prefix +'_realign.bam' + ' -knownSites ' + OneKG + ' -knownSites ' + mills + ' -knownSites ' + dbsnp138 + ' -o ' + alignment_out_fold + '/' + prefix + '.table'
+	cmd_PrintReads="java -Xmx4G -jar " + GATK_path + ' -T PrintReads -nct 16 -dt NONE -R ' + REFERENCE + ' -I ' + alignment_out_fold+'/'+ prefix + '_realign.bam' + ' -BQSR ' + alignment_out_fold + '/' + prefix + '.table' + ' -o ' + alignment_out_fold + '/' + prefix + '_recal.bam'
 	print cmd_STAR
 	os.system(cmd_STAR)
-	print cmd_stringtie
-	os.system(cmd_stringtie)
 	print cmd_add_readgroup
 	os.system(cmd_add_readgroup)
 	print cmd_picard
@@ -49,7 +75,31 @@ def mapping_qc_gatk_preprocess(fastq_1_path,fastq_2_path,CPU,STAR_index,alignmen
 	os.system(cmd_BaseRecalibrator)
 	print cmd_PrintReads
 	os.system(cmd_PrintReads)
-	
+
+def GATK_hp(GATK_path,REFERENCE,alignment_out_fold,prefix,CPU,dbsnp138,somatic_out_fold,vcftools_path,vep_path,vep_cache_path,netmhc_out_path,pos_1000G_file):
+	cmd_HaplotypeCaller = "java -Xmx4G -jar " + GATK_path + ' -T HaplotypeCaller -nct 32'  + ' -R ' + REFERENCE  + ' -I ' + alignment_out_fold + '/' + prefix + '_'+ 'recal.bam ' + '--dbsnp ' + dbsnp138 + ' -o ' + somatic_out_fold + '/' + prefix + '_'+ 'haplotyper.vcf' + " -dontUseSoftClippedBases -stand_call_conf 20.0"
+	print cmd_HaplotypeCaller
+	#os.system(cmd_HaplotypeCaller)
+	cmd_variantsfilter = "java -Xmx4G -jar " + GATK_path + ' -T VariantFiltration' + ' -R ' + REFERENCE + ' -V ' + somatic_out_fold + '/' + prefix + '_'+ 'haplotyper.vcf' + ' -window 35 -cluster 3 -filterName FS -filter "FS > 30.0" -filterName QD -filter "QD < 2.0" -o ' + somatic_out_fold + '/' + prefix + '_'+ 'haplotyper_filter.vcf'
+	#print cmd_variantsfilter
+	#os.system(cmd_variantsfilter)	
+	cmd_vcftools_snv=vcftools_path + " --vcf " + somatic_out_fold + '/' + prefix + '_'+ 'haplotyper_filter.vcf' + " --remove-filtered-all --remove-indels --recode --recode-INFO-all --minQ 1000 --not-chr chrM --out " + somatic_out_fold + '/' + prefix + '_'+ 'SNVs_only'
+	print cmd_vcftools_snv
+	os.system(cmd_vcftools_snv)
+	cmd_1000G_filter="python ${iTuNES_BIN_PATH}/snv_filter_1000genome.py -i " + somatic_out_fold + '/' + prefix + '_'+ 'SNVs_only.recode.vcf' + ' -g ' + pos_1000G_file + " -o " + somatic_out_fold + ' -s ' + prefix 
+	print cmd_1000G_filter
+	os.system(cmd_1000G_filter)
+	cmd_vcftools_indel=vcftools_path + " --vcf " + somatic_out_fold + '/' + prefix + '_'+ 'haplotyper_filter.vcf' + " --remove-filtered-all --keep-only-indels --recode --recode-INFO-all --not-chr chrM --out " + somatic_out_fold + '/' + prefix + '_'+ 'INDELs_only'
+	#print cmd_vcftools_indel
+	#os.system(cmd_vcftools_indel)
+	cmd_vep=vep_path + " -i " + somatic_out_fold + '/' + prefix + '_'+ 'SNVs_filter_1000.vcf' + " --cache --dir " + vep_cache_path + " --dir_cache " + vep_cache_path + " --force_overwrite --canonical --symbol -o STDOUT --offline | filter_vep --ontology --filter \"CANONICAL is YES and Consequence is missense_variant\" -o " + somatic_out_fold + '/' + prefix + '_'+ 'snv_vep_ann.txt' + " --force_overwrite"
+	print cmd_vep
+	os.system(cmd_vep)
+	cmd_snv="python ${iTuNES_BIN_PATH}/snv2fasta.py -i " + somatic_out_fold + '/' + prefix + '_'+ 'snv_vep_ann.txt' + " -o " + netmhc_out_path + " -s " + prefix
+	print cmd_snv
+	os.system(cmd_snv)	
+
+
 
 def netMHCpan(fasta_file,hla_str,netmhc_out_file,out_dir,split_num,netMHCpan_path,tmp_dir):
 	str_proc=r'''
@@ -86,7 +136,7 @@ do
 	do
 	{
 		echo ${file_l}
-		$netMHCpan -a $s -f ${out_dir}/${tmp}/${file_l} -l 8,9,10,11 > ${out_dir}/${tmp}/${s}_${file_l}_tmp_netmhc.txt
+		$netMHCpan -a $s -f ${out_dir}/${tmp}/${file_l} -l 9 > ${out_dir}/${tmp}/${s}_${file_l}_tmp_netmhc.txt
 	} &
 	done
 	wait
@@ -137,7 +187,7 @@ $samtools mpileup -f ${REFERENCE} -q 5 -Q 20 -L 10000 -d 10000 ${alignment_fold}
 java -jar $varscan mpileup2snp ${PREFIX}_tumor.fifo --output-vcf 1 > ${somatic_mutation}/${PREFIX}_varscan_snv.vcf #--output-vcf 1
 rm ${PREFIX}_tumor.fifo
 cd ..
-$vep -i ${somatic_mutation}/${PREFIX}_varscan_snv.vcf --cache --dir $vep_cache --dir_cache $vep_cache --force_overwrite  --symbol -o STDOUT --offline | filter_vep --ontology --filter "Consequence is missense_variant" -o ${somatic_mutation}/${PREFIX}_varscan_snv_vep_ann.txt --force_overwrite
+$vep -i ${somatic_mutation}/${PREFIX}_varscan_snv.vcf --cache --dir $vep_cache --dir_cache $vep_cache --force_overwrite --canonical --symbol -o STDOUT --offline | filter_vep --ontology --filter "CANONICAL is YES and Consequence is missense_variant" -o ${somatic_mutation}/${PREFIX}_varscan_snv_vep_ann.txt --force_overwrite
 python ${iTuNES_BIN_PATH}/snv2fasta.py -i ${somatic_mutation}/${PREFIX}_varscan_snv_vep_ann.txt -o ${netmhc_out} -s ${PREFIX}_varscan
 '''%(somatic_mutation_fold,alignment_out_fold,PREFIX,REFERENCE,vep_cache,netmhc_out_fold,samtools_path,varscan_path,vep_path)
 	print str_proc
@@ -209,7 +259,7 @@ Binding_Aff_Cutoff=%d
 Fpkm_Cutoff=%d
 hla_str=%s
 netctl_fold=%s
-python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i ${netmhc_out}/${PREFIX}_snv_netmhc.txt -g ${netmhc_out}/${PREFIX}_varscan_snv.fasta -o ${netmhc_out} -s ${PREFIX}_snv -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${hla_str}
+python ${iTuNES_BIN_PATH}/sm_netMHC_result_parse.py -i ${netmhc_out}/${PREFIX}_snv_netmhc.txt -g ${netmhc_out}/${PREFIX}_snv.fasta -o ${netmhc_out} -s ${PREFIX}_snv -e ${Exp_file} -a ${Binding_Aff_Fc_Cutoff} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${hla_str}
 python ${iTuNES_BIN_PATH}/netCTLPAN.py -i ${netmhc_out}/${PREFIX}_snv_final_neo_candidate.txt -o ${netctl_fold} -s ${PREFIX}_snv
 '''%(prefix,netmhc_out_fold,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,hla_str,netctl_fold)
 	print str_proc1
@@ -221,8 +271,8 @@ PREFIX=%s
 netmhc_out=%s
 #cat ${netmhc_out}/${PREFIX}_strelka_del.fasta > ${netmhc_out}/${PREFIX}_indel.fasta
 #cat ${netmhc_out}/${PREFIX}_strelka_ins.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
-cat ${netmhc_out}/${PREFIX}_varscan_del.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
-cat ${netmhc_out}/${PREFIX}_varscan_ins.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
+cat ${netmhc_out}/${PREFIX}_gatk_del.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
+cat ${netmhc_out}/${PREFIX}_gatk_ins.fasta >> ${netmhc_out}/${PREFIX}_indel.fasta
 '''%(PREFIX,netmhc_out_fold)
 	subprocess.call(str_proc3, shell=True, executable='/bin/bash')
 	netMHCpan(indel_fasta_file,hla_str,indel_netmhc_out_file,netmhc_out_fold,split_num,netMHCpan_path,'tmp_indel')
@@ -266,4 +316,108 @@ hla_str=%s
 python ${iTuNES_BIN_PATH}/gf_netMHC_result_parse.py -i ${netmhc_out}/${prefix}_genefusion_netmhc.txt -t ${netmhc_out}/${prefix}_gene_fusion.fasta -g ${gene_fusion_fold}/result/${prefix}_genefusion.results.total.tsv -o ${netmhc_out} -s ${prefix} -b ${Binding_Aff_Cutoff} -f ${Fpkm_Cutoff} -l ${hla_str}
 python ${iTuNES_BIN_PATH}/gf_netctl.py -i netmhc/${prefix}_genefusion_final_neo_candidate.txt -o netctl -s ${prefix}_gf
 '''%(netmhc_out_fold,prefix,Binding_Aff_Cutoff,Fpkm_Cutoff,hla_str)
+
+def plot_results(X, Y_, means, covariances, index, title, gmm_classification_file):
+	color_iter = itertools.cycle(['navy', 'c'])
+	splot = plt.subplot(1, 1, 1 + index)
+	#splot=plt.plot()
+	for i, (mean, covar, color) in enumerate(zip(means, covariances, color_iter)):
+		print i,color
+		v, w = linalg.eigh(covar)
+		v = 2. * np.sqrt(2.) * np.sqrt(v)
+		u = w[0] / linalg.norm(w[0])
+		# as the DP will not use every component it has access to
+		# unless it needs it, we shouldn't plot the redundant
+		# components.
+		if not np.any(Y_ == i):
+			continue
+		plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], .8, color=color)
+		# Plot an ellipse to show the Gaussian component
+		angle = np.arctan(u[1] / u[0])
+		angle = 180. * angle / np.pi  # convert to degrees
+		ell = mpl.patches.Ellipse(mean, v[0], v[1], 180. + angle, color=color)
+		ell.set_clip_box(splot.bbox)
+		ell.set_alpha(0.5)
+		splot.add_artist(ell)
+	plt.xlim(-1.0, 1.8)
+	plt.ylim(-.5, .8)
+	plt.xlabel('first component')
+	plt.ylabel('second component')
+	#plt.xticks()
+	#plt.yticks()
+	plt.title(title)
+	plt.savefig(gmm_classification_file)
+
+def immunogenicity_score_calculate(final_neo_file,gmm_classification_file,immunogenicity_score_ranking,immunogenicity_gmm_score_ranking):
+	data_neo = pd.read_table(final_neo_file,header=0,sep='\t')
+	neoantigen_infor = []
+	for i in range(len(data_neo.Gene)):
+		neo_infor = data_neo["Gene"][i]+'_'+data_neo["AA_change"][i]+'_'+data_neo["MT_pep"][i]+'_'+data_neo["WT_pep"][i]
+		neoantigen_infor.append(neo_infor)
+	data_neo["neoantigen_infor"] = neoantigen_infor
+
+	f_affinity_rank_wt=lambda x:1-(1/(1+math.pow(math.e,5*(x-2))))/2
+	f_affinity_rank_mt=lambda x:1/(1+math.pow(math.e,5*(x-2)))
+	k=1
+	f_TPM=lambda x:math.tanh(x/k)
+	f_normal_TPM=lambda x:1-math.tanh(x/k)
+	aff_mt_rank_score=data_neo.MT_Binding_level.apply(f_affinity_rank_mt)
+	aff_wt_rank_score=data_neo.WT_Binding_level.apply(f_affinity_rank_wt)
+	#allele_frequency_score=data_neo.variant_allele_frequency
+	netchop_score=data_neo.combined_prediction_score
+	#cellular_prevalence_score=data_neo.cellular_prevalence
+	tpm_score=data_neo.tpm.apply(f_TPM)
+	#tpm_normal_score=data_neo.iloc[:,22].apply(f_normal_TPM)
+	immunogenicity_score=[]
+	for i in range(len(aff_mt_rank_score)):
+		IS=aff_mt_rank_score[i]*aff_wt_rank_score[i]*tpm_score[i]*netchop_score[i]
+		immunogenicity_score.append(IS)
+	data_feature_select=pd.DataFrame()
+	data_feature_select["neoantigen_infor"]=neoantigen_infor
+	data_feature_select["aff_mt_rank_score"]=aff_mt_rank_score
+	data_feature_select["aff_wt_rank_score"]=aff_wt_rank_score
+	data_feature_select["tpm_score"]=tpm_score
+	#data_feature_select["tpm_normal_score"]=tpm_normal_score
+	#data_feature_select["allele_frequency_score"]=allele_frequency_score
+	data_feature_select["netchop_score"]=netchop_score
+	#data_feature_select["cellular_prevalence_score"]=cellular_prevalence_score
+	data_feature_select["immunogenicity_score"]=immunogenicity_score
+	data_feature_select_sorted=data_feature_select.sort_values(["immunogenicity_score"],ascending=False)
+	data_feature_select_sorted.to_csv(immunogenicity_score_ranking,header=1,index=0,sep='\t')
+	X_neo = data_feature_select.values[:,1:5]
+	####pca on non-standardized data of all 4 feature
+	pca = PCA(n_components=2).fit(X_neo)
+	X_neo_pca = pca.transform(X_neo)
+	#print "PCA result on non-standardized data"
+	#print "explained_variance_ratio",pca.explained_variance_ratio_
+	#print "explained_variance",pca.explained_variance_
+	#print pca.n_components_
+	#print pca.components_
+	###plot GMM ellipse
+	# Fit a Gaussian mixture with EM using five components
+	gmm = mixture.GaussianMixture(n_components=2, covariance_type='full',n_init=5).fit(X_neo_pca)
+	plot_results(X_neo_pca, gmm.predict(X_neo_pca), gmm.means_, gmm.covariances_, 0,'Gaussian Mixture',gmm_classification_file)
+	#plot_results(X_neo_pca, gmm.predict(X_neo_pca), gmm.means_, gmm.covars_, 0, 'Gaussian Mixture')
+	predict_label=gmm.predict(X_neo_pca)
+	predict_prob=gmm.predict_proba(X_neo_pca)
+	predict_positive_prob=[]
+	for i in range(len(predict_prob)):
+		pos_prob=predict_prob[i][1]
+		predict_positive_prob.append(pos_prob)
+	data_feature_select["gmm_label"]=predict_label
+	data_gmm_filter_1=data_feature_select[data_feature_select["gmm_label"]==1]
+	data_gmm_filter_1_scoreAve=data_gmm_filter_1.immunogenicity_score.sum()/len(data_gmm_filter_1.immunogenicity_score)
+	data_gmm_filter_0=data_feature_select[data_feature_select["gmm_label"]==0]
+	data_gmm_filter_0_scoreAve=data_gmm_filter_0.immunogenicity_score.sum()/len(data_gmm_filter_0.immunogenicity_score)
+	if data_gmm_filter_0_scoreAve > data_gmm_filter_1_scoreAve:
+		data_gmm_filter_0.gmm_label=1
+		data_gmm_filter_1.gmm_label=0
+	else:
+		pass
+	data_labeled=pd.concat([data_gmm_filter_1,data_gmm_filter_0])
+	data_label_sorted=data_labeled.sort_values(["immunogenicity_score"],ascending=False)
+	#data_label_sorted.to_csv("gmm_score_sorted.txt",header=1,index=0,sep='\t')
+	data_gmm_positive=data_label_sorted[data_label_sorted["gmm_label"]==1]
+	data_gmm_positive.to_csv(immunogenicity_gmm_score_ranking,header=1,index=0,sep='\t')
+
 

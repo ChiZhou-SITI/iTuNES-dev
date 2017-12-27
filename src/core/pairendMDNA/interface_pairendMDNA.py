@@ -20,6 +20,7 @@ def PEMD(opts):
 	opitype_ext='${iTuNES_BIN_PATH}/optitype_ext.py'
 	prefix=config_list["sample_name"]
 	CPU=config_list["thread_number"]
+	vcftools_path=config_list["vcftools_path"]
 	REFERENCE=config_list["reference_path"]
 	BWA_INDEX=config_list["bwa_index_path"]
 	GENOME=config_list["genome"]
@@ -38,12 +39,15 @@ def PEMD(opts):
 	vep_cache=config_list["vep_cache_path"]
 	varscan_path=config_list["varscan_path"]
 	vep_path=config_list["vep_path"]
+	clean_fastq_fold=output_fold + '/' + 'clean_fastq'
 	netmhc_out_fold=output_fold + '/' + 'netmhc'
 	strelka_out_fold=output_fold + '/' + 'strelka'
+	logfile_out_fold=output_fold + '/' + 'logfile'
+	bamstat_out_fold=output_fold + '/' + 'bamstat'
 	indel_fasta_file=netmhc_out_fold+'/'+prefix+'_indel.fasta'
 	hla_str=config_list["hla_str"]
 	indel_netmhc_out_file=netmhc_out_fold+'/'+prefix+'_indel_netmhc.txt'
-	split_num=1000
+	split_num=100
 	binding_fc_aff_cutoff=int(config_list["binding_fc_aff_cutoff"])
 	binding_aff_cutoff=int(config_list["binding_aff_cutoff"])
 	fpkm_cutoff=int(config_list["fpkm_cutoff"])
@@ -61,31 +65,39 @@ def PEMD(opts):
 	rna_fastq_2_path=config_list["tumor_rna_fastq_2"]
 	kallisto_path=config_list["kallisto_path"]
 	kallisto_out_fold=output_fold + '/' + 'expression'
-	kallisto_index_path=config_list["kallisto_index_path"]
+	kallisto_cdna_path=config_list["kallisto_cdna_path"]
 	final_neo_file=netctl_out_fold + '/' + prefix + '_pyclone_neo.txt'
 	candidate_neoantigens_fold=output_fold + '/' + 'candidate_neoantigens'
 	immunogenicity_score_ranking_file=candidate_neoantigens_fold + '/' + prefix + '_immunogenicity_score_ranking.txt'
+
 	neo_for_rankagg_file=netctl_out_fold + '/' + prefix + '_neo_for_rankagg.txt'
 	neo_rank_agg_result=candidate_neoantigens_fold + '/'+ prefix + '_neo_rankagg_score_ranking.txt'
 	trimmomatic_path=config_list["trimmomatic_path"]
 	adapter_path=config_list["adapter_path"]
-	tumor_fastq_prefix_first=os.path.splitext(os.path.basename(tumor_fastq_path_first))[0]
-	tumor_fastq_prefix_second=os.path.splitext(os.path.basename(tumor_fastq_path_second))[0]
-	tumor_fastq_dir=os.path.dirname(tumor_fastq_path_first)
-	tumor_fastq_clean_first=fastq_dir + '/' + tumor_fastq_prefix_first + "_clean.fastq"
-	tumor_fastq_clean_second=fastq_dir + '/' + tumor_fastq_prefix_second + "_clean.fastq"
-	tumor_fastq_unpaired_first=fastq_dir + '/' + tumor_fastq_prefix_first + "_unpaired.fastq"
-	tumor_fastq_unpaired_second=fastq_dir + '/' + tumor_fastq_prefix_second + "_unpaired.fastq"
+	tumor_fastq_prefix=clean_fastq_fold + '/' + prefix + "_tumor_clean.fq.gz"
+	normal_fastq_prefix=clean_fastq_fold + '/' + prefix + "_normal_clean.fq.gz"
 	
-	normal_fastq_prefix_first=os.path.splitext(os.path.basename(normal_fastq_path_first))[0]
-	normal_fastq_prefix_second=os.path.splitext(os.path.basename(normal_fastq_path_second))[0]
-	normal_fastq_dir=os.path.dirname(normal_fastq_path_first)
-	normal_fastq_clean_first=fastq_dir + '/' + normal_fastq_prefix_first + "_clean.fastq"
-	normal_fastq_clean_second=fastq_dir + '/' + normal_fastq_prefix_second + "_clean.fastq"
-	normal_fastq_unpaired_first=fastq_dir + '/' + normal_fastq_prefix_first + "_unpaired.fastq"
-	normal_fastq_unpaired_second=fastq_dir + '/' + normal_fastq_prefix_second + "_unpaired.fastq"
+	#tumor_fastq_prefix_first=os.path.splitext(os.path.basename(tumor_fastq_path_first))[0]
+	#tumor_fastq_prefix_second=os.path.splitext(os.path.basename(tumor_fastq_path_second))[0]
+	#tumor_fastq_dir=os.path.dirname(tumor_fastq_path_first)
+	tumor_fastq_dir=clean_fastq_fold
+	tumor_fastq_clean_first=clean_fastq_fold + '/' + prefix + "_tumor_clean_1P.fq.gz"
+	tumor_fastq_clean_second=clean_fastq_fold + '/' + prefix + "_tumor_clean_2P.fq.gz"
+	
+	#normal_fastq_prefix_first=os.path.splitext(os.path.basename(normal_fastq_path_first))[0]
+	#normal_fastq_prefix_second=os.path.splitext(os.path.basename(normal_fastq_path_second))[0]
+	#normal_fastq_dir=os.path.dirname(normal_fastq_path_first)
+	normal_fastq_dir=clean_fastq_fold
+	normal_fastq_clean_first=clean_fastq_fold + '/' + prefix + "_normal_clean_1P.fq.gz"
+	normal_fastq_clean_second=clean_fastq_fold + '/' + prefix + "_normal_clean_2P.fq.gz"
 
-
+	gmm_classification_file=netctl_out_fold + '/' + prefix + '_gmm.png'
+	immunogenicity_gmm_score_ranking=netctl_out_fold + '/' + prefix + '_gmm_score.txt'
+	immunogenicity_score_ranking_1=netctl_out_fold + '/' + prefix + '_score_ranking_1.txt'
+	immunogenicity_score_ranking_2=netctl_out_fold + '/' + prefix + '_score_ranking_2.txt'
+	iedb_seq_file=config_list["iedb_seq_file"]
+	postive_pep_file=config_list["postive_pep_file"]
+	negative_pep_file=config_list["negative_pep_file"]
 	print cancer_type
 	if os.path.exists(rna_fastq_1_path) and os.path.exists(rna_fastq_2_path):
 		exp_file=output_fold + '/' + "expression/abundance.tsv"
@@ -169,10 +181,10 @@ def PEMD(opts):
 	else:
 		print "ERROR: no index file and no genome.fa to build it"
 		os._exit(1)
-	if os.path.exists(kallisto_index_path): 
-		print "kallisto index path:%s"%(kallisto_index_path)
+	if os.path.exists(kallisto_cdna_path): 
+		print "kallisto cdna reference path:%s"%(kallisto_cdna_path)
 	else:
-		print "ERROR: no index file and no genome.fa to build it"
+		print "ERROR: no kallisto cdna reference file"
 		os._exit(1)
 	#####check output directory###
 	print "check output directory"
@@ -195,57 +207,67 @@ def PEMD(opts):
 	if not os.path.exists(candidate_neoantigens_fold):
 		os.mkdir(candidate_neoantigens_fold)
 	if not os.path.exists(candidate_neoantigens_fold):
-		os.mkdir(candidate_neoantigens_fold)			
+		os.mkdir(candidate_neoantigens_fold)
+	if not os.path.exists(logfile_out_fold):
+		os.mkdir(logfile_out_fold)	
+	if not os.path.exists(bamstat_out_fold):
+		os.mkdir(bamstat_out_fold)
+	if not os.path.exists(clean_fastq_fold):
+		os.mkdir(clean_fastq_fold)		
 	print "start fastq quality control"
 	processes_0=[]
-	q1=multiprocessing.Process(target=read_trimmomatic,args=(tumor_fastq_path_first,tumor_fastq_path_second,trimmomatic_path,adapter_path,tumor_fastq_clean_first,tumor_fastq_clean_second,tumor_fastq_unpaired_first,tumor_fastq_unpaired_second,))
+	q1=multiprocessing.Process(target=read_trimmomatic,args=(tumor_fastq_path_first,tumor_fastq_path_second,trimmomatic_path,adapter_path,tumor_fastq_prefix,logfile_out_fold,"tumor",CPU,))
 	processes_0.append(q1)
-	q2=multiprocessing.Process(target=read_trimmomatic,args=(normal_fastq_path_first,normal_fastq_path_second,trimmomatic_path,adapter_path,normal_fastq_clean_first,normal_fastq_clean_second,normal_fastq_unpaired_first,normal_fastq_unpaired_second,))
+	q2=multiprocessing.Process(target=read_trimmomatic,args=(normal_fastq_path_first,normal_fastq_path_second,trimmomatic_path,adapter_path,normal_fastq_prefix,logfile_out_fold,"normal",CPU,))
 	processes_0.append(q2)
-	for p in processes_0:
-		p.daemon = True
-		p.start()
-	for p in processes_0:
-		p.join()
-
+	#for p in processes_0:
+	#	p.daemon = True
+	#	p.start()
+	#for p in processes_0:
+	#	p.join()
 
 	print "start stage 1"
 	processes_1=[]
 	if hla_str=="None":
-		d1=multiprocessing.Process(target=hlatyping,args=(tumor_fastq_clean_first,tumor_fastq_clean_second,opitype_fold,opitype_out_fold,opitype_ext,prefix,))
+		d1=multiprocessing.Process(target=hlatyping,args=(tumor_fastq_path_first,tumor_fastq_path_second,opitype_fold,opitype_out_fold,opitype_ext,prefix,))
  		#processes_1.append(d1)
  		#q.put('hlatyping') 		
  		#hla_str=open(opitype_out_fold+'/'+prefix+"_optitype_hla_type").readlines()[0]
  	else:
  		print "hla type provided!"
- 	#d2=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(normal_fastq_clean_first,normal_fastq_clean_second,'normal',CPU,BWA_INDEX,GENOME,alignment_out_fold,prefix,REFERENCE,bwa_path,samtools_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,))
- 	#processes_1.append(d2)
+ 	d2=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(normal_fastq_clean_first,normal_fastq_clean_second,'normal',CPU,BWA_INDEX,GENOME,alignment_out_fold,prefix,REFERENCE,bwa_path,samtools_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,logfile_out_fold,bamstat_out_fold,))
+ 	processes_1.append(d2)
  	#q.put('normal_qc')
- 	#d3=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(tumor_fastq_path_first,tumor_fastq_path_second,'tumor',CPU,BWA_INDEX,GENOME,alignment_out_fold,prefix,REFERENCE,bwa_path,samtools_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,))
- 	#processes_1.append(d3)
- 	d4=multiprocessing.Process(target=kallisto_expression,args=(rna_fastq_1_path,rna_fastq_2_path,kallisto_path,kallisto_out_fold,prefix,kallisto_index_path,))
- 	processes_1.append(d4)
- 	#q.put('tumor_qc')
+ 	d3=multiprocessing.Process(target=mapping_qc_gatk_preprocess,args=(tumor_fastq_path_first,tumor_fastq_path_second,'tumor',CPU,BWA_INDEX,GENOME,alignment_out_fold,prefix,REFERENCE,bwa_path,samtools_path,java_picard_path,GATK_path,dbsnp138_path,OneKG_path,mills_path,logfile_out_fold,bamstat_out_fold,))
+ 	processes_1.append(d3)
+ 	if os.path.exists(rna_fastq_1_path):
+ 		d4=multiprocessing.Process(target=kallisto_expression,args=(rna_fastq_1_path,rna_fastq_2_path,kallisto_path,kallisto_out_fold,prefix,kallisto_cdna_path,logfile_out_fold,))
+ 		processes_1.append(d4)
+ 		#q.put('tumor_qc')
+ 	else:
+ 		print "RNA sequence not found, the kallisto will not be run!"
  	#for p in processes_1:
 	#	p.daemon = True
 	#	p.start()
 	#for p in processes_1:
 	#	p.join()
-	#print 'stage 1 done.'
+	print 'stage 1 done.'
 	if exp_file!="None" and os.path.exists(exp_file):
 		print "check expression file done."
-	elif exp_file=="None":
+	elif exp_file=="no_exp":
 		print "no expression file provided."
 	else:
 		print "please check your expression file path!"
 		os._exit(1)
 	print 'start stage 2'
 	processes_2=[]
-	h1=multiprocessing.Process(target=varscan_somatic_caling_drift,args=(somatic_mutation_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,))
-	processes_2.append(h1)
+	h0=multiprocessing.Process(target=GATK_mutect2,args=(GATK_path,REFERENCE,alignment_out_fold,prefix,CPU,dbsnp138_path,cosmic_path,somatic_mutation_fold,vcftools_path,vep_path,vep_cache,netmhc_out_fold,))
+	processes_2.append(h0)
+	#h1=multiprocessing.Process(target=varscan_somatic_caling_drift,args=(somatic_mutation_fold,alignment_out_fold,prefix,REFERENCE,vep_cache,samtools_path,varscan_path,vep_path,netmhc_out_fold,logfile_out_fold,))
+	#processes_2.append(h1)
 	#h2=multiprocessing.Process(target=indel_calling_drift,args=(strelka_out_fold,strelka_path,alignment_out_fold,prefix,REFERENCE,vep_cache,netmhc_out_fold,CPU,vep_path,))
 	#processes_2.append(h2)
-	#h3=multiprocessing.Process(target=varscan_copynumber_calling,args=(varscan_copynumber_fold,prefix,alignment_out_fold,REFERENCE,samtools_path,varscan_path,))
+	#h3=multiprocessing.Process(target=varscan_copynumber_calling,args=(varscan_copynumber_fold,prefix,alignment_out_fold,REFERENCE,samtools_path,varscan_path,logfile_out_fold))
 	#processes_2.append(h3)
 	#for p in processes_2:
 	#	p.daemon = True
@@ -259,17 +281,17 @@ def PEMD(opts):
 	processes_3=[]
 	t2=multiprocessing.Process(target=varscan_neo,args=(snv_fasta_file,hla_str,snv_netmhc_out_file,netmhc_out_fold,split_num,prefix,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
 	processes_3.append(t2)
-	t3=multiprocessing.Process(target=indel_neo,args=(somatic_mutation_fold,prefix,vep_cache,netmhc_out_fold,vep_path,indel_fasta_file,hla_str,indel_netmhc_out_file,split_num,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
-	processes_3.append(t3)
+	#t3=multiprocessing.Process(target=indel_neo,args=(somatic_mutation_fold,prefix,vep_cache,netmhc_out_fold,vep_path,indel_fasta_file,hla_str,indel_netmhc_out_file,split_num,exp_file,binding_fc_aff_cutoff,binding_aff_cutoff,fpkm_cutoff,netctl_out_fold,netMHCpan_path,))
+	#processes_3.append(t3)
 	#for p in processes_3:
 	#	p.daemon = True
 	#	p.start()
 	#for p in processes_3:
 	#	p.join()
-	#print "stage 3 done."
+	print "stage 3 done."
 	print 'start stage 4.'
 	processes_4=[]
-	l1=multiprocessing.Process(target=pyclone_annotation,args=(somatic_mutation_fold,varscan_copynumber_fold,prefix,pyclone_fold,netctl_out_fold,coverage,pyclone_path,cancer_type,))
+	l1=multiprocessing.Process(target=pyclone_annotation,args=(somatic_mutation_fold,varscan_copynumber_fold,prefix,pyclone_fold,netctl_out_fold,coverage,pyclone_path,cancer_type,logfile_out_fold))
 	processes_4.append(l1)	
 	#for p in processes_4:
 	#	p.daemon = True
@@ -278,18 +300,22 @@ def PEMD(opts):
 	#	p.join()
 	print 'stage 4 done.'
 	print 'start stage 5.'
+	clf_mlp=Train_hydrophobicity_mpl(postive_pep_file,negative_pep_file)
+	print clf_mlp
 	processes_5=[]
-	r1=multiprocessing.Process(target=immunogenicity_score_calculate,args=(final_neo_file,immunogenicity_score_ranking_file,))
+	r1=multiprocessing.Process(target=immunogenicity_score_calculate,args=(clf_mlp,final_neo_file,iedb_seq_file,gmm_classification_file,immunogenicity_score_ranking_1,immunogenicity_score_ranking_2,immunogenicity_gmm_score_ranking,))
 	processes_5.append(r1)	
-	r2=multiprocessing.Process(target=rankagg_score_calculate,args=(final_neo_file,neo_for_rankagg_file,neo_rank_agg_result,))
-	processes_5.append(r2)
-	#for p in processes_5:
-	#	p.daemon = True
-	#	p.start()
-	#for p in processes_5:
-	#	p.join()		
+	#r2=multiprocessing.Process(target=rankagg_score_calculate,args=(final_neo_file,neo_for_rankagg_file,neo_rank_agg_result,))
+	#processes_5.append(r2)
+	for p in processes_5:
+		p.daemon = True
+		p.start()
+	for p in processes_5:
+		p.join()		
 	print 'stage 5 done.'
 	print 'Done!'
+	print 'fpkm_cutoff'
+	print fpkm_cutoff
 '''
 	if os.path.exists(alignment_out_fold):
 		shutil.rmtree(alignment_out_fold)
