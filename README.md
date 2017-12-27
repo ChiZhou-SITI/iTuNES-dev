@@ -38,6 +38,9 @@ iTuNes currently test on x86_64 on ubuntu 16.04.
 * [Picard tools](https://broadinstitute.github.io/picard/)
 * [Java 8](https://java.com/en/download/help/linux_x64rpm_install.xml)
 
+#### Required software:
+* [yaml]()
+
 ## Installation
 
 1. Install all software listed above.
@@ -50,15 +53,15 @@ iTuNes currently test on x86_64 on ubuntu 16.04.
 files; see the References section in the [user manual](/doc/iTuNES_User_Manual.md)
 for a detailed description.
 
-4. Fill in the config.ini file  
-    see the config.ini file for more information
+4. Fill in the config.yaml file  
+    see the config.yaml file for more information
 
 ## Usage
 
 Here is a simple example in which somatic mutation calls and gene expression data are
 provided, and MHC binding is predicted for HLA types HLA-A01:01 and HLA-B08:01. 
 
-    python path/to/iTuNES.py -i config.ini
+    python path/to/iTuNES.py -i config.yaml
 
 All options can be displayed using the usage information with the `-h` option:   
 
@@ -67,7 +70,7 @@ All options can be displayed using the usage information with the `-h` option:
 
 ## User Manual 
 For detailed information about usage, input and output files, test examples and data
-preparation read the [iTuNES User Manual](/doc/MuPeXI_User_Manual.md)
+preparation read the [iTuNES User Manual](/doc/iTuNES_User_Manual.md)
 
 
 ## Contact   
