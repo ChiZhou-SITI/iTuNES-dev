@@ -75,13 +75,15 @@ preparation read the [iTuNES User Manual](/doc/iTuNES_User_Manual.md)
 
 ## Contact   
 
-Chi Zhou
-1410782Chiz@tongji.edu.cn
+Chi Zhou  
+1410782Chiz@tongji.edu.cn  
 
 
-Biological and Medical Big data Mining Lab 
-Tongji University
-http://bm2.runyoo.com/
+Biological and Medical Big data Mining Lab  
+Tongji University  
+http://bm2.runyoo.com/  
+
+
 
 
 ## Algorithmic Flow Chart  
