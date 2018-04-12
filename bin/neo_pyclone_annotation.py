@@ -137,7 +137,7 @@ del data_neo["tap_prediction_score"]
 data_fill_na=data_neo.fillna(0)
 ####HLA:0201 and sort by aff_rank
 data_drop=data_fill_na.drop_duplicates(subset=["Gene","MT_pep","WT_pep"])
-data_sort=data_drop.sort_values(["MT_Binding_level"],ascending=True)
+data_sort=data_drop.sort_values(["MT_Binding_Aff"],ascending=True)
 #print data_sort
 data_sort.to_csv(out_dir+'/'+sample_id+'_pyclone_neo.txt',header=1,sep='\t',index=0)
 

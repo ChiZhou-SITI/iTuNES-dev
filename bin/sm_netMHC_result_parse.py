@@ -146,7 +146,7 @@ for i in range(len(MT_neo)):
 			WT_record.append(WT_neo[i][j])
 
 candidate_neo = open(out_dir+'/'+sample_id+"_tmp_neo_candidate.txt",'w')
-candidate_neo.write('\t'.join(['#Position','HLA_type','Gene','Transcript_name','Mutation','AA_change','MT_pep','WT_pep','MT_Binding_affinity','WT_Binding_affinity','MT_Binding_level','WT_Binding_level','MT_Binding_level_des','WT_Binding_level_des','fold_change','DAI']) + '\n')
+candidate_neo.write('\t'.join(['#Position','HLA_type','Gene','Transcript_name','Mutation','AA_change','MT_pep','WT_pep','MT_Binding_Aff','WT_Binding_Aff','MT_Binding_level_des','WT_Binding_level_des','fold_change']) + '\n')
 for i in range(len(WB_SB_MT_record)):
     mt_record = [line for line in WB_SB_MT_record[i].split(' ') if line!='']
     HLA_tp = mt_record[1]
@@ -156,20 +156,18 @@ for i in range(len(WB_SB_MT_record)):
     cdna_change = cdna_record[i]
     chrom_pos_rec = chrom_pos_record[i]
     mt_pep = mt_record[2]
-    mt_binding_aff = mt_record[12]
-    mt_binding_level=mt_record[13]
+    mt_binding_rank=mt_record[13]
     mt_binding_level_des = mt_record[-1]
     wt_record = [i for i in WT_record[i].split(' ') if i!='']
     wt_pep = wt_record[2]
-    wt_binding_aff = wt_record[12]
-    wt_binding_level=wt_record[13]
+    wt_binding_rank=wt_record[13]
     if wt_record[-1]=='SB' or wt_record[-1]=='WB':
         wt_binding_level_des = wt_record[-1]
     else:
         wt_binding_level_des = 'NB'
-    fold_change = float(wt_binding_aff)/float(mt_binding_aff)
-    DAI = float(wt_binding_aff) - float(mt_binding_aff)
-    out_line = '\t'.join((chrom_pos_rec,HLA_tp,gene,transcript_n,cdna_change,ani_change,mt_pep,wt_pep,mt_binding_aff,wt_binding_aff,mt_binding_level,wt_binding_level,mt_binding_level_des,wt_binding_level_des,str(fold_change),str(DAI)))
+    fold_change = float(wt_binding_rank)/float(mt_binding_rank)
+    #DAI = float(wt_binding_aff) - float(mt_binding_aff)
+    out_line = '\t'.join((chrom_pos_rec,HLA_tp,gene,transcript_n,cdna_change,ani_change,mt_pep,wt_pep,mt_binding_rank,wt_binding_rank,mt_binding_level_des,wt_binding_level_des,str(fold_change)))
     candidate_neo.write(out_line + '\n')
 candidate_neo.close()
     
@@ -181,9 +179,9 @@ f=lambda x: x.split('.')[0]
 data=pd.read_table(out_dir+'/'+sample_id+"_tmp_neo_candidate.txt",header=0,sep='\t')
 if expression_fpkm_file=='no_exp':
 	print "You did not provide expression file, the expression filter will not be done."
-	final_filter_data=data[(data.MT_Binding_affinity<int(binding_affinity_cutoff))] 
+	final_filter_data=data[(data.MT_Binding_Aff<int(binding_affinity_cutoff))] 
 elif os.path.exists(expression_fpkm_file):
-	first_filter_data=data[(data.MT_Binding_affinity<int(binding_affinity_cutoff))]
+	first_filter_data=data[(data.MT_Binding_Aff<int(binding_affinity_cutoff))]
 	exp = pd.read_table(expression_fpkm_file,header=0,sep='\t')
 	gene_exp = exp.loc[:,['target_id','tpm']]
 	gene_exp["target_id"]=gene_exp.target_id.apply(f)
@@ -195,7 +193,9 @@ else:
 	sys.exit(2)
 #os.remove(out_dir+'/'+sample_id+"_tmp_neo_candidate.txt")
 #print final_filter_data
-final_filter_data.to_csv(out_dir+'/'+sample_id+"_final_neo_candidate.txt",header=1,sep='\t',index=0)
+final_filter_data_aa_change=final_filter_data[final_filter_data.MT_pep!=final_filter_data.WT_pep]
+final_filter_data_specific=final_filter_data_aa_change[(final_filter_data_aa_change.MT_Binding_Aff<=2) & (final_filter_data_aa_change.WT_Binding_Aff>2)]
+final_filter_data_specific.to_csv(out_dir+'/'+sample_id+"_final_neo_candidate.txt",header=1,sep='\t',index=0)
 
     
 

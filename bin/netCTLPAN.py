@@ -62,9 +62,9 @@ tap_prediction_score=[]
 cleavage_prediction_score=[]
 combined_prediction_score=[]
 for net in net_res:
-    tap_prediction_score.append(net[2])
-    cleavage_prediction_score.append(net[3])
-    combined_prediction_score.append(net[4])
+    tap_prediction_score.append(net[3])
+    cleavage_prediction_score.append(net[4])
+    combined_prediction_score.append(net[5])
 pdata={'tap_prediction_score':tap_prediction_score,'cleavage_prediction_score':cleavage_prediction_score,'combined_prediction_score':combined_prediction_score}
 
 data_pdata=pd.DataFrame(pdata) 
@@ -81,9 +81,9 @@ for i in range(len(data_con.Gene)):
 	else:
 		whether_driver_gene.append('FALSE')
 data_con['DriverGene_Lable'] = whether_driver_gene
-data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','Mutation','MT_pep','WT_pep'])
-#data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','MT_pep','WT_pep'])
-data_con_sort=data_con_drop.sort_values(['MT_Binding_level','fold_change'],ascending=[1, 1])
+#data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','Mutation','MT_pep','WT_pep'])
+data_con_drop=data_con.drop_duplicates(subset=['#Position','HLA_type','Gene','MT_pep','WT_pep'])
+data_con_sort=data_con_drop.sort_values(['MT_Binding_Aff','fold_change'],ascending=[1, 1])
 data_has_change_aa=data_con_sort[data_con_sort.MT_pep!=data_con_sort.WT_pep]
 data_has_change_aa.to_csv(out_dir+'/'+sample_id+'_netctl_concact.txt',sep='\t',header=1,index=0)	 
 if os.path.exists(out_dir+'/'+sample_id+'_tmp.txt'):    
