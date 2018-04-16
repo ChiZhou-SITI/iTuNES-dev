@@ -76,7 +76,7 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
         git clone https://github.com/XIAOCHIZI/iTuNES-dev.git
 
-4.Reference data includes genome fasta, cDNA, peptide, cosmic reference(GRCh38 build) could be downloaded through:
+4. Reference data includes genome fasta, cDNA, peptide, cosmic reference(GRCh38 build) could be downloaded through:
 
         bash data_download.sh
         
