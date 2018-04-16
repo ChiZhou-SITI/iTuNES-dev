@@ -50,6 +50,12 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 * [GATK 3.7](https://software.broadinstitute.org/gatk/best-practices/)
 * [Picard tools](https://broadinstitute.github.io/picard/)
 * [Java 8](https://java.com/en/download/help/linux_x64rpm_install.xml)
+* [Varscan2](http://varscan.sourceforge.net/)
+* [kallisto](http://pachterlab.github.io/kallisto/)
+* [trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
+* [vcftools](http://vcftools.sourceforge.net/)
+* [bllast](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+
 
 #### Python modules:
 * [multiprocessing]
@@ -70,7 +76,8 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
         git clone https://github.com/XIAOCHIZI/iTuNES-dev.git
 
-4. If not already on your system, reference files from GRCh38 should be obtained. These
-include cDNA, peptide and cosmic references, look under References (below)
-for a detailed description.
+4.Reference data includes genome fasta, cDNA, peptide, cosmic reference(GRCh38 build)
+could be downloaded through 
+    `bash data_download,sh`
+
 
