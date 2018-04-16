@@ -54,13 +54,13 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 * [kallisto](http://pachterlab.github.io/kallisto/)
 * [trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
 * [vcftools](http://vcftools.sourceforge.net/)
-* [bllast](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+* [blast](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
 
 #### Python modules:
-* [multiprocessing]
-* [pyper]
-* [sklearn]
+    multiprocessing
+    pyper
+    sklearn
 
 ## Installation 
 
@@ -78,6 +78,24 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
 4.Reference data includes genome fasta, cDNA, peptide, cosmic reference(GRCh38 build)
 could be downloaded through 
-    `bash data_download,sh`
 
+        bash data_download.sh
+        
+all reference data would be in the fold database, including:
+
+        [Genome reference]
+        Homo_sapiens_assembly38.fasta
+        dbsnp_138.hg38.vcf.gz
+        hapmap_3.3.hg38.vcf.gz
+        1000G_phase1.snps.high_confidence.hg38.vcf.gz
+        1000G_omni2.5.hg38.vcf.gz
+        Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+        CosmicCodingMuts_chr_M_sorted.vcf.gz
+        
+        [EnsemblVEP]
+        homo_sapiens_vep_89_GRCh38.tar.gz
+        
+        [cDNA and protein]
+        Homo_sapiens.GRCh38.cdna.all.fa
+        Homo_sapiens.GRCh38.pep.all.fa
 
