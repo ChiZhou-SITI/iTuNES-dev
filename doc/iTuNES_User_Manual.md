@@ -80,7 +80,7 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
         bash data_download.sh
         
-    all reference data would be in the fold database, including:
+    all reference data would be in the fold `database`, including:
 
         [Genome reference]
         Homo_sapiens_assembly38.fasta
