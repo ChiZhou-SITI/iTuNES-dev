@@ -54,7 +54,7 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 * [kallisto](http://pachterlab.github.io/kallisto/)
 * [trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
 * [vcftools](http://vcftools.sourceforge.net/)
-* [blast](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
+* [blast](http://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
 
 
 #### Python modules:
