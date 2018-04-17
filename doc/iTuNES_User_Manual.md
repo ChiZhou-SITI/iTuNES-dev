@@ -100,3 +100,14 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
+
+
+## Usage
+
+After installation iTuNES is called as follows. Here is an example where the reference
+files and other options are stated in the config.yaml file and HLA types are HLA-A01:01 and HLA-B08:01. 
+The config file is specified using the `-c` option
+
+    path/to/iTuNES.py -c path/to/config.yaml
+
+
