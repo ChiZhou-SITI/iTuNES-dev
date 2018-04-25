@@ -161,6 +161,7 @@ The following references are required for iTuNES to run:
         [cDNA and protein]
         Homo_sapiens.GRCh38.cdna.all.fa
         Homo_sapiens.GRCh38.pep.all.fa
+        
 * EnsemblVEP: VEP cache database.   
 
         [EnsemblVEP]
@@ -168,10 +169,12 @@ The following references are required for iTuNES to run:
 
 It should be emphasized that it is of very high importance that the references and VEP
 match in release version (e.g. release-89).
+
 * Cosmic 
 TSV file containing known cancer driver genes. The cancer gene census can be
 downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
 
+### Training dataset
 
 
 ## Output Files 
