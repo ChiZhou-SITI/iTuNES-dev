@@ -179,15 +179,22 @@ iTuNES output four result files contains information of identified neoantigens c
 
 The output files are the following: 
 1.  snv.model.tsv 
+
     The file is a TSV file with the extracted mutated peptides derived from nonsynonymous point mutation with a model-based
     score measures the immunity of neoantigens in in-vivo experiment such as `ELISPOT` and `ICS`. 
+    
 2.  indel.model.tsv
+
     The file is a TSV file with the extracted mutated peptides derived from INDEL mutation with a model-based score measures
     the immunity of neoantigens in in-vivo experiment such as `ELISPOT` and `ICS`.
+    
 3.  snv.score.tsv
+
     The file is a TSV file with the extracted mutated peptides derived from nonsynonymous point mutation with a priority
     score measures the in-vitro immunogecity of neoantigens.
+    
 4.  indel.score.tsv
+
     The file is a TSV file with the extracted mutated peptides derived from INDEL mutation with a priority score
     measures the in-vitro immunogecity of neoantigens.
 
