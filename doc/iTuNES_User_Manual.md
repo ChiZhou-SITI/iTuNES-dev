@@ -168,23 +168,25 @@ The following references are required for iTuNES to run:
 It should be emphasized that it is of very high importance that the references and VEP
 match in release version (e.g. release-89).
 * Cosmic 
-
-        TSV file containing known cancer driver genes. The cancer gene census can be
-        downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
+TSV file containing known cancer driver genes. The cancer gene census can be
+downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
 
 ## Output Files 
 iTuNES output four result files contains information of identified neoantigens corresponding to nonsynonymous point mutation and INDEL mutation.
 
 The output files are the following: 
-1.  .snv.model 
-    The main output file containing a TSV file with the extracted mutated peptides and
-    all the information needed to choose the wanted peptides. 
-2.  .indel.model
-
-3.  .snv.score
-
-4.  .indel.score
-
+1.  snv.model.tsv 
+    The file is a TSV file with the extracted mutated peptides derived from nonsynonymous point mutation with a model-based
+    score measures the immunity of neoantigens in in-vivo experiment such as `ELISPOT` and `ICS`. 
+2.  indel.model.tsv
+    The file is a TSV file with the extracted mutated peptides derived from INDEL mutation with a model-based score measures
+    the immunity of neoantigens in in-vivo experiment such as `ELISPOT` and `ICS`.
+3.  snv.score.tsv
+    The file is a TSV file with the extracted mutated peptides derived from nonsynonymous point mutation with a priority    
+    score measures the in-vitro immunogecity of neoantigens.
+4.  indel.score.tsv
+    The file is a TSV file with the extracted mutated peptides derived from INDEL mutation with a priority score        
+    measures the in-vitro immunogecity of neoantigens.
 
 
 ### Column explanation
