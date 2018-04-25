@@ -129,7 +129,6 @@ You should specify the right path to the sequencing file in `config.yaml` like:
     #your path to second normal fastq file
     normal_fastq_path_second: /home/zhouchi/ncbi/dbGaP-14145/sra/SRR2669057_2.fastq.gz
 
-
 A full example of an expression file can be found in example fold.
 ### Input Files (optional) 
 
@@ -147,12 +146,20 @@ A full example of an expression file can be found in example
 [here](exmple/abundance.tsv).
 
 ### References 
-The following references are required for MuPeXI to run:
-* Peptide  
-    The peptide reference is a FASTA file containing all peptides of the human proteome.
-* cDNA  
-    The cDNA reference is a FASTA file containing all cDNA sequences of the human
-    proteome.  
+The following references are required for iTuNES to run:
+* Snp: These files are used in somatic variant calling process.
+    [Genome reference]
+    Homo_sapiens_assembly38.fasta
+    dbsnp_138.hg38.vcf.gz
+    hapmap_3.3.hg38.vcf.gz
+    1000G_phase1.snps.high_confidence.hg38.vcf.gz
+    1000G_omni2.5.hg38.vcf.gz
+    Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+    CosmicCodingMuts_chr_M_sorted.vcf.gz     
+* Peptide and cDNA: The peptide reference is a FASTA file containing all peptides and all cDNA sequences of the human proteome.
+    [cDNA and protein]
+    Homo_sapiens.GRCh38.cdna.all.fa
+    Homo_sapiens.GRCh38.pep.all.fa
 
 These references can be acquired from the
 [Ensembl website](http://www.ensembl.org/Homo_sapiens/Info/Index).  
