@@ -183,7 +183,7 @@ The output files are the following:
 
 3.  .snv.score
 
-4   .indel.score
+4.  .indel.score
 
 
 
