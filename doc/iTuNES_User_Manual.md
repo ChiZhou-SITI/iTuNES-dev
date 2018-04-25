@@ -13,8 +13,8 @@ Shanghai, China.
 3. [Installation](#installation)  
 4. [Usage](#usage)  
 5. [Input Files](#input-files)  
-    - [VCF file](#vcf-file)  
-    - [Expression file](#expression-file)  
+    - [Input Files (required)](#input-files (required))  
+    - [Input Files (optional)](#input-files (optional))  
     - [References](#references)  
 6. [Output Files](#output-files)  
     - [Column explanation](#column-explanation)  
@@ -111,7 +111,11 @@ The config file is specified using the `-c` option
 
 a detailed explaination is in example `config.yaml` file, you should replace the path of required software and reference file in your system.
 
-## Input Files(required) 
+## Input Files
+Pair-end matched tumor-normal whole exome sequencing file should be provied for basic neoantigens identification, expression
+profile file or raw RNA sequnencing file is optional if you want to get expressed neoantigen.
+
+### Input Files (required) 
 
 iTuNES accepts pair-end matched tumor-normal whole exome sequencing as input,it could be in `.fastq.gz` or `.fastq` format 
 You should specify the right path to the sequencing file in `config.yaml` like:
@@ -127,7 +131,7 @@ You should specify the right path to the sequencing file in `config.yaml` like:
 
 
 A full example of an expression file can be found in example fold.
-## Input Files(optional) 
+### Input Files (optional) 
 
 It is optional, but preferable, to provide RNA sequencing data for evaluating the expression level of neoantigens or you 
 could provide expression file derived from killasto or other tools. The files should be tab separated and include Ensembl transcript ID (ENST) and mean expression(tpm).
@@ -141,10 +145,6 @@ could provide expression file derived from killasto or other tools. The files sh
 
 A full example of an expression file can be found in example
 [here](exmple/abundance.tsv).
-
-It should be noted that MuPeXI takes both expression values determined on transcript and
-gene level, though transcript is preferable. If gene level is used (ENSG...) the `-E gene`
-option should be used. 
 
 ### References 
 The following references are required for MuPeXI to run:
