@@ -243,3 +243,4 @@ To run the provided test files with iTuNES the following command can be run:
 
         path/to/iTuNES.py -i config.yaml
         
+![](iTuNES_flow_chart.png)
