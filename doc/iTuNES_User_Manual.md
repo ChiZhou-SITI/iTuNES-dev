@@ -211,10 +211,12 @@ The prediction output (.snv.model.tsv) for each peptide pair consists of the fol
 | DriverGene_Lable      | TRUE if the HUGO symbol is in the cosmic reference list, FALSE if it is not. |
 | MT_Binding_level_des  | Binding level description of mutated peptide. |
 | WT_Binding_level_des  | Binding level description of normal peptide. |
-| Cellular_prevalence   | Clonality of mutated gene. |
-| Homolog_pep           | The extracted homology peptide of neo-peptide in human protein. |
-
-| Priority score        | Calculated prioritization dependent on HLA binding, gene expression, normal and mutant peptide binding ratio and allele frequency. |
+| Homolog_pep           | The extracted homologous peptide of neo-peptide in human protein. |
+| Homolog_Binding_EL    | %Rank of prediction score for homologous peptides use NetMHCpan4.0(defalut model).|
+| Recognition_score     | T cell recognition score calculated based on TCR cross reactivity. |
+| Hydrophobicity_score  | Neo-peptide immunity mesurement based on animo acid hydrophobicity. |
+| Self_sequence_similarity | Sequence similarity bewteen mutated peptide and normal(homglogous) peptide, We select the bigger one as final score |
+| model_pro       | Model prediction score denpend on Recognition_score, Hydrophobicity_score, Self_sequence_similarity, WT_Binding_EL, MT_Binding_EL . |
 
 ## Test example 
 
