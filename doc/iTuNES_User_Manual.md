@@ -1,5 +1,11 @@
 # iTuNES User Manual 
 
+Given matched tumor-normal whole exome sequencing and tumor RNA-seq sequencing data 
+as input, iTuNes infers HLA sub-types, mutated peptides (neo-peptide), variant allele
+frequency, expression profile etc feature information. Based on these feature, a model-
+based refined ranking-score scheme could identify which of the neo-peptides have strong 
+immunogecity.
+
 ## Table of Contents
 1. [General Description](#general-description)  
 2. [Dependencies](#dependencies)  
