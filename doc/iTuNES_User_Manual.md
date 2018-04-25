@@ -16,7 +16,8 @@ Shanghai, China.
 6. [Input Files](#input-files)  
     - [Input Files (required)](#input-files (required))  
     - [Input Files (optional)](#input-files (optional))  
-    - [References](#references)  
+    - [References](#references)
+    - [Training dataset](#training-dataset)
 7. [Output Files](#output-files)  
     - [Column explanation](#column-explanation)  
 8. [Test Example](#test-example)  
@@ -171,6 +172,8 @@ match in release version (e.g. release-89).
 TSV file containing known cancer driver genes. The cancer gene census can be
 downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
 
+
+
 ## Output Files 
 iTuNES output four result files contains information of identified neoantigens corresponding to nonsynonymous point mutation and INDEL mutation.
 
@@ -220,18 +223,7 @@ The prediction output (.snv.model.tsv) for each peptide pair consists of the fol
 
 ## Test example 
 
-To run the provided test files with MuPeXI the following command can be run: 
+To run the provided test files with iTuNES the following command can be run: 
 
-        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv
-
-For additional fasta file output:
-
-        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv -f
-
-Print only the mismatch amino acid for the normal peptide:
-
-        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv -m
+        path/to/iTuNES.py -i config.yaml
         
-
-
-
