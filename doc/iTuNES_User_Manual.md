@@ -207,8 +207,7 @@ The prediction output (.snv.model.tsv) for each peptide pair consists of the fol
 | Transcript_name       | Ensembl transcript ID |
 | Mutation              | necleatide change of mutated gene |
 | AA_change             | Amino acid change annotated in VEP file. |
-| Variant_allele_frequency      
-                        | Genomic allele frequency detected by MuTect2. |
+| Variant_allele_frequency  | Genomic allele frequency detected by MuTect2. |
 | DriverGene_Lable      | TRUE if the HUGO symbol is in the cosmic reference list, FALSE if it is not. |
 | MT_Binding_level_des  | Binding level description of mutated peptide. |
 | WT_Binding_level_des  | Binding level description of normal peptide. |
