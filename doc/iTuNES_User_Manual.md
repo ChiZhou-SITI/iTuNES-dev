@@ -1,9 +1,4 @@
-# iTuNES User Manual
-
-Chi Zhou  
-Biological and Medical Big data Mining Lab  
-Tongji University  
-Shanghai, China. 
+# iTuNES User Manual 
 
 ## Table of Contents
 1. [General Description](#general-description)  
@@ -249,9 +244,9 @@ To run the provided test files with iTuNES the following command can be run:
 Chi Zhou  
 1410782Chiz@tongji.edu.cn  
 
-
 Biological and Medical Big data Mining Lab  
-Tongji University  
+Tongji University    
+Shanghai, China. 
 http://bm2.runyoo.com/
 
 ## Algorithmic Flow Chart
