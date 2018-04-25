@@ -191,33 +191,30 @@ The output files are the following:
 
 ### Column explanation
 
-The prediction output (.snv.model) for each peptide pair consists of the following columns:
+The prediction output (.snv.model.tsv) for each peptide pair consists of the following columns:
 
 | Column Name           | Description |
 | -----------           | ----------- |
-| HLA allele            | Allele name |
-| Normal peptide        | Peptide from reference corresponding to the mutant peptide. |
-| Normal MHC affinity   | Predicted binding affinity of normal peptide in nanoMolar units. |
-| Normal MHC % rank     | %Rank of prediction score for nomal peptides. |
-| Mutant peptide        | The extracted mutant peptide. |
-| Mutant MHC affinity   | Predicted binding affinity of mutant peptide in nanoMolar units. |
-| Mutant MHC % rank     | %Rank of prediction score for mutant peptides. |
-| Gene ID               | Ensembl gene ID |
-| Transcript ID         | Ensembl transcript ID |
-| Amino acid change     | Amino acid change annotated in VEP file. |
-| Allele Frequency      | Genomic allele frequency detected by MuTect2. |
-| Mismatches            | Mismatches between normal and mutant peptide. |
-| Peptide position      | Position of amino acid change in the peptide. Can be a range in the case of insertions and frameshifts. |
-| Chr                   | Chromosome position annotated in the VEP file. |
-| Genomic position      | Genome nucleotide position annotated in the VEP file. |
-| Protein position      | Amino acid position annotated in the VEP file. |
-| Mutation cons.        | The consequence annotated in the VEP file translated into single letter abbreviations: M; Missense variant, I; In-frame insertion, D; In-frame deletion, F; Frameshift variant |
-| Gene symbol           | HUGO symbol corresponding to the Ensembl transcript id. |
-| Cancer driver gene    | Yes if the HUGO symbol is in the cosmic reference list, No if it is not. |
-| Expression Level      | Expression of the transcript which the mutant peptide was extracted from. |
-| Mutant affinity score | Calculated binding affinity score of the mutant peptide, based on a negative logistic function of the mutant MHC %Rank score. This is used to calculate the final prioritization score. |
-| Normal affinity score | Calculated binding affinity score of the normal peptide, based on a positive logistic function of the normal MHC %Rank score. This is used to calculate the final prioritization score. |
-| Expression score      | Calculated Expression score of the transcript expression level. This is used to calculate the final prioritization score. |
+| Position              | Mutation position in genome. |
+| HLA_type              | HLA allele name. |
+| Gene                  | HUGO symbol name of mutatied gene. |
+| WT_pep                | The extracted normal peptide. |
+| WT_Binding_EL         | %Rank of prediction score for nomal peptides use NetMHCpan4.0(defalut model). |
+| WT_Binding_Rank       | %Rank of prediction score for nomal peptides use NetMHCpan4.0(-ba model). |
+| MT_pep                | The extracted mutant peptide. |
+| MT_Binding_EL         | %Rank of prediction score for mutated peptides use NetMHCpan4.0(defalut model). |
+| MT_Binding_Rank       | %Rank of prediction score for mutant peptides use NetMHCpan4.0(-ba model). |
+| Transcript_name       | Ensembl transcript ID |
+| Mutation              | necleatide change of mutated gene |
+| AA_change             | Amino acid change annotated in VEP file. |
+| Variant_allele_frequency      
+                        | Genomic allele frequency detected by MuTect2. |
+| DriverGene_Lable      | TRUE if the HUGO symbol is in the cosmic reference list, FALSE if it is not. |
+| MT_Binding_level_des  | Binding level description of mutated peptide. |
+| WT_Binding_level_des  | Binding level description of normal peptide. |
+| Cellular_prevalence   | Clonality of mutated gene. |
+| Homolog_pep           | The extracted homology peptide of neo-peptide in human protein. |
+
 | Priority score        | Calculated prioritization dependent on HLA binding, gene expression, normal and mutant peptide binding ratio and allele frequency. |
 
 ## Test example 
