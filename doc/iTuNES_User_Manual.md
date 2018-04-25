@@ -21,7 +21,8 @@ Shanghai, China.
 7. [Output Files](#output-files)  
     - [Column explanation](#column-explanation)  
 8. [Test Example](#test-example)  
-    - [Data preparation](#data-preparation)   
+9. [Contact](#contact)
+10. [Algorithmic Flow Chart](#algorithmic-flow-chart)
 
 ## General Description
 
@@ -242,5 +243,17 @@ The prediction output (.snv.model.tsv) for each peptide pair consists of the fol
 To run the provided test files with iTuNES the following command can be run: 
 
         path/to/iTuNES.py -i config.yaml
-        
+
+## Contact   
+
+Chi Zhou  
+1410782Chiz@tongji.edu.cn  
+
+
+Biological and Medical Big data Mining Lab  
+Tongji University  
+http://bm2.runyoo.com/
+
+## Algorithmic Flow Chart
+
 ![](iTuNES_flow_chart.png)
