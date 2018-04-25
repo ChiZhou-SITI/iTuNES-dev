@@ -9,30 +9,24 @@ Shanghai, China.
 1. [General Description](#general-description)  
 2. [Dependencies](#dependencies)  
     - [Required software](#required-software)  
-    - [Python packages](#python-packages)  
-3. [Installation](#installation)  
-4. [Usage](#usage)  
-5. [Input Files](#input-files)  
+    - [Python packages](#python-packages) 
+3. [Installation via Docker](#installation-via-docker)  
+4. [Installation from source](#installation-from-source)  
+5. [Usage](#usage)  
+6. [Input Files](#input-files)  
     - [Input Files (required)](#input-files (required))  
     - [Input Files (optional)](#input-files (optional))  
     - [References](#references)  
-6. [Output Files](#output-files)  
+7. [Output Files](#output-files)  
     - [Column explanation](#column-explanation)  
-7. [Test Example](#test-example)  
-    - [Data preparation](#data-preparation)  
-        * [Recommended preprocessing of next generation sequencing (NGS)
-data](#recommended-preprocessing-of-next-generation-sequencing-(ngs)-data)  
-        * [Data cleanup](#data-cleanup)
-        * [WXS data](#wxs-data)
-        * [RNAseq](#rnaseq)
-        * [HLA typing](#hla-typing)  
+8. [Test Example](#test-example)  
+    - [Data preparation](#data-preparation)   
 
 ## General Description
 
 Given matched tumor-normal whole exome sequencing and tumor RNA-seq sequencing data as input, iTuNes infers HLA sub-types, mutated peptides (neo-peptide), variant allele frequency, expression profile etc feature information. Based on these feature, a model- based refined ranking-score scheme could identify which of the neo-peptides have strong immunogecity.
 
 ## Dependencies  
-
 
 #### Hardware:
 iTuNEs currently test on x86_64 on ubuntu 16.04.
@@ -61,8 +55,11 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
     multiprocessing
     pyper
     sklearn
+   
+## Installation via Docker
+1.Install Docker on your computer and make sure it works.
 
-## Installation 
+## Installation from source
 
 1. Install all software listed above. 
 2. Install multiprocessing, pyper and sklearn with the following command:
@@ -170,7 +167,71 @@ The following references are required for iTuNES to run:
 
 It should be emphasized that it is of very high importance that the references and VEP
 match in release version (e.g. release-89).
-* Cosmic  
+* Cosmic 
+
         TSV file containing known cancer driver genes. The cancer gene census can be
         downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
+
+## Output Files 
+iTuNES output four result files contains information of identified neoantigens corresponding to nonsynonymous point mutation and INDEL mutation.
+
+The output files are the following: 
+1.  .snv.model 
+    The main output file containing a TSV file with the extracted mutated peptides and
+    all the information needed to choose the wanted peptides. 
+2.  .indel.model
+
+3.  .snv.score
+
+4   .indel.score
+
+
+
+### Column explanation
+
+The prediction output (.snv.model) for each peptide pair consists of the following columns:
+
+| Column Name           | Description |
+| -----------           | ----------- |
+| HLA allele            | Allele name |
+| Normal peptide        | Peptide from reference corresponding to the mutant peptide. |
+| Normal MHC affinity   | Predicted binding affinity of normal peptide in nanoMolar units. |
+| Normal MHC % rank     | %Rank of prediction score for nomal peptides. |
+| Mutant peptide        | The extracted mutant peptide. |
+| Mutant MHC affinity   | Predicted binding affinity of mutant peptide in nanoMolar units. |
+| Mutant MHC % rank     | %Rank of prediction score for mutant peptides. |
+| Gene ID               | Ensembl gene ID |
+| Transcript ID         | Ensembl transcript ID |
+| Amino acid change     | Amino acid change annotated in VEP file. |
+| Allele Frequency      | Genomic allele frequency detected by MuTect2. |
+| Mismatches            | Mismatches between normal and mutant peptide. |
+| Peptide position      | Position of amino acid change in the peptide. Can be a range in the case of insertions and frameshifts. |
+| Chr                   | Chromosome position annotated in the VEP file. |
+| Genomic position      | Genome nucleotide position annotated in the VEP file. |
+| Protein position      | Amino acid position annotated in the VEP file. |
+| Mutation cons.        | The consequence annotated in the VEP file translated into single letter abbreviations: M; Missense variant, I; In-frame insertion, D; In-frame deletion, F; Frameshift variant |
+| Gene symbol           | HUGO symbol corresponding to the Ensembl transcript id. |
+| Cancer driver gene    | Yes if the HUGO symbol is in the cosmic reference list, No if it is not. |
+| Expression Level      | Expression of the transcript which the mutant peptide was extracted from. |
+| Mutant affinity score | Calculated binding affinity score of the mutant peptide, based on a negative logistic function of the mutant MHC %Rank score. This is used to calculate the final prioritization score. |
+| Normal affinity score | Calculated binding affinity score of the normal peptide, based on a positive logistic function of the normal MHC %Rank score. This is used to calculate the final prioritization score. |
+| Expression score      | Calculated Expression score of the transcript expression level. This is used to calculate the final prioritization score. |
+| Priority score        | Calculated prioritization dependent on HLA binding, gene expression, normal and mutant peptide binding ratio and allele frequency. |
+
+## Test example 
+
+To run the provided test files with MuPeXI the following command can be run: 
+
+        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv
+
+For additional fasta file output:
+
+        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv -f
+
+Print only the mismatch amino acid for the normal peptide:
+
+        path/to/MuPeXI.py -v test.vcf -c path/to/config.ini -e expression_test.tsv -m
+        
+
+
 
