@@ -148,28 +148,28 @@ A full example of an expression file can be found in example
 ### References 
 The following references are required for iTuNES to run:
 * Snp: These files are used in somatic variant calling process.
-    [Genome reference]
-    Homo_sapiens_assembly38.fasta
-    dbsnp_138.hg38.vcf.gz
-    hapmap_3.3.hg38.vcf.gz
-    1000G_phase1.snps.high_confidence.hg38.vcf.gz
-    1000G_omni2.5.hg38.vcf.gz
-    Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-    CosmicCodingMuts_chr_M_sorted.vcf.gz     
+
+        [Genome reference]
+        Homo_sapiens_assembly38.fasta
+        dbsnp_138.hg38.vcf.gz
+        hapmap_3.3.hg38.vcf.gz
+        1000G_phase1.snps.high_confidence.hg38.vcf.gz
+        1000G_omni2.5.hg38.vcf.gz
+        Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+        CosmicCodingMuts_chr_M_sorted.vcf.gz 
+    
 * Peptide and cDNA: The peptide reference is a FASTA file containing all peptides and all cDNA sequences of the human proteome.
-    [cDNA and protein]
-    Homo_sapiens.GRCh38.cdna.all.fa
-    Homo_sapiens.GRCh38.pep.all.fa
 
-These references can be acquired from the
-[Ensembl website](http://www.ensembl.org/Homo_sapiens/Info/Index).  
-The most recent release is found under Gene annotation > Download genes, cDNAs, ncRNA,
-protein (FASTA) > pep (for peptide reference) and > cdna (for cDNA reference).  
+        [cDNA and protein]
+        Homo_sapiens.GRCh38.cdna.all.fa
+        Homo_sapiens.GRCh38.pep.all.fa
+* EnsemblVEP: VEP cache database.   
+
+        [EnsemblVEP]
+        homo_sapiens_vep_89_GRCh38.tar.gz
+
 It should be emphasized that it is of very high importance that the references and VEP
-match in release version (e.g. release-85).
-
-
-The following reference are optional but preferable:
+match in release version (e.g. release-89).
 * Cosmic  
         TSV file containing known cancer driver genes. The cancer gene census can be
         downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
