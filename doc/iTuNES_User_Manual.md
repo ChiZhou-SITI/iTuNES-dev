@@ -111,50 +111,36 @@ The config file is specified using the `-c` option
 
 a detailed explaination is in example `config.yaml` file, you should replace the path of required software and reference file in your system.
 
-## Input Files 
+## Input Files(required) 
 
-MuPeXI accepts a VCF file of somatic mutation calls optimally obtained from either MuTect
-or MuTect2. The VCF files do not need to be modified; the "raw" output VCF file can
-be put directly into MuPeXI. 
+iTuNES accepts pair-end matched tumor-normal whole exome sequencing as input,it could be in `.fastq.gz` or `.fastq` format 
+You should specify the right path to the sequencing file in `config.yaml` like:
 
-### VCF file 
+    #your path to first tumor fastq file
+    tumor_fastq_path_first: /home/zhouchi/ncbi/dbGaP-14145/sra/SRR2770550_1.fastq.gz
+    #your path to second tumor fastq file
+    tumor_fastq_path_second: /home/zhouchi/ncbi/dbGaP-14145/sra/SRR2770550_2.fastq.gz
+    #your path to first normal fastq file
+    normal_fastq_path_first: /home/zhouchi/ncbi/dbGaP-14145/sra/SRR2669057_1.fastq.gz
+    #your path to second normal fastq file
+    normal_fastq_path_second: /home/zhouchi/ncbi/dbGaP-14145/sra/SRR2669057_2.fastq.gz
 
-Compact example of a VCF file:
 
-        ##fileformat=VCFv4.2
-        ##GATKCommandLine.MuTect2=<ID=MuTect2,Version=3.5-0-g36282e4
-        ##SAMPLE=<ID=NORMAL,SampleName=TCGA-XV-A9W5_N
-        ##SAMPLE=<ID=TUMOR,SampleName=TCGA-XV-A9W5_T
-        ##reference=file:///home/projects/pr_46630/data/references/human_GRCh38/GCA_000001405.15_GRCh38_full_analysis_set.fa
-        #CHROM  POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  TUMOR   NORMAL
-        chr1    948711  .   C   G   .   germline_risk . . . .
-        chr1    1657358 .   T   TA  .   alt_allele_in_normal . . . .
-        chr1    1986752 rs4233028   A   G   .   germline_risk . . . .   
-        chr1    3431704 rs2493274   G   C   .   germline_risk . . . .  
-        chr1    3631978 rs2244942   T   C   .   germline_risk . . . .  
-        chr1    3839305 rs1891940   T   C   .   clustered_events;germline_risk  . . . .
+A full example of an expression file can be found in example fold.
+## Input Files(optional) 
 
-A full example of a VCF file can be found on the MuPeXI webserver
-[here](http://www.cbs.dtu.dk/services/MuPeXI/example.vcf). 
+It is optional, but preferable, to provide RNA sequencing data for evaluating the expression level of neoantigens or you 
+could provide expression file derived from killasto or other tools. The files should be tab separated and include Ensembl transcript ID (ENST) and mean expression(tpm).
 
-### Expression file
+    target_id	length	eff_length	est_counts	tpm
+    ENST00000434970.2	9	3.5	0	0
+    ENST00000448914.1	13	7.5	0	0
+    ENST00000415118.1	8	2.5	0	0
+    ENST00000631435.1	12	6.5	0	0
+    ENST00000632684.1	12	6.5	0	0
 
-It is optional, but preferable, to provide a file with expression values as input to add
-the expression of each transcript where a mutated peptide was extracted.
-The expression files used for testing MuPeXI were generated from raw RNA-seq data using
-Kallisto. The files should be tab separated and include Ensembl transcript ID (ENST) and
-mean expression WITHOUT a header. 
-
-        ENST00000456328.2   0.868567715
-        ENST00000450305.2   0
-        ENST00000488147.1   2.72373575
-        ENST00000619216.1   0
-        ENST00000473358.1   0
-        ENST00000469289.1   0
-        ENST00000607096.1   0
-
-A full example of an expression file can be found on the MuPeXI webserver
-[here](http://www.cbs.dtu.dk/services/MuPeXI/example_expression.tsv).
+A full example of an expression file can be found in example
+[here](exmple/abundance.tsv).
 
 It should be noted that MuPeXI takes both expression values determined on transcript and
 gene level, though transcript is preferable. If gene level is used (ENSG...) the `-E gene`
