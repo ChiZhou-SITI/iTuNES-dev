@@ -107,6 +107,13 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
     (click the "VCF files" dropdown menu after loading the Download tab). You will need to register before gaining access to 
     the file. Note: to our knowledge COSMIC uses b38 which does not contain the 'chr' before the chromosome names like the 
     UCSC hg38. Thus, we provide scripts to convert the file into the correct format.
+    1. Click [here](https://cancer.sanger.ac.uk/cosmic/register) to register
+    2. Wait for the verification email (can take more than 24 hours) and follow instructions to create an account
+    3. After you are registered, login to [COSMIC](https://cancer.sanger.ac.uk/cosmic/login)
+    4. Click the "Download" tab
+    5. Click the "VCF files" dropdown menu
+    6. Click the "CosmicCodingMuts.vcf.gz" file name ([direct link] (https://cancer.sanger.ac.uk/files/cosmic/current_release/VCF/CosmicCodingMuts.vcf.gz))
+    7. After you have downloaded the file, you will need to decompress it: `gunzip CosmicCodingMuts.vcf.gz`
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
