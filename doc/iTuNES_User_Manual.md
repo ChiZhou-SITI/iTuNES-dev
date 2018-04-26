@@ -102,11 +102,11 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
         [cDNA and protein]
         Homo_sapiens.GRCh38.cdna.all.fa
         Homo_sapiens.GRCh38.pep.all.fa
-    The Catalogue of Somatic Mutations In Cancer (COSMIC) provides a variant file (VCF) of all coding mutations in COSMIC.  
-    This VCF file is called CosmicCodingMuts.vcf.gz and can be found under the "Download" tab on the COSMIC website (click 
-    the "VCF files" dropdown menu after loading the Download tab). You will need to register before gaining access to the 
-    file. Note: to our knowledge COSMIC uses b38 which does not contain the 'chr' before the chromosome names like the UCSC 
-    hg38. Thus, we provide scripts to convert the file into the correct format.
+    Moreover,the Catalogue of Somatic Mutations In Cancer (COSMIC) provides a variant file (VCF) of all coding mutations in 
+    COSMIC. This VCF file is called CosmicCodingMuts.vcf.gz and can be found under the "Download" tab on the COSMIC website 
+    (click the "VCF files" dropdown menu after loading the Download tab). You will need to register before gaining access to 
+    the file. Note: to our knowledge COSMIC uses b38 which does not contain the 'chr' before the chromosome names like the 
+    UCSC hg38. Thus, we provide scripts to convert the file into the correct format.
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
