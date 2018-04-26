@@ -121,11 +121,11 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
     cosmic_process.sh: A tool to format the COSMIC VCF file compatible for Mutect2
  	Usage: bash cosmic_process.sh <-i CosmicCodingMuts.vcf> <-o FormattedCosmicMuts.vcf> <-d Homo_sapiens_assembly38.dic>
 	-i  Input CosmicCodingMuts.vcf file as downloaded from COSMIC
-	-o	Output formatted COSMIC VCF file
-	-p  your path to picard
-	-d	Path to the GATK hg19 bundle's sequence dictionary file
+	-o  Output formatted COSMIC VCF file
+	-p  Your path to picard
+	-d  Path to the GATK hg19 bundle's sequence dictionary file
 ```
-  Run this on your downloaded file:
+   Run this on your downloaded file.
 
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
