@@ -126,7 +126,9 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 	-d	Path to the GATK hg19 bundle's sequence dictionary file
 ```
 
-Run this on your downloaded file:
+    Run this on your downloaded file:
+   
+```
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
