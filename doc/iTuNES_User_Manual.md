@@ -114,6 +114,18 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
     5. Click the "VCF files" dropdown menu
     6. Click the "CosmicCodingMuts.vcf.gz" file name ([direct link] (https://cancer.sanger.ac.uk/files/cosmic/current_release/VCF/CosmicCodingMuts.vcf.gz))
     7. After you have downloaded the file, you will need to decompress it: `gunzip CosmicCodingMuts.vcf.gz`
+    8. we need to convert it to be compatible to Mutect2 using the script  `cosmic_process.sh`
+    The usage statement from `cosmic_process.sh`:
+```
+    cosmic_process.sh: A tool to format the COSMIC VCF file compatible for Mutect2
+ 	Usage: bash cosmic_process.sh <-i CosmicCodingMuts.vcf> <-o FormattedCosmicMuts.vcf> <-d Homo_sapiens_assembly38.dic>
+	-i  Input CosmicCodingMuts.vcf file as downloaded from COSMIC
+	-o	Output formatted COSMIC VCF file
+	-p  your path to picard
+	-d	Path to the GATK hg19 bundle's sequence dictionary file
+```
+
+Run this on your downloaded file:
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
