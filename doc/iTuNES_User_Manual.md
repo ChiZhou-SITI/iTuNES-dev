@@ -86,16 +86,15 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
 
         bash data_download.sh
         
-    all reference data would be in the fold `database`, including:
+    a few reference data would be in the fold `database`, including:
 
         [Genome reference]
         Homo_sapiens_assembly38.fasta
-        dbsnp_138.hg38.vcf.gz
-        hapmap_3.3.hg38.vcf.gz
-        1000G_phase1.snps.high_confidence.hg38.vcf.gz
-        1000G_omni2.5.hg38.vcf.gz
-        Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-        CosmicCodingMuts_chr_M_sorted.vcf.gz
+        dbsnp_138.hg38.vcf
+        1000G_phase1.snps.high_confidence.hg38.vcf
+        1000G_omni2.5.hg38.vcf
+        Mills_and_1000G_gold_standard.indels.hg38.vcf
+        CosmicCodingMuts_chr_M_sorted.vcf
         
         [EnsemblVEP]
         homo_sapiens_vep_89_GRCh38.tar.gz
@@ -103,6 +102,7 @@ iTuNEs currently test on x86_64 on ubuntu 16.04.
         [cDNA and protein]
         Homo_sapiens.GRCh38.cdna.all.fa
         Homo_sapiens.GRCh38.pep.all.fa
+The Catalogue of Somatic Mutations In Cancer (COSMIC) provides a variant file (VCF) of all coding mutations in COSMIC. This VCF file is called CosmicCodingMuts.vcf.gz and can be found under the "Download" tab on the COSMIC website (click the "VCF files" dropdown menu after loading the Download tab). You will need to register before gaining access to the file. Note: to our knowledge COSMIC uses b38 which does not contain the 'chr' before the chromosome names like the UCSC hg38. Thus, we provide scripts to convert the file into the correct format.
 
 5. Fill in the `config.yaml` file with your local path, make sure you have installed all above software and have downloaded
 reference data.You should be aware that the version of VEP library you use should match the references used (peptide and cDNA). E.g. in the example above is used version/release 85 of GRCh38.
@@ -178,9 +178,15 @@ The following references are required for iTuNES to run:
 It should be emphasized that it is of very high importance that the references and VEP
 match in release version (e.g. release-89).
 
-* Cosmic 
+* Cosmic consencus gene 
 TSV file containing known cancer driver genes. The cancer gene census can be
 downloaded from the [COSMIC](http://cancer.sanger.ac.uk/census) website.  
+
+* Cosmic VCF file
+
+The Catalogue of Somatic Mutations In Cancer (COSMIC) provides a variant file (VCF) of all coding mutations in COSMIC. This VCF file is called CosmicCodingMuts.vcf.gz and can be found under the "Download" tab on the COSMIC website (click the "VCF files" dropdown menu after loading the Download tab). You will need to register before gaining access to the file. Note: to our knowledge COSMIC uses b38 which does not contain the 'chr' before the chromosome names like the UCSC hg38. Thus, we provide scripts to convert the file into the correct format.
+
+
 
 ### Training dataset
 
